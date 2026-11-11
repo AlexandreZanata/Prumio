@@ -12,7 +12,8 @@
 
 ## Responsibility
 
-- `.sq` files: one per table, containing `CREATE TABLE`, indices and the named queries for that table.
+- `.sq` files: one per table (`setting`, `inbox_item`, `task`, `appointment`, `matter`,
+  `matter_entry`), containing `CREATE TABLE`, indices and the named queries for that table.
 - `.sqm` files: numbered migrations (`1.sqm` migrates schema version 1 → 2).
 - `databases/*.db`: committed schema snapshots used by `verifySqlDelightMigration`.
 - Driver creation per platform (`databaseDriverModule`, expect/actual) with foreign keys enabled.
@@ -40,5 +41,6 @@ Specification: [docs/architecture/database-schema.md](../../docs/architecture/da
 
 ## Tests
 
-`./gradlew :core:database:testAndroidHostTest` (in-memory JDBC SQLite driver, `src/androidHostTest`).
+`./gradlew :core:database:testAndroidHostTest` (in-memory database from `:core:database-testing`,
+`src/androidHostTest`). `SchemaTest` covers constraints, cascades and ordering.
 Migration verification runs in `check`.

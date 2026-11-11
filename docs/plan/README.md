@@ -9,7 +9,7 @@ phase closes with a validation gate signed off by the owner.
 | Phase | Goal | Release | Gate | Status |
 |---|---|---|---|---|
 | [0 — Foundation](phase-0-foundation.md) | Architecture, docs, build, quality gates, app shell | — | G0 | ✅ done (pending owner sign-off) |
-| [1 — Domain and persistence](phase-1-domain-and-persistence.md) | All entities, rules and storage for v0.1, no UI | — | G1 | in progress (1/16) |
+| [1 — Domain and persistence](phase-1-domain-and-persistence.md) | All entities, rules and storage for v0.1, no UI | — | G1 | ✅ done (pending owner review) |
 | [2 — Design system](phase-2-design-system.md) | Components, domain UI, screenshots, accessibility base | — | G2 | todo |
 | [3 — Organize](phase-3-organize.md) | Capture, inbox, tasks, Today, agenda, matters, search, settings | — | G3 | todo |
 | [4 — Reminders](phase-4-reminders.md) | Offline notifications, reliable and honest | **v0.1** | G4 | todo |

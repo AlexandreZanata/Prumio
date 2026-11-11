@@ -21,7 +21,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
   `ModuleStructureTest` requires every shared module in the merged report.
 
 ### P1.02 — Domain model types
-- **Status:** todo
+- **Status:** done
 - **Depends on:** —
 - **Goal:** implement the phase-1 types of model.md exactly.
 - **Inputs:** docs/domain/model.md, glossary.md, core/model/README.md.
@@ -32,7 +32,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:model:testAndroidHostTest`; field-by-field comparison with model.md.
 
 ### P1.03 — Validation and creation policies
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.02
 - **Goal:** one place that normalizes and validates input for every entity.
 - **Inputs:** business-rules.md (GEN, TASK, APPT, MATTER, INBOX), error-handling.md.
@@ -42,7 +42,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:domain:testAndroidHostTest`.
 
 ### P1.04 — Database schema version 1
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.02
 - **Goal:** create the phase-1 tables, indices, constraints and named queries.
 - **Inputs:** docs/architecture/database-schema.md, data-layer.md, recipe add-database-table.md.
@@ -52,7 +52,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:database:testAndroidHostTest :core:database:verifySqlDelightMigration`.
 
 ### P1.05 — Shared in-memory database for tests
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.04
 - **Goal:** one reusable way to create a fresh in-memory `PrumioDatabase` in JVM tests (no copies).
 - **Inputs:** docs/architecture/modules.md, ADR-0007.
@@ -62,7 +62,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./scripts/verify.sh` (module rules and structure tests must accept the module).
 
 ### P1.06 — Ports, fakes and builders
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.02
 - **Goal:** declare the domain ports of contracts.md and their in-memory fakes.
 - **Inputs:** docs/architecture/contracts.md, recipe add-repository.md.
@@ -72,7 +72,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** fakes have their own tests proving ordering and emissions.
 
 ### P1.07 — Inbox and task repositories
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.04, P1.05, P1.06
 - **Goal:** SQLDelight adapters for inbox items and tasks.
 - **Inputs:** data-layer.md, contracts.md, recipe add-repository.md.
@@ -81,7 +81,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:data:testAndroidHostTest`.
 
 ### P1.08 — Appointment and matter repositories
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.04, P1.05, P1.06
 - **Goal:** SQLDelight adapters for appointments, matters and history (atomic `save`/`resolve`).
 - **Deliverables:** `SqlDelightAppointmentRepository`, `SqlDelightMatterRepository`, mappers, tests
@@ -89,7 +89,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:data:testAndroidHostTest`.
 
 ### P1.09 — Settings
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.06
 - **Goal:** typed settings with defaults over the `setting` table.
 - **Inputs:** model.md#settings, recipe add-setting.md.
@@ -99,7 +99,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** domain + data tests.
 
 ### P1.10 — Inbox use cases
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.03, P1.06
 - **Deliverables:** `CaptureInboxItemUseCase`, `EditInboxItemUseCase`, `DiscardInboxItemUseCase`,
   `RestoreInboxItemUseCase` (undo), `ConvertInboxItemUseCase`, `ObserveInboxUseCase`.
@@ -107,7 +107,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** `./gradlew :core:domain:testAndroidHostTest`.
 
 ### P1.11 — Task use cases
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.03, P1.06
 - **Deliverables:** `CreateTaskUseCase`, `UpdateTaskUseCase`, `CompleteTaskUseCase`,
   `DismissTaskUseCase`, `ReopenTaskUseCase`, `PostponeTaskUseCase`, `DeleteTaskUseCase`,
@@ -116,7 +116,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** domain tests including midnight and time zone change (`FakeTimeProvider.moveTo`).
 
 ### P1.12 — Appointment use cases
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.03, P1.06
 - **Deliverables:** `CreateAppointmentUseCase`, `UpdateAppointmentUseCase`, `DeleteAppointmentUseCase`,
   `RestoreAppointmentUseCase`, `ObserveAppointmentsOnDaysUseCase` (non-recurring; occurrence on day per
@@ -125,7 +125,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** domain tests with travel across zones and DST days.
 
 ### P1.13 — Matter use cases and policies
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.03, P1.06, P1.11
 - **Deliverables:** `CreateMatterUseCase`, `UpdateMatterUseCase`, `WaitOnMatterUseCase`,
   `ResumeMatterUseCase`, `ResolveMatterUseCase`, `ReopenMatterUseCase`, `AddMatterNoteUseCase`,
@@ -135,7 +135,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** state machine tests for every allowed and forbidden transition (state-machines.md).
 
 ### P1.14 — Today aggregation
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.11, P1.12, P1.13
 - **Deliverables:** `ObserveTodayUseCase` emitting a `TodaySnapshot` (counts, ordered tasks, next
   appointment, attention matters, inbox count) that recomputes on data change.
@@ -143,7 +143,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** domain tests with mixed fixtures; Turbine tests for re-emission.
 
 ### P1.15 — Search
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.07, P1.08
 - **Deliverables:** `SearchTextNormalizer` (accent folding for Latin scripts, lowercase), search
   queries per type, `SearchUseCase` with grouping and ordering.
@@ -151,7 +151,7 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 - **Validation:** tests with Portuguese accents ("Documentação", "ação", "Pendência"), multi-word queries.
 
 ### P1.16 — Wiring and gate review
-- **Status:** todo
+- **Status:** done
 - **Depends on:** P1.07 … P1.15
 - **Goal:** everything bound in Koin; docs reflect reality; gate G1 executed.
 - **Deliverables:** `coreDataModule`/`coreDomainModule` complete; contracts.md, model.md, schema,
@@ -162,4 +162,12 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 
 | Date | Result | Notes |
 |---|---|---|
-| | | |
+| 2026-11-11 | Automated G1 checks passed (`./scripts/verify.sh`) | Domain line coverage 99.7 % (≥ 90 %), data 95 % (≥ 80 %); 44 phase-1 rules `implemented` with tests; `KoinModulesTest` resolves 6 repositories and 43 use cases; schema snapshot regenerated and verified. Owner review of contracts and rule spot-checks pending |
+
+### Implementation notes
+
+- P1.05 created `:core:database-testing` (test-only, enforced by `ModuleRules`).
+- Recurrence columns stay NULL until P5.01; the data layer refuses recurring items before that.
+- Rules whose logic is done but whose screen is pending carry a **Screen:** line in business-rules.md.
+- BR-GEN-005 (Undo) and BR-MATTER-009 (follow-up reminder) stay `planned`: their domain parts
+  exist (delete returns a snapshot, restore use cases, follow-up use case), the UI/reminder parts come later.

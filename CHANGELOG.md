@@ -6,6 +6,12 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Phase 1 domain and persistence (P1.02–P1.16): model types; input validation; SQLite schema v1
+  (inbox items, tasks, appointments, matters, history); `:core:database-testing`; repositories for
+  inbox, tasks, appointments, matters, search and settings; 43 use cases covering capture and
+  conversion, task lifecycle and postpone, appointments across time zones, matters (waiting,
+  resolve, notes, follow-up, next action, attention), Today snapshot, accent-insensitive search
+  and typed settings. 44 business rules implemented with tests.
 - Coverage gate (P1.01): Kover on every shared module, `:core:domain` ≥ 90 % and `:core:data` ≥ 80 %
   lines enforced in `check`; merged report with `./gradlew koverHtmlReport`.
 - `DomainError.Validation` and `InvalidTransition` require a business rule id (`BR-AREA-NNN`).

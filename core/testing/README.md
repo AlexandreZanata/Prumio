@@ -17,9 +17,11 @@
 | `FakeTimeProvider` | Controllable clock and time zone: `advanceBy`, `setLocal`, `moveTo` |
 | `FakeIdGenerator` | Deterministic UUID-shaped ids |
 | `runViewModelTest { }` | `runTest` with `Dispatchers.Main` replaced, for ViewModel tests |
-
-Phase 1 adds `Fake<Aggregate>Repository` for every domain port and entity builders
-(`aTask(title = …)`) used across tests.
+| `FakeRepositories` / `FakeStore` | One coherent set of in-memory fakes (`inbox`, `tasks`, `appointments`, `matters`, `search`, `settings`) over shared state, so cross-aggregate effects behave like SQLite |
+| `Fake<Aggregate>Repository` | In-memory implementation of each domain port, same ordering and `Flow` emissions as the adapter |
+| `TestDispatcherProvider` | Runs repository work on a test dispatcher |
+| `anInboxItem()`, `aTask()`, `anAppointment()`, `timedAt()`, `allDay()`, `aMatter()`, `aMatterEntry()`, `TestInstant` | Builders with defaults |
+| `assertSuccess()`, `assertFailure()`, `assertValidation(ruleId)`, `assertInvalidTransition(ruleId)`, `assertNotFound()` | Outcome assertions |
 
 ## Rules
 

@@ -11,21 +11,21 @@ Conventions for every port:
 - Ports never validate business rules (use cases do) and never decide (policies do).
 - Fakes must behave like the real adapter, including emitting on every `Flow` after a write.
 
-Status: ports below are implemented in the phase indicated. Signatures may gain parameters during
+Status: sections marked *implemented* exist in code; the others are specifications for their phase. Signatures may gain parameters during
 implementation; update this page in the same change.
 
-## Inbox (phase 1)
+## Inbox (implemented, phase 1)
+
+`app.prumio.core.domain.inbox` — adapter `SqlDelightInboxRepository`, fake `FakeInboxRepository`.
 
 ```kotlin
 interface InboxRepository {
-    fun observeAll(): Flow<List<InboxItem>>                      // newest first (BR-INBOX-003)
-    fun observeCount(): Flow<Int>                                // badge (BR-INBOX-005)
+    fun observeAll(): Flow<List<InboxItem>>                       // newest first (BR-INBOX-003)
+    fun observeCount(): Flow<Int>                                 // badge (BR-INBOX-005)
     suspend fun get(id: InboxItemId): InboxItem?
-    suspend fun insert(item: InboxItem)
-    suspend fun update(item: InboxItem)
+    suspend fun save(item: InboxItem)                             // insert or replace
     suspend fun delete(id: InboxItemId)
-    /** Atomically inserts [target] and deletes the item (BR-INBOX-004). */
-    suspend fun convert(id: InboxItemId, target: ConversionTarget)
+    suspend fun convert(id: InboxItemId, target: ConversionTarget) // target + delete, one transaction (BR-INBOX-004)
 }
 
 sealed interface ConversionTarget {
@@ -35,83 +35,114 @@ sealed interface ConversionTarget {
 }
 ```
 
-## Tasks (phase 1; completions phase 5)
+## Tasks (implemented, phase 1; completions phase 5)
+
+`app.prumio.core.domain.task` — adapter `SqlDelightTaskRepository`, fake `FakeTaskRepository`.
+Dated lists are ordered by due date, due time, creation. Writes that also change a matter's history
+go through `MatterRepository.save(matter, entries, tasks)` so they stay atomic (the domain's
+`TaskWriter` does this).
 
 ```kotlin
 interface TaskRepository {
     fun observe(id: TaskId): Flow<Task?>
-    fun observeOpenDueOnOrBefore(date: LocalDate): Flow<List<Task>>   // Today: due today + overdue candidates
-    fun observeOpenUndated(): Flow<List<Task>>                       // Anytime
-    fun observeOpenDueBetween(from: LocalDate, to: LocalDate): Flow<List<Task>>   // Agenda, Upcoming
-    fun observeCompletedSince(instant: Instant): Flow<List<Task>>
+    fun observeOpen(): Flow<List<Task>>
+    fun observeOpenDueOnOrBefore(date: LocalDate): Flow<List<Task>>   // Today: overdue + due today
+    fun observeOpenDueBetween(from: LocalDate, to: LocalDate): Flow<List<Task>>
+    fun observeOpenUndated(): Flow<List<Task>>                         // newest first
+    fun observeCompletedSince(instant: Instant): Flow<List<Task>>      // most recent first
+    fun observeDismissed(): Flow<List<Task>>                           // most recent first
     fun observeByMatter(matterId: MatterId): Flow<List<Task>>
     suspend fun get(id: TaskId): Task?
-    suspend fun upsert(task: Task)
-    /** Saves [task] and appends [entry] to its matter's history in one transaction (BR-MATTER-003). */
-    suspend fun upsertWithMatterEntry(task: Task, entry: MatterEntry?)
+    suspend fun getByMatter(matterId: MatterId): List<Task>
+    suspend fun save(task: Task)                                       // insert or replace
     suspend fun delete(id: TaskId)
-    suspend fun recordCompletion(completion: TaskCompletion)          // phase 5 (BR-REC-007)
-    suspend fun removeCompletion(id: String)                          // phase 5
+    // phase 5: recordCompletion / removeCompletion (BR-REC-007)
 }
 ```
 
-## Appointments (phase 1; exceptions phase 5)
+## Appointments (implemented, phase 1; exceptions phase 5)
+
+`app.prumio.core.domain.appointment` — adapter `SqlDelightAppointmentRepository`, fake `FakeAppointmentRepository`.
 
 ```kotlin
 interface AppointmentRepository {
     fun observe(id: AppointmentId): Flow<Appointment?>
-    /** Appointments whose stored local dates overlap [from]..[to] widened by one day (time-semantics.md). */
+    /** Stored local dates overlap from..to; callers widen by one day and filter in the domain. */
     fun observeOverlapping(from: LocalDate, to: LocalDate): Flow<List<Appointment>>
-    fun observeRecurring(): Flow<List<Appointment>>                   // series, expanded by the domain
     suspend fun get(id: AppointmentId): Appointment?
-    suspend fun upsert(appointment: Appointment)
+    suspend fun save(appointment: Appointment)
     suspend fun delete(id: AppointmentId)
 }
 ```
 
-## Matters (phase 1)
+## Matters (implemented, phase 1)
+
+`app.prumio.core.domain.matter` — adapter `SqlDelightMatterRepository`, fake `FakeMatterRepository`.
 
 ```kotlin
 interface MatterRepository {
     fun observe(id: MatterId): Flow<Matter?>
-    fun observeUnresolved(): Flow<List<Matter>>
-    fun observeResolvedSince(instant: Instant): Flow<List<Matter>>
+    fun observeUnresolved(): Flow<List<Matter>>                        // most recent activity first
+    fun observeResolvedSince(instant: Instant): Flow<List<Matter>>     // most recently resolved first
     fun observeHistory(id: MatterId): Flow<List<MatterEntry>>          // newest first
     suspend fun get(id: MatterId): Matter?
-    /** Saves the matter and appends [entries] atomically (state changes, follow-ups: BR-MATTER-003). */
-    suspend fun save(matter: Matter, entries: List<MatterEntry>)
-    /** Resolve with the chosen fate of open actions, atomically (BR-MATTER-007). */
-    suspend fun resolve(matter: Matter, entries: List<MatterEntry>, tasksToUpdate: List<Task>)
-    suspend fun updateNote(entry: MatterEntry)
-    suspend fun deleteNote(id: MatterEntryId)
-    suspend fun delete(id: MatterId)                                  // cascades history; unlinks tasks
+    suspend fun getEntry(id: MatterEntryId): MatterEntry?
+    /** Upserts the matter, its entries and tasks in ONE transaction (BR-MATTER-003). */
+    suspend fun save(matter: Matter, entries: List<MatterEntry> = emptyList(), tasks: List<Task> = emptyList())
+    suspend fun deleteEntry(matter: Matter, entryId: MatterEntryId)    // delete + save matter, one transaction
+    suspend fun delete(id: MatterId)                                   // cascades history; unlinks tasks/appointments
 }
 ```
 
-## Search (phase 1)
+## Search (implemented, phase 1)
+
+`app.prumio.core.domain.search` — adapter `SqlDelightSearchRepository`, fake `FakeSearchRepository`.
 
 ```kotlin
 interface SearchRepository {
-    /** Items whose normalized searchable text contains every normalized term (BR-SEARCH-002). */
-    suspend fun search(terms: List<String>, limitPerType: Int = 50): SearchResults
+    /** Items whose searchable text contains EVERY normalized term (BR-SEARCH-002); unordered. */
+    suspend fun search(terms: List<String>): SearchHits
 }
+data class SearchHits(val tasks: List<Task>, val appointments: List<Appointment>, val matters: List<Matter>, val inboxItems: List<InboxItem>)
 ```
 
-Normalization (`SearchTextNormalizer`, pure, in domain): lowercase + remove diacritics + collapse
-whitespace. Stored in `search_text` columns maintained by the data layer on every write.
+Normalization is domain code shared by adapters and fakes (`SearchText.kt`): `normalizeForSearch`
+(lowercase, Latin diacritics removed, whitespace collapsed), `searchTerms(query)`, and
+`searchableText()` per type (what is searchable: BR-SEARCH-001). The data layer stores it in
+`search_text` columns on every write; matter notes are searchable through `matter_entry.search_text`.
 
-## Settings (phase 1)
+## Settings (implemented, phase 1)
+
+`app.prumio.core.domain.settings` — adapter `SqlDelightSettingsRepository`, fake `FakeSettingsRepository`.
 
 ```kotlin
-interface SettingsRepository {
-    fun observe(): Flow<Settings>                                     // typed, with defaults (BR-SET-001)
-    suspend fun get(): Settings
-    suspend fun <T> set(key: SettingKey<T>, value: T)
+interface SettingsRepository {                      // raw key-value store; typing is a domain rule
+    fun observeValues(): Flow<Map<String, String>>
+    suspend fun setValue(key: String, value: String?, updatedAt: Instant)   // null removes the key
 }
+
+class SettingKey<T>(val name: String, val default: T, val encode: (T) -> String?, val decode: (String) -> T?)
+object SettingKeys { Theme; WeekStart; fun read(values): Settings }       // registry with defaults (BR-SET-001)
 ```
 
-`SettingKey<T>` is a typed registry in `:core:domain/settings` (name, default, codec). Adding a
-setting = adding one `SettingKey` ([recipe](../ai/recipes/add-setting.md)); no migration needed.
+Adding a setting = one `SettingKey` + one `Settings` field ([recipe](../ai/recipes/add-setting.md)); no migration.
+
+## Use cases (implemented, phase 1)
+
+All registered in `coreDomainModule`. Writes return `Outcome<T, DomainError>`; observations return `Flow`.
+
+| Area | Use cases |
+|---|---|
+| Inbox | `CaptureInboxItemUseCase`, `EditInboxItemUseCase`, `DiscardInboxItemUseCase`, `RestoreInboxItemUseCase`, `ConvertInboxItemUseCase`, `ObserveInboxUseCase`, `ObserveInboxCountUseCase` |
+| Tasks | `CreateTaskUseCase`, `UpdateTaskUseCase`, `CompleteTaskUseCase`, `DismissTaskUseCase` (both return `ClosedTask` with `matterNeedsNextAction`), `ReopenTaskUseCase`, `PostponeTaskUseCase`, `LinkTaskToMatterUseCase`, `DeleteTaskUseCase`, `RestoreTaskUseCase`, `ObserveTaskUseCase`, `ObserveTaskListUseCase` |
+| Appointments | `CreateAppointmentUseCase`, `UpdateAppointmentUseCase`, `DeleteAppointmentUseCase`, `RestoreAppointmentUseCase`, `ObserveAppointmentUseCase`, `ObserveAppointmentsUseCase` (per day) |
+| Matters | `CreateMatterUseCase`, `UpdateMatterUseCase`, `WaitOnMatterUseCase`, `ResumeMatterUseCase`, `ResolveMatterUseCase`, `ReopenMatterUseCase`, `SetMatterFollowUpUseCase`, `AddMatterNoteUseCase`, `EditMatterNoteUseCase`, `DeleteMatterNoteUseCase`, `DeleteMatterUseCase`, `RestoreMatterUseCase`, `ObserveMattersUseCase`, `ObserveMatterDetailUseCase` |
+| Today | `GetDayPeriodUseCase`, `ObserveTodayUseCase` (`TodaySnapshot`) |
+| Search / Settings | `SearchUseCase`, `ObserveSettingsUseCase`, `UpdateSettingUseCase` |
+
+Pure policies (no I/O): `TaskOverduePolicy` (BR-TASK-004), `AppointmentTimePolicy` (BR-APPT-005),
+`NextActionPolicy` (BR-MATTER-005), `MatterAttentionPolicy` (BR-MATTER-010), draft validation
+(`TaskDraft`, `AppointmentDraft`, `MatterDraft`, `TextRules`).
 
 ## Reminders (phase 4)
 

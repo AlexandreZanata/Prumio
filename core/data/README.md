@@ -25,10 +25,14 @@ Detailed rules: [docs/architecture/data-layer.md](../../docs/architecture/data-l
 
 ```
 app.prumio.core.data
-├── inbox/ task/ appointment/ matter/ settings/ search/   one package per aggregate
+├── storage/     ColumnMappers (time/enum formats), RowMappers (row → model), Writes (shared upserts
+│                that also maintain search_text; used inside transactions)
+├── inbox/ task/ appointment/ matter/ search/ settings/   SqlDelight<Aggregate>Repository
 ├── backup/                                               phase 5
 └── di/          coreDataModule (binds every port)
 ```
+
+Never write an entity outside `storage/Writes.kt`: conversions, matters and tasks all reuse it.
 
 ## Rules
 

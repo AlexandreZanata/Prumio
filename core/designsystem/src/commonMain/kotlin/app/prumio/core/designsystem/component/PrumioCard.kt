@@ -15,8 +15,8 @@ fun PrumioCard(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val colors = CardDefaults.cardColors(
-        containerColor = PrumioTheme.colors.surfaceVariant,
-        contentColor = PrumioTheme.colors.onSurfaceVariant,
+        containerColor = PrumioTheme.colors.surfaceContainerHigh,
+        contentColor = PrumioTheme.colors.onSurface,
     )
     if (onClick == null) {
         Card(modifier = modifier, colors = colors, content = content)

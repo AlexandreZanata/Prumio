@@ -23,6 +23,8 @@ re-litigates it by accident or breaks it unknowingly. Format: [template.md](temp
 | [0016](0016-android-system-backup.md) | Allow Android system backup of the database | Accepted |
 | [0017](0017-ai-first-repository.md) | Repository and documentation designed for AI agents | Accepted |
 | [0018](0018-brand-identity.md) | Sprout logo and Prumio Green as the brand identity | Accepted |
+| [0019](0019-core-ui-uses-domain-types.md) | `:core:ui` may use domain result types (shared error messages) | Accepted |
+| [0020](0020-screenshot-testing.md) | Screenshot tests with Roborazzi and Robolectric in `:core:screenshot-testing` | Accepted |
 
 ## When to write an ADR
 

@@ -18,7 +18,7 @@ Package `app.prumio.core.designsystem.component` unless noted.
 | Component | Signature (essential parameters) | Use for | Status |
 |---|---|---|---|
 | `PrumioTheme` | `(darkTheme: Boolean = isSystemInDarkTheme(), content)` — package `theme` | Root of every screen, preview and screenshot test. Tokens via `PrumioTheme.colors`, `PrumioTheme.spacing` | ready |
-| `PrumioText` | `(text, modifier, style: PrumioTextStyle = Body, color, textAlign, maxLines)` | All text. Pick a semantic `PrumioTextStyle`; `Overline` uppercases | ready |
+| `PrumioText` | `(text, modifier, style: PrumioTextStyle = Body, color, textAlign, maxLines, textDecoration)` | All text. Pick a semantic `PrumioTextStyle`; `Overline` uppercases; long text ends in an ellipsis | ready |
 | `PrumioLogo` | `(contentDescription: String?, modifier, size: Dp = 32.dp, color = brand)` | The Prumio mark — the only way to show the logo ([brand rules](../brand/README.md)) | ready |
 | `PrumioIcon` | `(icon: ImageVector, contentDescription: String?, modifier, tint)` | Non-clickable icons from `PrumioIcons`. `null` description only when decorative | ready |
 
@@ -34,31 +34,39 @@ Package `app.prumio.core.designsystem.component` unless noted.
 
 | Component | Signature | Use for | Status |
 |---|---|---|---|
-| `PrumioScaffold` | `(modifier, topBar, bottomBar, floatingActionButton, content: (PaddingValues) -> Unit)` | Skeleton of every screen | ready |
+| `PrumioScaffold` | `(modifier, topBar, bottomBar, floatingActionButton, snackbarHost, content: (PaddingValues) -> Unit)` | Skeleton of every screen | ready |
 | `PrumioTopBar` | `(title, modifier, onNavigateBack: (() -> Unit)?, navigateBackContentDescription, showBrandMark: Boolean = false, actions)` | Screen title; back arrow when `onNavigateBack` is set; brand mark before the title on root screens (Today) | ready |
 | `PrumioNavigationBar` | `(modifier, content: RowScope.() -> Unit)` | Bottom bar container (used only by `:app:shell`) | ready |
 | `PrumioNavigationBarItem` | `RowScope.(selected, onClick, icon, selectedIcon, label, modifier)` | One bottom bar destination | ready |
-| `PrumioCard` | `(modifier, onClick: (() -> Unit)?, content: ColumnScope.() -> Unit)` | Grouped content; clickable when `onClick` is set | ready |
-| `PrumioSectionHeader` | `(title, modifier, action: @Composable () -> Unit)` | Title of a group inside a screen ("What to do today") | ready |
+| `PrumioCard` | `(modifier, onClick: (() -> Unit)?, content: ColumnScope.() -> Unit)` | Grouped content on `surfaceContainerHigh`; clickable when `onClick` is set. No inner padding: add it | ready |
+| `PrumioSectionHeader` | `(title, modifier, action: @Composable () -> Unit)` | Title of a group inside a screen ("What to do today"); announced as a heading | ready |
+| `PrumioListItem` | `(headline, modifier, supporting: String?, overline: String?, onClick: (() -> Unit)?, leading, trailing)` | Generic rows (settings, inbox, search results) | ready |
+| `PrumioDivider` | `(modifier)` | Hairline separator between rows or groups | ready |
+| `PrumioLoadingIndicator` | `(modifier)` | Rare loading states (import/export); never for local reads | ready |
 | `PrumioEmptyState` | `(title, modifier, description: String?, icon: ImageVector?)` | Empty lists and screens. Calm tone, suggests what comes next | ready |
 
-### Planned (phase 2, see docs/plan/phase-2-design-system.md)
+### Inputs and selection
 
-| Component | Use for | Task |
-|---|---|---|
-| `PrumioTextField` | Single and multi-line text input with label, error and character counter | P2.04 |
-| `PrumioCheckbox` | Round completion control for tasks | P2.04 |
-| `PrumioChip` | Filter and status chips | P2.04 |
-| `PrumioListItem` | Rows with leading/trailing slots and supporting text | P2.04 |
-| `PrumioSwitch` | Boolean settings | P2.04 |
-| `PrumioBadge` | Counts on tabs (inbox) | P2.04 |
-| `PrumioDivider` | Separators | P2.04 |
-| `PrumioSnackbarHost` | Messages with Undo | P2.08 |
-| `PrumioBottomSheet` | Contextual choices (postpone, snooze, convert) | P2.04 |
-| `PrumioConfirmDialog` | Confirmation of destructive actions | P2.04 |
-| `PrumioLoadingIndicator` | Rare loading states (import/export) | P2.04 |
-| `PrumioDatePicker`, `PrumioTimePicker` | Date and time selection | P2.05 |
-| `PrumioQuickDateChips` | Today / Tomorrow / Next week / Pick | P2.05 |
+| Component | Signature | Use for | Status |
+|---|---|---|---|
+| `PrumioTextField` | `(value, onValueChange, label, modifier, placeholder, errorText, maxLength, singleLine, minLines, keyboardOptions, keyboardActions, focusRequester)` | All text input. `errorText` shows the error state; `maxLength` adds a counter and stops input there | ready |
+| `PrumioCheckbox` | `(checked, onCheckedChange, contentDescription: String, modifier, enabled)` | Round completion control of tasks (`TaskOpen`/`TaskDone` icons); 48 dp target | ready |
+| `PrumioChip` | `(label, selected, onClick, modifier, leadingIcon: ImageVector?)` | Filters and single choices | ready |
+| `PrumioSwitch` | `(checked, onCheckedChange, modifier, enabled)` | Boolean settings | ready |
+| `PrumioQuickDateChips` | `(options: List<QuickDate>, selected: LocalDate?, onSelect, pickLabel, onPick, modifier)` | Today / Tomorrow / Next week / Pick… row; `QuickDate(label, date)` is built by the caller | ready |
+| `PrumioDatePicker` | `(initialDate: LocalDate?, confirmLabel, dismissLabel, onConfirm: (LocalDate) -> Unit, onDismiss, modifier)` | Date dialog (locale week start) | ready |
+| `PrumioTimePicker` | `(initialTime: LocalTime, is24Hour, confirmLabel, dismissLabel, onConfirm: (LocalTime) -> Unit, onDismiss, modifier)` | Time dialog; pass `rememberIs24HourFormat()` | ready |
+
+### Labels, feedback and overlays
+
+| Component | Signature | Use for | Status |
+|---|---|---|---|
+| `PrumioTag` | `(label, color: Color, modifier, icon: ImageVector?)` | Non-interactive colored label (statuses). Color always comes with text | ready |
+| `PrumioBadge` | `(count: Int, modifier)` | Counts (inbox tab). Hidden at 0, "99+" above 99 | ready |
+| `PrumioSnackbarHost` | `(messenger: PrumioMessenger, modifier)` | Where messages appear; placed once by `PrumioApp`. Features send messages with `rememberMessageSender()` (`:core:ui`) | ready |
+| `rememberPrumioMessenger` | `(): PrumioMessenger` | Creates the app's messenger (`suspend show(text, actionLabel): Boolean` — true when the action was tapped). Only `PrumioApp` calls it | ready |
+| `PrumioBottomSheet` | `(onDismissRequest, modifier, content: ColumnScope.() -> Unit)` | Contextual choices (postpone, snooze, convert) | ready |
+| `PrumioConfirmDialog` | `(title, text, confirmLabel, dismissLabel, onConfirm, onDismiss, modifier, destructive)` | Confirmation of destructive actions | ready |
 
 ### Tokens and registries (not composables)
 
@@ -69,6 +77,7 @@ Package `app.prumio.core.designsystem.component` unless noted.
 | `PrumioSpacing` | `theme/PrumioSpacing.kt` | `xxs`=2, `xs`=4, `sm`=8, `md`=12, `lg`=16, `xl`=24, `xxl`=32, `xxxl`=48 dp; `minTouchTarget`, `screenHorizontal` |
 | `PrumioIcons` | `icon/PrumioIcons.kt` | The only icon registry |
 | `PrumioButtonVariant` | `component/PrumioButton.kt` | Button styles |
+| `PrumioShape`, `PrumioElevation`, `PrumioMotion` | `theme/PrumioTokens.kt` | Corners, depth, durations ([tokens](tokens.md)); `PrumioTheme.shape`, `PrumioTheme.elevation` |
 
 ## Domain-aware components and helpers — `:core:ui`
 
@@ -82,21 +91,47 @@ Package `app.prumio.core.designsystem.component` unless noted.
 
 `PrumioViewModel` (package `mvi`) is the base class of every screen ViewModel (not a composable).
 
-### Planned (phase 2)
+### Domain components
 
-| Component | Renders | Task |
-|---|---|---|
-| `TaskRow` | A task in any list: completion control, title, due label, matter link, overdue state | P2.06 |
-| `AppointmentRow` | An appointment: time range or "All day", title, location | P2.06 |
-| `MatterCard` | A matter: status chip, title, next action, follow-up | P2.06 |
-| `MatterStatusChip` | Open / Waiting / Resolved with color **and** text | P2.06 |
-| `InboxItemRow` | An inbox item with age ("2 days ago") | P2.06 |
-| `DueLabel` | "Today 15:30", "Tomorrow", "Overdue · Mon" | P2.06 |
-| `ReminderSummary` | "1 hour before" / "At time" | P2.06 |
-| `TimelineEntryRow` | One entry of a matter's history | P2.06 |
-| `SummaryTile` | Count + label tiles of Today's summary | P2.06 |
-| `relativeDateText`, `timeText`, `durationText` | Localized formatting helpers | P2.07 |
-| `label` for `MatterStatus`, `TaskStatus`, `RecurrenceRule` | Localized labels | P2.06 |
+Package `app.prumio.core.ui.component`. Each receives models and callbacks; time-dependent state
+(`today`, `now`, `isOverdue`) is passed in by the caller, never read inside.
+
+| Component | Signature | Renders | Status |
+|---|---|---|---|
+| `TaskRow` | `(task, today, isOverdue, onToggle: (Boolean) -> Unit, onClick, modifier, matterTitle: String?)` | A task in any list: completion control ("Complete task …" for TalkBack), title (struck through when done), `DueLabel`, matter link | ready |
+| `AppointmentRow` | `(appointment, start: LocalTime?, end: LocalTime?, onClick, modifier)` | Time range, single time or "All day", title, location. Times already in the device zone | ready |
+| `MatterCard` | `(matter, nextAction: Task?, today, onClick, modifier)` | Status chip, title, next action or "No next action yet", waiting for, follow-up | ready |
+| `MatterStatusChip` | `(status: MatterStatus, modifier)` | Open / Waiting / Resolved with color, icon **and** text | ready |
+| `InboxItemRow` | `(item, now: Instant, onClick, modifier, trailing)` | An inbox item with its age ("2 days ago") | ready |
+| `DueLabel` | `(date, time: LocalTime?, today, isOverdue, modifier)` | "Today, 15:30", "Tomorrow", "Overdue · Mon, Jan 12" | ready |
+| `ReminderSummary` | `(offsetsMinutes: List<Int>, modifier)` | "🔔 1 day before · At time"; nothing when empty | ready |
+| `TimelineEntryRow` | `(entry: MatterEntry, today, modifier)` | One entry of a matter's history: icon, sentence, day | ready |
+| `SummaryTile` | `(count, label, modifier, onClick: (() -> Unit)?)` | Count + label tile of Today's summary; read as one phrase | ready |
+
+### Formatters and labels
+
+| Helper | Signature | Output | Status |
+|---|---|---|---|
+| `relativeDateText` | `LocalDate.relativeDateText(today): String` — `format` | "Today", "Tomorrow", "Yesterday", weekday within 6 days, else "Mon, Jan 26" | ready |
+| `relativeDayOf` | `(date, today): RelativeDay` — `format` | The pure rule behind `relativeDateText` (unit-tested) | ready |
+| `timeText` | `LocalTime.timeText(): String` — `format` | "15:30" or "3:30 PM" per the device setting | ready |
+| `dateTimeText` | `(date, time: LocalTime?, today): String` — `format` | "Tomorrow, 15:30" | ready |
+| `rememberIs24HourFormat` | `(): Boolean` — `format` | Device 12/24 h preference (for `PrumioTimePicker`) | ready |
+| `ageText` | `(since: Instant, now: Instant): String` — `format` | "Just now", "5 minutes ago", "2 days ago" | ready |
+| `reminderOffsetText` | `(offsetMinutes: Int): String` — `label` | "At time", "1 hour before", "2 days before" | ready |
+| `label` | `MatterStatus.label()`, `TaskStatus.label()` — `label` | Localized status names | ready |
+
+### Messages
+
+Package `app.prumio.core.ui.message` ([presentation pattern](../architecture/presentation-pattern.md#messages-and-undo)).
+
+| Helper | Signature | Use for | Status |
+|---|---|---|---|
+| `UiMessage` | `data class (text: StringResource, args, actionLabel: StringResource?, onAction)` | A message a ViewModel asks to show (in an effect) | ready |
+| `rememberMessageSender` | `(): suspend (UiMessage) -> Unit` | In a Route: shows a `UiMessage` and runs `onAction` when tapped (Undo) | ready |
+| `toUiMessage` | `DomainError.toUiMessage(): UiMessage` | Standard text for any domain error | ready |
+| `fieldMessage` | `DomainError.Validation.fieldMessage(): StringResource` | Text under a form field (`PrumioTextField(errorText = …)`) | ready |
+| `LocalMessenger` | `ProvidableCompositionLocal<PrumioMessenger?>` | Provided once by `PrumioApp`; read only through `rememberMessageSender` | ready |
 
 ## How to choose where a new component goes
 

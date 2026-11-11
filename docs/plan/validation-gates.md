@@ -44,9 +44,9 @@ Manual / review:
 ## G2 — Design system
 
 Automated:
-- [ ] Screenshot tests for every catalog component (light, dark, 200 % font) recorded and verified in CI.
-- [ ] Contrast test passes for all text/background token pairs.
-- [ ] Catalog test green (every component documented).
+- [x] Screenshot tests for every catalog component (light, dark, 200 % font) recorded and verified in CI.
+- [x] Contrast test passes for all text/background token pairs.
+- [x] Catalog test green (every component documented).
 
 Manual:
 - [ ] Owner reviews the screenshot gallery and approves the visual language.

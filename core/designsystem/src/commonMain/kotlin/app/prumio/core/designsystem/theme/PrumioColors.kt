@@ -84,9 +84,9 @@ internal val LightPrumioColors = PrumioColors(
     error = Color(0xFFBA1A1A),
     onError = Color(0xFFFFFFFF),
     statusOpen = Color(0xFF2B5F8E),
-    statusWaiting = Color(0xFF8A5A00),
-    statusResolved = Color(0xFF2E6E47),
-    statusOverdue = Color(0xFFB3261E),
+    statusWaiting = Color(0xFF784E00),
+    statusResolved = Color(0xFF235E3B),
+    statusOverdue = Color(0xFFA3221B),
     isDark = false,
 )
 

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import app.prumio.core.designsystem.theme.PrumioTextStyle
 import app.prumio.core.designsystem.theme.toTextStyle
@@ -19,6 +20,7 @@ fun PrumioText(
     color: Color = Color.Unspecified,
     textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
+    textDecoration: TextDecoration? = null,
 ) {
     Text(
         text = if (style == PrumioTextStyle.Overline) text.uppercase() else text,
@@ -27,6 +29,7 @@ fun PrumioText(
         color = color,
         textAlign = textAlign,
         maxLines = maxLines,
+        textDecoration = textDecoration,
         overflow = TextOverflow.Ellipsis,
     )
 }

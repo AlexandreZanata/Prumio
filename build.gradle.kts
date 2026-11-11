@@ -26,6 +26,7 @@ dependencies {
     kover(projects.core.model)
     kover(projects.core.navigation)
     kover(projects.core.notifications)
+    kover(projects.core.screenshotTesting)
     kover(projects.core.testing)
     kover(projects.core.ui)
     kover(projects.feature.agenda)
@@ -44,7 +45,10 @@ spotless {
     kotlin {
         target("**/*.kt")
         targetExclude("**/build/**", "**/.gradle/**", "**/.kotlin/**")
-        ktlint(ktlintVersion).customRuleSets(listOf(composeRules))
+        ktlint(ktlintVersion)
+            .customRuleSets(listOf(composeRules))
+            // Spotless does not pass custom-rule keys from .editorconfig to ktlint; keep both in sync.
+            .editorConfigOverride(mapOf("compose_allowed_composition_locals" to "LocalPrumioColors,LocalMessenger"))
     }
     kotlinGradle {
         target("**/*.gradle.kts")

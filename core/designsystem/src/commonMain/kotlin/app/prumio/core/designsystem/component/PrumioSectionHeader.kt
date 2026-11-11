@@ -7,10 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.heading
+import androidx.compose.ui.semantics.semantics
 import app.prumio.core.designsystem.theme.PrumioTextStyle
 import app.prumio.core.designsystem.theme.PrumioTheme
 
-/** Title of a group of items inside a screen, with an optional trailing [action]. */
+/** Title of a group of items inside a screen, with an optional trailing [action]. Announced as a heading. */
 @Composable
 fun PrumioSectionHeader(title: String, modifier: Modifier = Modifier, action: @Composable () -> Unit = {}) {
     Row(
@@ -18,7 +20,7 @@ fun PrumioSectionHeader(title: String, modifier: Modifier = Modifier, action: @C
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        PrumioText(text = title, style = PrumioTextStyle.Subtitle)
+        PrumioText(text = title, modifier = Modifier.semantics { heading() }, style = PrumioTextStyle.Subtitle)
         action()
     }
 }

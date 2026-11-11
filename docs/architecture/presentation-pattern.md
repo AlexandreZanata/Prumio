@@ -32,7 +32,7 @@ internal sealed interface XxxAction {  // everything the user can do
 
 internal sealed interface XxxEffect {  // things that happen once
     data class Navigate(val key: NavKey) : XxxEffect
-    data class ShowMessage(val message: UiMessage) : XxxEffect   // phase 2
+    data class ShowMessage(val message: UiMessage) : XxxEffect
 }
 ```
 
@@ -77,9 +77,11 @@ Rules:
 @Composable
 internal fun XxxRoute(navigator: Navigator, modifier: Modifier = Modifier, viewModel: XxxViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val showMessage = rememberMessageSender()
     CollectEffects(viewModel.effects) { effect ->
         when (effect) {
             is XxxEffect.Navigate -> navigator.navigate(effect.key)
+            is XxxEffect.ShowMessage -> showMessage(effect.message)
         }
     }
     XxxScreen(state = state, onAction = viewModel::onAction, modifier = modifier)
@@ -114,6 +116,41 @@ an action; at least one `private` preview with realistic data; uses only design-
   ViewModels that need a navigation argument use `viewModel { params -> XxxViewModel(params.get(), …) }`
   and the Route passes `koinViewModel { parametersOf(key.id) }`.
 
+## Messages and Undo
+
+Short feedback ("Task deleted", "Couldn't save") is a snackbar drawn by the single
+`PrumioSnackbarHost` that `PrumioApp` places in its scaffold. There is no message bus: the flow is
+always **ViewModel effect → Route → `rememberMessageSender()`**, so it is testable like any effect.
+
+- The ViewModel emits `XxxEffect.ShowMessage(UiMessage(...))`. Text is a `StringResource` (+ args):
+  ViewModels never hold resolved strings.
+- Failures: `result.onFailure { sendEffect(XxxEffect.ShowMessage(it.toUiMessage())) }`.
+  `DomainError.toUiMessage()` (`:core:ui/message`) is the only error → text mapping; validation
+  errors shown under a field use `DomainError.Validation.fieldMessage()` instead.
+- The Route maps the effect to `showMessage(effect.message)`; it returns at once.
+
+**Undo (BR-GEN-005).** The ViewModel keeps what is needed to restore the item and puts the restore
+in `onAction`; the snackbar stays ≥ 5 s when it has an action:
+
+```kotlin
+is XxxAction.Delete -> viewModelScope.launch {
+    deleteTask(action.id).onSuccess { deleted ->
+        sendEffect(
+            XxxEffect.ShowMessage(
+                UiMessage(
+                    text = Res.string.task_deleted,
+                    actionLabel = Res.string.action_undo,
+                    onAction = { onAction(XxxAction.Restore(deleted)) },
+                ),
+            ),
+        )
+    }.onFailure { sendEffect(XxxEffect.ShowMessage(it.toUiMessage())) }
+}
+```
+
+Test it like any effect: assert the `ShowMessage` effect, invoke `message.onAction`, then assert
+the item is back (`awaitItem()` on `effects`, Turbine).
+
 ## UI models
 
 When a screen needs presentation-specific data (a formatted label, a flag combining fields),
@@ -124,4 +161,5 @@ times in composables via `:core:ui` formatters (they depend on locale), not in t
 
 - ViewModel: `runViewModelTest { }` with fakes; assert `state.value` and `effects` (Turbine).
   Name tests after the rule they prove. See `TodayViewModelTest`.
-- Screen: previews now; screenshot tests from phase 2 (P2.01).
+- Screen: previews, plus screenshot tests (`ScreenshotTest` from `:core:screenshot-testing`) of
+  realistic states in light, dark and 200 % font. See [testing strategy](testing-strategy.md#screenshot-tests).

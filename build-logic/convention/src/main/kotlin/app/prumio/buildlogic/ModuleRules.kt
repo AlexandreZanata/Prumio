@@ -14,7 +14,8 @@ import org.gradle.api.artifacts.ProjectDependency
 internal object ModuleRules {
     private const val TESTING_MODULE = ":core:testing"
     private const val DATABASE_TESTING_MODULE = ":core:database-testing"
-    private val testOnlyModules = setOf(TESTING_MODULE, DATABASE_TESTING_MODULE)
+    private const val SCREENSHOT_TESTING_MODULE = ":core:screenshot-testing"
+    private val testOnlyModules = setOf(TESTING_MODULE, DATABASE_TESTING_MODULE, SCREENSHOT_TESTING_MODULE)
 
     private data class Rule(val module: String, val allowed: List<String>, val reason: String)
 
@@ -43,8 +44,8 @@ internal object ModuleRules {
         ),
         Rule(
             module = ":core:ui",
-            allowed = listOf(":core:common", ":core:designsystem", ":core:model"),
-            reason = "shared UI renders models; it never loads data.",
+            allowed = listOf(":core:common", ":core:designsystem", ":core:domain", ":core:model"),
+            reason = "shared UI renders models and domain results (ADR-0019); it never loads data.",
         ),
         Rule(
             module = ":core:designsystem",
@@ -70,6 +71,11 @@ internal object ModuleRules {
             module = ":core:database",
             allowed = listOf(":core:common"),
             reason = "the database module owns SQL only.",
+        ),
+        Rule(
+            module = SCREENSHOT_TESTING_MODULE,
+            allowed = listOf(":core:common", ":core:designsystem"),
+            reason = "screenshot tests render components inside PrumioTheme.",
         ),
         Rule(
             module = DATABASE_TESTING_MODULE,

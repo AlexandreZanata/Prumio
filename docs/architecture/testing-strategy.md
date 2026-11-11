@@ -14,7 +14,8 @@ deterministic, named after what they prove, and runnable with one command (`./sc
 | DI graph | Every binding resolvable | `app/shell/src/androidHostTest` | Koin `verify()` | 0 |
 | Navigation | Back stack rules | `app/shell/src/commonTest` | kotlin-test | 0 |
 | Architecture | Layering, naming, catalog, traceability, privacy | `tooling/architecture-tests` | Konsist | 0 |
-| Screenshot | Components and screens, light/dark, 200 % font | `core/designsystem`, `core/ui`, features | Roborazzi + Robolectric | 2 |
+| Screenshot | Components and screens, light/dark, 200 % font | `*/src/androidHostTest` of `core/designsystem`, `core/ui`, features | Roborazzi + Robolectric (`:core:screenshot-testing`) | 2 |
+| Contrast | WCAG ratio of every text/background pair, both themes | `core/designsystem/src/commonTest` (`PrumioColorsContrastTest`) | kotlin-test | 2 |
 | Instrumented | Alarms fire, notifications, receivers, SAF | `core/notifications/src/androidDeviceTest`, `app/android/src/androidTest` | AndroidX Test on emulator | 4 |
 | Manual QA | Real devices, reboot, Doze, permissions, TalkBack | docs/plan/qa/device-qa-checklist.md | humans | 3+ |
 
@@ -31,6 +32,34 @@ deterministic, named after what they prove, and runnable with one command (`./sc
 6. **Never weaken a test to make a change pass.** If a test is wrong, fix it in a separate,
    explained commit.
 7. Flaky tests are bugs: fix or quarantine with an issue, never ignore silently.
+
+## Screenshot tests
+
+Visual regression tests run on the JVM (Robolectric, native graphics) in every module's
+`androidHostTest`, so they are part of `./scripts/verify.sh` and CI. No emulator is involved.
+
+```kotlin
+class MyComponentScreenshotTest : ScreenshotTest() {      // :core:screenshot-testing
+    @Test
+    fun states() = screenshot("states") {                  // one PNG per variant
+        Column { MyComponent(/* typical */); MyComponent(/* long text */); MyComponent(/* error */) }
+    }
+}
+```
+
+- `screenshot(name) { }` renders the content three times — `_light`, `_dark` and `_font200`
+  (200 % font scale) — on a 360 dp wide phone, inside `PrumioTheme`, and compares each with the
+  baseline in `src/androidHostTest/screenshots/<TestClass>/`. A difference above 0.5 % of pixels
+  fails the test and writes a `_compare.png` diff under `build/outputs/roborazzi`.
+- Group the states of one component (or a family) per test: typical, long text, empty/error,
+  overdue/waiting. Use builders from `:core:testing` and fixed dates (never "now").
+- Dialogs and bottom sheets open their own window and are not captured; check them on the phone.
+- **Changing visuals on purpose**: run
+  `./gradlew :core:ui:testAndroidHostTest -PrecordScreenshots` (or the module you changed), open
+  the changed PNGs in the diff and confirm each change is intended before committing them. Never
+  re-record to silence a failure you did not expect.
+- Baselines depend on the Robolectric SDK and fonts pinned in `ScreenshotTest`; bumping
+  Robolectric or Compose may require a deliberate re-record in its own commit.
 
 ## Coverage
 
@@ -57,6 +86,7 @@ Coverage is a signal, not the goal: rules must be proven by intent-named tests.
 ./scripts/verify.sh                                  # everything (what CI runs)
 ./gradlew :core:domain:testAndroidHostTest           # one module (KMP host tests)
 ./gradlew :tooling:architecture-tests:test           # architecture
+./gradlew :core:ui:testAndroidHostTest -PrecordScreenshots   # re-record screenshots (review the diff!)
 ./gradlew :core:database:verifySqlDelightMigration   # migrations
 ./gradlew koverHtmlReport                            # merged coverage report
 ```

@@ -23,7 +23,10 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                     namespace = prumioNamespace
                     compileSdk = libs.version("android-compileSdk").toInt()
                     minSdk = libs.version("android-minSdk").toInt()
-                    withHostTest {}
+                    withHostTest {
+                        // Robolectric screenshot tests need Android resources (docs/architecture/testing-strategy.md).
+                        isIncludeAndroidResources = true
+                    }
                     compilerOptions {
                         jvmTarget.set(JvmTarget.fromTarget(libs.version("jvm-target")))
                     }

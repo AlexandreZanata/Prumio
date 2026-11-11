@@ -6,6 +6,16 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Phase 2 design system (P2.01–P2.09): screenshot tests with Roborazzi + Robolectric
+  (`:core:screenshot-testing`, ADR-0020) in light, dark and 200 % font; Material Symbols icon set
+  replacing `material-icons-core`; shape, elevation and motion tokens; generic components
+  (`PrumioTextField`, `PrumioCheckbox`, `PrumioChip`, `PrumioTag`, `PrumioListItem`, `PrumioSwitch`,
+  `PrumioBadge`, `PrumioDivider`, `PrumioBottomSheet`, `PrumioConfirmDialog`,
+  `PrumioLoadingIndicator`, date/time pickers and quick date chips); domain components in `:core:ui`
+  (`TaskRow`, `AppointmentRow`, `MatterCard`, `MatterStatusChip`, `InboxItemRow`, `DueLabel`,
+  `ReminderSummary`, `TimelineEntryRow`, `SummaryTile`); localized date, time, age and reminder
+  formatters; snackbar messages with Undo hosted by the app (`UiMessage`, ADR-0019); heading and
+  row semantics for TalkBack.
 - Phase 1 domain and persistence (P1.02–P1.16): model types; input validation; SQLite schema v1
   (inbox items, tasks, appointments, matters, history); `:core:database-testing`; repositories for
   inbox, tasks, appointments, matters, search and settings; 43 use cases covering capture and
@@ -27,3 +37,7 @@ versions follow [Semantic Versioning](https://semver.org/).
   privacy gate (no INTERNET permission), SQLDelight migration verification, `scripts/verify.sh`, CI.
 - Documentation: product vision, domain model and business rules, architecture, design system,
   AI agent manual and recipes, execution plan with validation gates, ADR-0001 … ADR-0017.
+
+### Changed
+- Cards use `surfaceContainerHigh` and the light status colors are deeper, so status tags inside
+  cards keep 4.5:1 contrast (the contrast test now covers tags, cards, errors and snackbars).

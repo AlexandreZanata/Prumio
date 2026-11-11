@@ -2,6 +2,7 @@ package app.prumio.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Shapes
 import androidx.compose.runtime.Composable
@@ -14,10 +15,10 @@ private val LocalPrumioColors = staticCompositionLocalOf { LightPrumioColors }
 
 private val PrumioShapes = Shapes(
     extraSmall = RoundedCornerShape(4.dp),
-    small = RoundedCornerShape(8.dp),
-    medium = RoundedCornerShape(12.dp),
-    large = RoundedCornerShape(16.dp),
-    extraLarge = RoundedCornerShape(28.dp),
+    small = PrumioShape.small,
+    medium = PrumioShape.medium,
+    large = PrumioShape.large,
+    extraLarge = PrumioShape.extraLarge,
 )
 
 /** Root theme. Wrap every screen, preview and screenshot test in it. */
@@ -29,12 +30,14 @@ fun PrumioTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable
             colorScheme = colors.toMaterialColorScheme(),
             typography = PrumioMaterialTypography,
             shapes = PrumioShapes,
-            content = content,
-        )
+        ) {
+            // Text and icons default to the readable color even outside a Scaffold or Surface.
+            CompositionLocalProvider(LocalContentColor provides colors.onBackground, content = content)
+        }
     }
 }
 
-/** Token accessors: `PrumioTheme.colors.primary`, `PrumioTheme.spacing.md`. */
+/** Token accessors: `PrumioTheme.colors.primary`, `PrumioTheme.spacing.md`, `PrumioTheme.shape.medium`. */
 object PrumioTheme {
     val colors: PrumioColors
         @Composable
@@ -42,4 +45,8 @@ object PrumioTheme {
         get() = LocalPrumioColors.current
 
     val spacing: PrumioSpacing get() = PrumioSpacing
+
+    val shape: PrumioShape get() = PrumioShape
+
+    val elevation: PrumioElevation get() = PrumioElevation
 }

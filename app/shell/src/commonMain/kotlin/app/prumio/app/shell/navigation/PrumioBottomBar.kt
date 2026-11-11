@@ -23,8 +23,8 @@ import org.jetbrains.compose.resources.stringResource
 internal enum class TopLevelDestination(
     val key: TopLevelNavKey,
     val label: StringResource,
-    val icon: () -> ImageVector,
-    val selectedIcon: () -> ImageVector,
+    val icon: @Composable () -> ImageVector,
+    val selectedIcon: @Composable () -> ImageVector,
 ) {
     Today(TodayKey, Res.string.destination_today, { PrumioIcons.Today }, { PrumioIcons.TodaySelected }),
     Agenda(AgendaKey, Res.string.destination_agenda, { PrumioIcons.Agenda }, { PrumioIcons.AgendaSelected }),

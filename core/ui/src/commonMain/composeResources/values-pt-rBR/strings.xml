@@ -24,4 +24,79 @@
 
     <!-- Placeholder shown by screens that are not implemented yet -->
     <string name="coming_soon_title">Em breve</string>
+
+    <!-- Actions on dates and pickers -->
+    <string name="action_pick_date">Escolher data…</string>
+
+    <!-- Relative dates and times (format/) -->
+    <string name="date_today">Hoje</string>
+    <string name="date_tomorrow">Amanhã</string>
+    <string name="date_yesterday">Ontem</string>
+    <string name="date_with_time">%1$s, %2$s</string>
+    <string name="time_range">%1$s – %2$s</string>
+    <string name="all_day">Dia inteiro</string>
+    <string name="age_just_now">Agora mesmo</string>
+    <plurals name="age_minutes">
+        <item quantity="one">há %1$d minuto</item>
+        <item quantity="other">há %1$d minutos</item>
+    </plurals>
+    <plurals name="age_hours">
+        <item quantity="one">há %1$d hora</item>
+        <item quantity="other">há %1$d horas</item>
+    </plurals>
+    <plurals name="age_days">
+        <item quantity="one">há %1$d dia</item>
+        <item quantity="other">há %1$d dias</item>
+    </plurals>
+
+    <!-- Reminders (label/) -->
+    <string name="reminder_at_time">Na hora</string>
+    <plurals name="reminder_minutes_before">
+        <item quantity="one">%1$d minuto antes</item>
+        <item quantity="other">%1$d minutos antes</item>
+    </plurals>
+    <plurals name="reminder_hours_before">
+        <item quantity="one">%1$d hora antes</item>
+        <item quantity="other">%1$d horas antes</item>
+    </plurals>
+    <plurals name="reminder_days_before">
+        <item quantity="one">%1$d dia antes</item>
+        <item quantity="other">%1$d dias antes</item>
+    </plurals>
+
+    <!-- Statuses (label/) -->
+    <string name="matter_status_open">Em aberto</string>
+    <string name="matter_status_waiting">Aguardando</string>
+    <string name="matter_status_resolved">Resolvida</string>
+    <string name="task_status_open">Em aberto</string>
+    <string name="task_status_completed">Concluída</string>
+    <string name="task_status_dismissed">Descartada</string>
+    <string name="overdue_since">Atrasada · %1$s</string>
+
+    <!-- Domain components (component/) -->
+    <string name="task_complete">Concluir tarefa %1$s</string>
+    <string name="task_reopen">Reabrir tarefa %1$s</string>
+    <string name="matter_waiting_for">Aguardando %1$s</string>
+    <string name="matter_follow_up">Verificar em: %1$s</string>
+    <string name="matter_next_action">Próxima ação: %1$s</string>
+    <string name="matter_no_next_action">Sem próxima ação</string>
+    <string name="task_matter">Pendência: %1$s</string>
+    <string name="entry_created">Pendência criada</string>
+    <string name="entry_status_changed">Marcada como %1$s</string>
+    <string name="entry_action_linked">Próxima ação adicionada: %1$s</string>
+    <string name="entry_action_completed">Concluída: %1$s</string>
+    <string name="entry_action_dismissed">Descartada: %1$s</string>
+    <string name="entry_action_unlinked">Deixou de ser ação: %1$s</string>
+    <string name="entry_follow_up_set">Verificar novamente em %1$s</string>
+    <string name="entry_follow_up_cleared">Acompanhamento removido</string>
+
+    <!-- Messages (message/) -->
+    <string name="error_storage">Não foi possível salvar. Seus dados estão seguros; tente de novo.</string>
+    <string name="error_not_found">Este item não existe mais.</string>
+    <string name="error_generic">Algo deu errado. Tente de novo.</string>
+    <string name="validation_blank">Preencha este campo</string>
+    <string name="validation_too_long">Texto longo demais</string>
+    <string name="validation_end_before_start">O fim não pode ser antes do início</string>
+    <string name="validation_future_date">Esta data está no futuro</string>
+    <string name="validation_not_editable">Esta entrada não pode ser alterada</string>
 </resources>

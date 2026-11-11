@@ -41,7 +41,11 @@ Checklist:
 - Add it to [components.md](../../design-system/components.md) with signature, use and status 🔒.
 - Add it to `core/designsystem/.../preview/ComponentCatalogPreview.kt` (or a preview in the
   `:core:ui` file) with realistic states.
-- From phase 2: add a screenshot test (light, dark, 200 % font).
+- Add its states to a screenshot test: `ComponentScreenshotTest` (`:core:designsystem`) or
+  `DomainComponentScreenshotTest` (`:core:ui`) — typical, long text, error/overdue/waiting. Record
+  with `./gradlew :core:<module>:testAndroidHostTest -PrecordScreenshots` and look at the three
+  PNGs (light, dark, `font200`) before committing them.
+- New color combination for text? Add the pair to `PrumioColorsContrastTest`.
 
 ## 4. Replace duplicates
 

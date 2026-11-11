@@ -6,6 +6,9 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Coverage gate (P1.01): Kover on every shared module, `:core:domain` ≥ 90 % and `:core:data` ≥ 80 %
+  lines enforced in `check`; merged report with `./gradlew koverHtmlReport`.
+- `DomainError.Validation` and `InvalidTransition` require a business rule id (`BR-AREA-NNN`).
 - Brand identity (ADR-0018): vectorized sprout logo (SVG/PNG/Android adaptive icon), `PrumioLogo`,
   Prumio Green `#88C29A` tonal color system with WCAG contrast tests, brand usage guide.
 - Device testing rule: manual checks run on the physical phone over adb.

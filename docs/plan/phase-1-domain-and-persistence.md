@@ -4,7 +4,7 @@
 fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
 
 ### P1.01 — Coverage measurement with thresholds
-- **Status:** todo
+- **Status:** done
 - **Depends on:** —
 - **Goal:** measure test coverage and fail the build below agreed thresholds.
 - **Inputs:** docs/architecture/testing-strategy.md#coverage, docs/ai/recipes/add-library.md.
@@ -14,6 +14,11 @@ fully tested, with no UI. **Gate:** G1. **Can run in parallel with:** phase 2.
   tests, write an ADR and use the documented alternative.
 - **Validation:** `./scripts/verify.sh`; temporarily add an untested function to the domain and
   confirm verification fails (revert).
+- **Result:** Kover 0.9.11 works with the Android KMP host tests (no ADR needed). Thresholds in
+  `build-logic/.../CoverageRules.kt`; `koverVerify` runs in `check` (so in `verify.sh` and CI);
+  merged report via `./gradlew koverHtmlReport`. The gate was proven: domain at 60 % failed the
+  90 % rule; `DomainError` gained a rule-id invariant with tests, bringing the domain to 100 %.
+  `ModuleStructureTest` requires every shared module in the merged report.
 
 ### P1.02 — Domain model types
 - **Status:** todo

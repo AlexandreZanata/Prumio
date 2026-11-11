@@ -26,7 +26,8 @@ sealed interface DomainError {
 
 - Use cases that write or can fail return `Outcome<T, DomainError>`.
 - Observations (`Flow`) do not carry errors for expected cases: an absent item emits `null`.
-- `ruleId` ties every validation failure to docs/domain/business-rules.md.
+- `ruleId` ties every validation failure to docs/domain/business-rules.md; `Validation` and
+  `InvalidTransition` reject anything that is not a `BR-AREA-NNN` id (programming error).
 
 ## From error to user
 

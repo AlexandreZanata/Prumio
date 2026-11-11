@@ -21,6 +21,7 @@ Needs a plan task or owner approval (new modules change the architecture map).
    - `app/shell/build.gradle.kts`: `implementation(projects.feature.review)`
    - `app/shell/.../navigation/PrumioNavDisplay.kt`: `reviewEntries(navigator)`
    - `app/shell/.../di/PrumioModules.kt`: `reviewFeatureModule`
+   - root `build.gradle.kts`: `kover(projects.feature.review)` (merged coverage report)
 7. Contract docs:
    - `feature/review/README.md` (copy another feature's README and adapt every row).
    - `feature/review/CLAUDE.md` containing `@README.md`.

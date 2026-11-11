@@ -47,6 +47,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
             }
 
             enforceModuleRules()
+            configureCoverage()
         }
     }
 }

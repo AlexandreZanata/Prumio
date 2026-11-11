@@ -34,8 +34,22 @@ deterministic, named after what they prove, and runnable with one command (`./sc
 
 ## Coverage
 
-Kover is added in P1.01 with gates: `:core:domain` ≥ 90 % lines, `:core:data` ≥ 80 %,
-features' ViewModels ≥ 80 %. Coverage is a signal, not the goal: rules must be proven by intent-named tests.
+Kover instruments every shared module (`prumio.kmp.library` → `CoverageRules.kt` in build-logic).
+
+| Module | Minimum line coverage | Enforced by |
+|---|---|---|
+| `:core:domain` | 90 % | `:core:domain:koverVerify` (part of `check`) |
+| `:core:data` | 80 % | `:core:data:koverVerify` (part of `check`) |
+| Features (ViewModels) | 80 % — enforced from phase 3 | planned |
+
+- Excluded (wiring or generated, not logic): `app.prumio.*.di.*`, generated `*.resources.*`,
+  `ComposableSingletons*`.
+- Merged HTML report of all shared modules: `./gradlew koverHtmlReport` →
+  `build/reports/kover/html/index.html`. Per module: `./gradlew :core:domain:koverLog`.
+- Thresholds live only in `CoverageRules.kt`. Raising one is welcome; lowering one needs the
+  owner's approval. Never exclude real logic to pass the gate — write the test.
+
+Coverage is a signal, not the goal: rules must be proven by intent-named tests.
 
 ## Commands
 
@@ -44,4 +58,5 @@ features' ViewModels ≥ 80 %. Coverage is a signal, not the goal: rules must be
 ./gradlew :core:domain:testAndroidHostTest           # one module (KMP host tests)
 ./gradlew :tooling:architecture-tests:test           # architecture
 ./gradlew :core:database:verifySqlDelightMigration   # migrations
+./gradlew koverHtmlReport                            # merged coverage report
 ```

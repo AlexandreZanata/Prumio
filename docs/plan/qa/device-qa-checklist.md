@@ -4,7 +4,8 @@ Manual tests on real devices and emulators. Run the sections required by the cur
 (validation-gates.md) and record results in the phase file's gate record (date, device, API level,
 pass/fail, issue links). Items marked *(phase N)* apply once that phase is implemented.
 
-Useful commands:
+Run on the owner's physical phone connected over adb (not emulators); the matrix in G7 adds
+borrowed or cloud devices. Useful commands:
 
 ```bash
 ./gradlew :app:android:installDebug

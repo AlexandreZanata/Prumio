@@ -53,6 +53,7 @@ first: each one has a single purpose, stable headings you can link to, and expli
 
 | Document | Purpose |
 |---|---|
+| [brand/README.md](brand/README.md) | Logo files, Prumio Green and logo usage rules |
 | [design-system/README.md](design-system/README.md) | Visual principles and how to use the design system |
 | [design-system/tokens.md](design-system/tokens.md) | Colors, typography, spacing, shapes |
 | [design-system/components.md](design-system/components.md) | **Catalog of every shared component.** Search it before creating UI |

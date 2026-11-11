@@ -5,28 +5,52 @@ The only place where visual constants are defined. Code: `core/designsystem/src/
 ## Color
 
 Access: `PrumioTheme.colors.<token>`. Defined in `PrumioColors.kt` for light and dark; Material 3's
-color scheme is derived from these values.
+color scheme is derived from these values (`toMaterialColorScheme`), so no off-brand Material color
+can leak into components. Contrast of every text pair is enforced by `PrumioColorsContrastTest`
+(≥ 4.5:1 for text, ≥ 3:1 for outlines).
+
+### Brand
+
+**Prumio Green `#88C29A`** — the logo color ([brand guide](../brand/README.md)) and the main accent
+of the app. It is a *surface* color: it fills the FAB, the selected tab indicator's family, brand
+surfaces and highlights. White text on it fails contrast (2.05:1), so content on it uses
+`onPrimaryContainer` (`#0C2715`). Interactive text and icons in the light theme use the deeper
+`primary` tone of the same hue.
+
+```
+Prumio Green tonal scale (hue ≈ 138°)
+#0C2715  #2C5A3B  #2E6E47  [#88C29A]  #C3EBCC  #D0E8D5  #F6FAF6
+ on-container  container(dark)  primary(light)  BRAND  on-container(dark)  secondaryContainer  background
+```
+
+### Tokens
 
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `primary` | `#2E6B5E` | `#96D3C3` | Primary actions, selected states |
-| `onPrimary` | `#FFFFFF` | `#00382E` | Content on primary |
-| `primaryContainer` | `#B2EFDF` | `#105145` | FAB, highlighted surfaces |
-| `onPrimaryContainer` | `#00201A` | `#B2EFDF` | Content on primaryContainer |
-| `secondary` | `#4B635C` | `#B1CCC3` | Secondary emphasis |
-| `secondaryContainer` | `#CDE8DF` | `#344C45` | Chips, tonal surfaces |
-| `background` / `surface` | `#F7FAF8` | `#101413` | Screen background |
-| `onBackground` / `onSurface` | `#181C1B` | `#DFE4E1` | Main text |
-| `surfaceVariant` | `#DBE5E0` | `#3F4945` | Cards |
-| `onSurfaceVariant` | `#3F4945` | `#BFC9C4` | Secondary text |
-| `outline` / `outlineVariant` | `#6F7975` / `#BFC9C4` | `#89938F` / `#3F4945` | Borders, dividers, empty-state icons |
+| `brand` | `#88C29A` | `#88C29A` | Logo, brand surfaces. Same in both themes |
+| `onBrand` | `#FFFFFF` | `#FFFFFF` | Only the logo mark on `brand` |
+| `primary` | `#2E6E47` | `#88C29A` | Text buttons, links, active icons, focused fields |
+| `onPrimary` | `#FFFFFF` | `#0C2715` | Content on `primary` (filled buttons) |
+| `primaryContainer` | `#88C29A` | `#2C5A3B` | FAB, highlighted cards, brand accents |
+| `onPrimaryContainer` | `#0C2715` | `#C3EBCC` | Content on `primaryContainer` |
+| `secondary` / `onSecondary` | `#4E6354` / `#FFFFFF` | `#B4CCB8` / `#203527` | Secondary emphasis |
+| `secondaryContainer` / `onSecondaryContainer` | `#D0E8D5` / `#0C1F12` | `#364B3C` / `#D0E8D5` | Selected tab indicator, chips, tonal surfaces |
+| `background` = `surface` | `#F6FAF6` | `#0F1511` | Screen background |
+| `onBackground` = `onSurface` | `#171D19` | `#DEE5DE` | Main text |
+| `surfaceVariant` / `onSurfaceVariant` | `#DDE6DE` / `#414942` | `#414942` / `#C0C9C0` | Cards; secondary text |
+| `surfaceContainerLowest … Highest` | `#FFFFFF` `#F0F5F0` `#EAF0EA` `#E4EBE5` `#DEE5DF` | `#0A0F0C` `#171D19` `#1B211D` `#252B27` `#303631` | Bottom bar, sheets, menus, dialogs (green-tinted neutrals) |
+| `inverseSurface` / `inverseOnSurface` | `#2C322D` / `#EDF2EC` | `#DEE5DE` / `#2C322D` | Snackbars |
+| `inversePrimary` | `#88C29A` | `#2E6E47` | Actions inside snackbars |
+| `outline` / `outlineVariant` | `#717971` / `#C0C9C0` | `#8B938B` / `#414942` | Borders, dividers, empty-state icons |
 | `error` / `onError` | `#BA1A1A` / `#FFFFFF` | `#FFB4AB` / `#690005` | Destructive actions, errors |
-| `statusOpen` | `#2B5F8E` | `#9CCBFA` | Matter Open |
+| `statusOpen` | `#2B5F8E` | `#9CCBFA` | Matter Open (always with text) |
 | `statusWaiting` | `#8A5A00` | `#FFB951` | Matter Waiting |
-| `statusResolved` | `#2E6B3A` | `#94D69B` | Matter Resolved, completed |
-| `statusOverdue` | `#B3261E` | `#FFB4AB` | Overdue labels (always with text) |
+| `statusResolved` | `#2E6E47` | `#94D69B` | Matter Resolved, completed |
+| `statusOverdue` | `#B3261E` | `#FFB4AB` | Overdue labels |
 
-The window background in `app/android/src/main/res/values*/colors.xml` mirrors `background`.
+Material's tertiary role is mapped to secondary: Prumio has a single accent hue.
+The Android window background and launcher icon background (`app/android/src/main/res/values/colors.xml`)
+mirror `background` and `brand`.
 
 ## Typography
 

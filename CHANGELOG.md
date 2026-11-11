@@ -6,6 +6,9 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Brand identity (ADR-0018): vectorized sprout logo (SVG/PNG/Android adaptive icon), `PrumioLogo`,
+  Prumio Green `#88C29A` tonal color system with WCAG contrast tests, brand usage guide.
+- Device testing rule: manual checks run on the physical phone over adb.
 - Phase 0 foundation: Kotlin Multiplatform (Android-only) project with 20 modules, convention
   plugins, enforced module dependency rules, version catalog.
 - App shell: bottom navigation (Today, Agenda, Matters, Inbox), "Add anything" dialog placeholder,

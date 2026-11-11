@@ -93,6 +93,7 @@ re-plans alarms. Features never call alarm or notification APIs.
 | Application id and namespace | [ADR-0015](../adr/0015-application-id-and-namespace.md) |
 | Android system backup enabled | [ADR-0016](../adr/0016-android-system-backup.md) |
 | Documentation and repository designed for AI agents | [ADR-0017](../adr/0017-ai-first-repository.md) |
+| Sprout logo and Prumio Green brand identity | [ADR-0018](../adr/0018-brand-identity.md) |
 
 ## Where does my code go?
 

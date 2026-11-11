@@ -19,6 +19,7 @@ Package `app.prumio.core.designsystem.component` unless noted.
 |---|---|---|---|
 | `PrumioTheme` | `(darkTheme: Boolean = isSystemInDarkTheme(), content)` — package `theme` | Root of every screen, preview and screenshot test. Tokens via `PrumioTheme.colors`, `PrumioTheme.spacing` | ready |
 | `PrumioText` | `(text, modifier, style: PrumioTextStyle = Body, color, textAlign, maxLines)` | All text. Pick a semantic `PrumioTextStyle`; `Overline` uppercases | ready |
+| `PrumioLogo` | `(contentDescription: String?, modifier, size: Dp = 32.dp, color = brand)` | The Prumio mark — the only way to show the logo ([brand rules](../brand/README.md)) | ready |
 | `PrumioIcon` | `(icon: ImageVector, contentDescription: String?, modifier, tint)` | Non-clickable icons from `PrumioIcons`. `null` description only when decorative | ready |
 
 ### Actions
@@ -34,7 +35,7 @@ Package `app.prumio.core.designsystem.component` unless noted.
 | Component | Signature | Use for | Status |
 |---|---|---|---|
 | `PrumioScaffold` | `(modifier, topBar, bottomBar, floatingActionButton, content: (PaddingValues) -> Unit)` | Skeleton of every screen | ready |
-| `PrumioTopBar` | `(title, modifier, onNavigateBack: (() -> Unit)?, navigateBackContentDescription, actions)` | Screen title; back arrow when `onNavigateBack` is set | ready |
+| `PrumioTopBar` | `(title, modifier, onNavigateBack: (() -> Unit)?, navigateBackContentDescription, showBrandMark: Boolean = false, actions)` | Screen title; back arrow when `onNavigateBack` is set; brand mark before the title on root screens (Today) | ready |
 | `PrumioNavigationBar` | `(modifier, content: RowScope.() -> Unit)` | Bottom bar container (used only by `:app:shell`) | ready |
 | `PrumioNavigationBarItem` | `RowScope.(selected, onClick, icon, selectedIcon, label, modifier)` | One bottom bar destination | ready |
 | `PrumioCard` | `(modifier, onClick: (() -> Unit)?, content: ColumnScope.() -> Unit)` | Grouped content; clickable when `onClick` is set | ready |
@@ -63,7 +64,7 @@ Package `app.prumio.core.designsystem.component` unless noted.
 
 | Symbol | Where | Notes |
 |---|---|---|
-| `PrumioColors` | `theme/PrumioColors.kt` | Includes status colors `statusOpen`, `statusWaiting`, `statusResolved`, `statusOverdue` |
+| `PrumioColors` | `theme/PrumioColors.kt` | Prumio Green tonal palette; `brand`/`onBrand` for identity; status colors `statusOpen`, `statusWaiting`, `statusResolved`, `statusOverdue` |
 | `PrumioTextStyle` | `theme/PrumioTypography.kt` | `Display`, `Headline`, `Title`, `Subtitle`, `Body`, `BodyStrong`, `Label`, `Caption`, `Overline` |
 | `PrumioSpacing` | `theme/PrumioSpacing.kt` | `xxs`=2, `xs`=4, `sm`=8, `md`=12, `lg`=16, `xl`=24, `xxl`=32, `xxxl`=48 dp; `minTouchTarget`, `screenHorizontal` |
 | `PrumioIcons` | `icon/PrumioIcons.kt` | The only icon registry |

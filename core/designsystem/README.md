@@ -16,6 +16,9 @@
 - `theme/`: `PrumioTheme`, `PrumioColors`, `PrumioTextStyle`, `PrumioSpacing` (docs/design-system/tokens.md).
 - `component/`: generic components with no knowledge of tasks, matters or any domain concept.
 - `icon/`: `PrumioIcons`, the single icon registry.
+- `component/PrumioLogo.kt` + `composeResources/drawable/prumio_mark.xml`: the brand mark
+  (generated; rules in [docs/brand/README.md](../../docs/brand/README.md)). Prumio Green `#88C29A`
+  is the accent of every token.
 - `preview/`: the visual component catalog preview.
 
 The full catalog with signatures and usage is [docs/design-system/components.md](../../docs/design-system/components.md).

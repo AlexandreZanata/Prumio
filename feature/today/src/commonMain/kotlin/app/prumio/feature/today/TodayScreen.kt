@@ -41,6 +41,7 @@ internal fun TodayScreen(state: TodayUiState, onAction: (TodayAction) -> Unit, m
         topBar = {
             PrumioTopBar(
                 title = stringResource(CoreUiRes.string.destination_today),
+                showBrandMark = true,
                 actions = {
                     PrumioIconButton(
                         icon = PrumioIcons.Search,

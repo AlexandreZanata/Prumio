@@ -55,7 +55,11 @@ action and a history). Private by design: no network, no account, no telemetry.
 | Build the debug APK | `./gradlew :app:android:assembleDebug` |
 | Install on a running emulator/device | `./gradlew :app:android:installDebug` |
 
-Requirements: JDK 21, Android SDK with platform 36 (`ANDROID_HOME` set).
+Requirements: JDK 21, Android SDK with platform 37 (`ANDROID_HOME` set).
+
+**Device testing:** use the owner's physical phone connected over USB/adb (`adb devices`), not
+emulators. Install the **debug** build only (`app.prumio.debug`), which never touches a release
+install. If no device is connected, say so and ask instead of starting an emulator.
 
 ## 4. Repository map
 

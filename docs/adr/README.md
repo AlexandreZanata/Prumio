@@ -22,6 +22,7 @@ re-litigates it by accident or breaks it unknowingly. Format: [template.md](temp
 | [0015](0015-application-id-and-namespace.md) | `app.prumio` application id and package root | Accepted |
 | [0016](0016-android-system-backup.md) | Allow Android system backup of the database | Accepted |
 | [0017](0017-ai-first-repository.md) | Repository and documentation designed for AI agents | Accepted |
+| [0018](0018-brand-identity.md) | Sprout logo and Prumio Green as the brand identity | Accepted |
 
 ## When to write an ADR
 

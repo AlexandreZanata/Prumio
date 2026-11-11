@@ -6,8 +6,9 @@ dashboard. The design system makes that feeling consistent by construction: ever
 
 ## Principles
 
-1. **Calm over loud.** Soft, natural palette (deep sage green); color is used for meaning (status),
-   not decoration. No red badges for productivity, no confetti.
+1. **Calm over loud.** One accent: **Prumio Green `#88C29A`**, the logo color, on soft green-tinted
+   neutrals. Color is used for identity and meaning (status), not decoration. No red badges for
+   productivity, no confetti.
 2. **Clarity over density.** Generous spacing on a 4 dp grid, one primary action per screen,
    readable type sizes.
 3. **Consistency over novelty.** One component per concept; one look per domain object (`TaskRow`
@@ -21,6 +22,7 @@ dashboard. The design system makes that feeling consistent by construction: ever
 
 | Part | Where | Doc |
 |---|---|---|
+| Brand: logo files, Prumio Green, usage rules | `docs/brand/`, `PrumioLogo` | [../brand/README.md](../brand/README.md) |
 | Tokens: color, typography, spacing, shape | `core/designsystem/.../theme/` | [tokens.md](tokens.md) |
 | Generic components (`Prumio*`) | `core/designsystem/.../component/` | [components.md](components.md) |
 | Icons | `core/designsystem/.../icon/PrumioIcons.kt` | [components.md](components.md#tokens-and-registries-not-composables) |
@@ -38,5 +40,5 @@ dashboard. The design system makes that feeling consistent by construction: ever
 
 ## Dynamic color
 
-Android 12+ "Material You" dynamic color is **off**: Prumio keeps its own calm identity and
+Android 12+ "Material You" dynamic color is **off**: Prumio keeps its brand green and
 predictable status colors. Revisit only with an ADR.

@@ -11,6 +11,7 @@ import app.prumio.core.designsystem.component.PrumioButton
 import app.prumio.core.designsystem.component.PrumioButtonVariant
 import app.prumio.core.designsystem.component.PrumioCard
 import app.prumio.core.designsystem.component.PrumioEmptyState
+import app.prumio.core.designsystem.component.PrumioLogo
 import app.prumio.core.designsystem.component.PrumioSectionHeader
 import app.prumio.core.designsystem.component.PrumioText
 import app.prumio.core.designsystem.icon.PrumioIcons
@@ -37,6 +38,7 @@ private fun ComponentCatalog() {
         modifier = Modifier.background(PrumioTheme.colors.background).padding(PrumioTheme.spacing.lg),
         verticalArrangement = Arrangement.spacedBy(PrumioTheme.spacing.sm),
     ) {
+        PrumioLogo(contentDescription = "Prumio", size = PrumioTheme.spacing.xxxl)
         PrumioTextStyle.entries.forEach { style -> PrumioText(text = style.name, style = style) }
         PrumioSectionHeader(title = "Buttons")
         PrumioButtonVariant.entries.forEach { variant ->

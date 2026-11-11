@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/brand/logo/prumio-logo-rounded-1024.png" alt="Prumio logo" width="128"></p>
+
 # Prumio
 
 **Your life in order. Your mind at ease.**

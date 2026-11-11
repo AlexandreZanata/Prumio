@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Mirrors PrumioColors (core/designsystem) for platform surfaces drawn before Compose starts. -->
-    <color name="prumio_primary">#FF2E6B5E</color>
-    <color name="prumio_background_light">#FFF7FAF8</color>
-    <color name="prumio_background_dark">#FF101413</color>
-    <color name="ic_launcher_background">#FF2E6B5E</color>
+    <color name="prumio_primary">#FF2E6E47</color>
+    <color name="prumio_background_light">#FFF6FAF6</color>
+    <color name="prumio_background_dark">#FF0F1511</color>
+    <!-- Prumio Green, the logo color (docs/brand/README.md) -->
+    <color name="ic_launcher_background">#FF88C29A</color>
 </resources>

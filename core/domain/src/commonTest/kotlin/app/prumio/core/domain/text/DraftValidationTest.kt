@@ -15,6 +15,8 @@ import app.prumio.core.model.AppointmentTiming
 import app.prumio.core.model.Frequency
 import app.prumio.core.model.RecurrenceRule
 import app.prumio.core.model.TaskRecurrence
+import app.prumio.core.testing.assertFailure
+import app.prumio.core.testing.assertSuccess
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
@@ -24,10 +26,10 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class DraftValidationTest {
-    private fun <T> Outcome<T, DomainError>.value(): T = assertIs<Outcome.Success<T>>(this).value
+    private fun <T> Outcome<T, DomainError>.value(): T = assertSuccess()
 
     private fun Outcome<*, DomainError>.validation(): DomainError.Validation =
-        assertIs<DomainError.Validation>(assertIs<Outcome.Failure<DomainError>>(this).error)
+        assertIs<DomainError.Validation>(assertFailure())
 
     @Test
     fun `BR-GEN-001 a title alone is enough for every entity`() {

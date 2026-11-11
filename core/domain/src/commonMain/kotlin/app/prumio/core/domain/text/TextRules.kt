@@ -21,6 +21,7 @@ object ValidationReasons {
     const val TOO_LONG = "too_long"
     const val END_BEFORE_START = "end_before_start"
     const val FUTURE_DATE = "future_date"
+    const val NOT_EDITABLE = "not_editable"
 }
 
 /**

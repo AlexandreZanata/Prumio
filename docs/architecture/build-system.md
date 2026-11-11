@@ -65,6 +65,13 @@ upload test reports on failure and the debug APK as an artifact. Dependabot prop
 for Gradle dependencies and GitHub Actions; toolchain upgrades are done together (AGP + Kotlin +
 Compose) by a plan task, never piecemeal.
 
+### Branch protection
+
+`main` requires a pull request, the status check *Verify (format, tests, architecture, privacy,
+assemble)* passing on a branch up to date with `main`, and resolved conversations. Force pushes and
+deletion are blocked, and the rules apply to administrators too. Changing these settings is an owner
+decision.
+
 ## Performance tips
 
 - Configuration cache and build cache are on. Keep plugins and build logic compatible (no

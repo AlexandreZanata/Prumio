@@ -6,6 +6,7 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- `main` branch protection: pull requests only, green CI required (documented in AGENTS.md and CONTRIBUTING.md).
 - Brand identity (ADR-0018): vectorized sprout logo (SVG/PNG/Android adaptive icon), `PrumioLogo`,
   Prumio Green `#88C29A` tonal color system with WCAG contrast tests, brand usage guide.
 - Device testing rule: manual checks run on the physical phone over adb.

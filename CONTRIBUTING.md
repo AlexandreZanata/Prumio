@@ -22,7 +22,9 @@ process is explicit and the same for everyone.
    ```
 5. Commit with [Conventional Commits](https://www.conventionalcommits.org/), citing task and rule ids:
    `feat(tasks): complete a task (P1.11, BR-TASK-003)`.
-6. Open a pull request using the template; CI must be green.
+6. Open a pull request using the template. `main` is protected: it only accepts merges of pull
+   requests whose CI check is green and up to date with `main`, with all review conversations
+   resolved. Direct and force pushes are rejected, for maintainers too.
 
 ## Pull request expectations
 

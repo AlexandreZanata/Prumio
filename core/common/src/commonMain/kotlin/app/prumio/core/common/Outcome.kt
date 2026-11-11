@@ -35,3 +35,12 @@ inline fun <T, E> Outcome<T, E>.onFailure(action: (E) -> Unit): Outcome<T, E> {
 fun <T> T.asSuccess(): Outcome<T, Nothing> = Outcome.Success(this)
 
 fun <E> E.asFailure(): Outcome<Nothing, E> = Outcome.Failure(this)
+
+/** Value of a success, or the result of [onFailure] (typically a non-local `return`). */
+inline fun <T, E> Outcome<T, E>.valueOr(onFailure: (E) -> Nothing): T = when (this) {
+    is Outcome.Success -> value
+    is Outcome.Failure -> onFailure(error)
+}
+
+/** Value of a success or null. */
+fun <T, E> Outcome<T, E>.valueOrNull(): T? = (this as? Outcome.Success)?.value

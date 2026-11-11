@@ -1,0 +1,82 @@
+-- Where you need to be (docs/architecture/database-schema.md#version-1-phase-1).
+-- Dates are local to time_zone (timed) or floating (all-day); range queries widen by one day.
+CREATE TABLE appointment (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    notes TEXT,
+    location TEXT,
+    all_day INTEGER NOT NULL,
+    start_date TEXT NOT NULL,
+    start_time TEXT,
+    end_date TEXT NOT NULL,
+    end_time TEXT,
+    time_zone TEXT,
+    recurrence TEXT,
+    matter_id TEXT REFERENCES matter(id) ON DELETE SET NULL,
+    search_text TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    CHECK ((all_day = 1 AND start_time IS NULL AND end_time IS NULL AND time_zone IS NULL) OR
+           (all_day = 0 AND start_time IS NOT NULL AND time_zone IS NOT NULL)),
+    CHECK (end_date >= start_date)
+);
+
+CREATE INDEX appointment_dates ON appointment(start_date, end_date);
+
+selectById:
+SELECT *
+FROM appointment
+WHERE id = :id;
+
+selectByIds:
+SELECT *
+FROM appointment
+WHERE id IN :ids;
+
+selectOverlapping:
+SELECT *
+FROM appointment
+WHERE start_date <= :toDate AND end_date >= :fromDate
+ORDER BY start_date, start_time, id;
+
+selectByMatter:
+SELECT *
+FROM appointment
+WHERE matter_id = :matterId
+ORDER BY start_date, start_time, id;
+
+selectIdsMatching:
+SELECT id
+FROM appointment
+WHERE search_text LIKE '%' || :term || '%';
+
+countById:
+SELECT count(*)
+FROM appointment
+WHERE id = :id;
+
+insert:
+INSERT INTO appointment(id, title, notes, location, all_day, start_date, start_time, end_date, end_time,
+                        time_zone, recurrence, matter_id, search_text, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE appointment
+SET title = :title,
+    notes = :notes,
+    location = :location,
+    all_day = :allDay,
+    start_date = :startDate,
+    start_time = :startTime,
+    end_date = :endDate,
+    end_time = :endTime,
+    time_zone = :timeZone,
+    recurrence = :recurrence,
+    matter_id = :matterId,
+    search_text = :searchText,
+    updated_at = :updatedAt
+WHERE id = :id;
+
+deleteById:
+DELETE FROM appointment
+WHERE id = :id;

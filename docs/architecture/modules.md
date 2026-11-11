@@ -24,6 +24,7 @@ imports that README so Claude Code loads it automatically.
 | `:core:ui` | `prumio.kmp.compose` | Domain-aware shared components, labels, formatters, shared strings, `PrumioViewModel` |
 | `:core:navigation` | `prumio.kmp.library` | Navigation keys and the `Navigator` contract |
 | `:core:testing` | `prumio.kmp.library` | Fakes and helpers for tests |
+| `:core:database-testing` | `prumio.kmp.library` | In-memory SQLite database for JVM tests (test-only) |
 | `:feature:today` | `prumio.feature` | Today: day at a glance (reference implementation) |
 | `:feature:agenda` | `prumio.feature` | Agenda and appointments |
 | `:feature:matters` | `prumio.feature` | Matters: list, detail, history |
@@ -57,12 +58,13 @@ graph TD
     testing[":core:testing"] --> domain
 ```
 
-(Edges implied by transitivity are omitted. `:core:testing` is only consumed by test source sets.)
+(Edges implied by transitivity are omitted. `:core:testing` and `:core:database-testing` are only consumed by test source sets.)
 
 ## Dependency rules
 
 These are the exact rules of `ModuleRules.kt`. A module may depend **only** on what its row allows.
-Any module may additionally use `:core:testing` from its test source sets.
+Any module may additionally use `:core:testing` and `:core:database-testing` from its test source sets
+(and only from there).
 
 | Module | May depend on | Why |
 |---|---|---|
@@ -76,6 +78,7 @@ Any module may additionally use `:core:testing` from its test source sets.
 | `:core:domain` | `:core:common`, `:core:model` | Pure Kotlin business logic |
 | `:core:database` | `:core:common` | Owns SQL only |
 | `:core:testing` | `:core:common`, `:core:domain`, `:core:model` | Test doubles implement domain ports |
+| `:core:database-testing` | `:core:common`, `:core:database` | The in-memory test database wraps the production schema |
 | `:core:model` | `:core:common` | Plain data |
 | `:core:navigation` | nothing | Leaf contract |
 | `:core:common` | nothing | Bottom of the graph |

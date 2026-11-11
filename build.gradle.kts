@@ -20,6 +20,7 @@ dependencies {
     kover(projects.core.common)
     kover(projects.core.data)
     kover(projects.core.database)
+    kover(projects.core.databaseTesting)
     kover(projects.core.designsystem)
     kover(projects.core.domain)
     kover(projects.core.model)

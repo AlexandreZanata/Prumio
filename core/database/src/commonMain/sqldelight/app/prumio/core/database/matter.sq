@@ -1,0 +1,80 @@
+-- Life's unfinished business (docs/architecture/database-schema.md#version-1-phase-1).
+CREATE TABLE matter (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    description TEXT,
+    status TEXT NOT NULL,
+    waiting_for TEXT,
+    follow_up_date TEXT,
+    follow_up_time TEXT,
+    resolved_at INTEGER,
+    last_activity_at INTEGER NOT NULL,
+    search_text TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    CHECK (status IN ('OPEN', 'WAITING', 'RESOLVED')),
+    CHECK (follow_up_time IS NULL OR follow_up_date IS NOT NULL)
+);
+
+CREATE INDEX matter_status ON matter(status);
+CREATE INDEX matter_follow_up_date ON matter(follow_up_date);
+
+selectById:
+SELECT *
+FROM matter
+WHERE id = :id;
+
+selectByIds:
+SELECT *
+FROM matter
+WHERE id IN :ids;
+
+selectUnresolved:
+SELECT *
+FROM matter
+WHERE status != 'RESOLVED'
+ORDER BY last_activity_at DESC, id;
+
+selectResolvedSince:
+SELECT *
+FROM matter
+WHERE status = 'RESOLVED' AND resolved_at >= :since
+ORDER BY resolved_at DESC, id;
+
+selectIdsMatching:
+SELECT id
+FROM matter
+WHERE search_text LIKE '%' || :term || '%'
+   OR id IN (
+       SELECT matter_id
+       FROM matter_entry
+       WHERE kind = 'NOTE' AND search_text LIKE '%' || :term || '%'
+   );
+
+countById:
+SELECT count(*)
+FROM matter
+WHERE id = :id;
+
+insert:
+INSERT INTO matter(id, title, description, status, waiting_for, follow_up_date, follow_up_time,
+                   resolved_at, last_activity_at, search_text, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE matter
+SET title = :title,
+    description = :description,
+    status = :status,
+    waiting_for = :waitingFor,
+    follow_up_date = :followUpDate,
+    follow_up_time = :followUpTime,
+    resolved_at = :resolvedAt,
+    last_activity_at = :lastActivityAt,
+    search_text = :searchText,
+    updated_at = :updatedAt
+WHERE id = :id;
+
+deleteById:
+DELETE FROM matter
+WHERE id = :id;

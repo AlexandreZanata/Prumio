@@ -16,7 +16,7 @@ kotlin {
             implementation(libs.sqldelight.android.driver)
         }
         getByName("androidHostTest").dependencies {
-            implementation(libs.sqldelight.sqlite.driver)
+            implementation(projects.core.databaseTesting)
         }
     }
 }

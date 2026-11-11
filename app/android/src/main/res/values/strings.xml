@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Only platform-level strings live here. UI strings are Compose resources (docs/architecture/i18n.md). -->
+    <string name="app_name" translatable="false">Prumio</string>
+</resources>

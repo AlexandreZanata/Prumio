@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Prumio mark: a plumb bob ("prumo") hanging from a line — balance and direction.
+     Drawn inside the 66dp safe zone of the 108dp adaptive icon canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Line -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M52.5,28h3v16h-3z" />
+    <!-- Cap -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M46,44h16a2,2 0,0 1,2 2v2a2,2 0,0 1,-2 2h-16a2,2 0,0 1,-2 -2v-2a2,2 0,0 1,2 -2z" />
+    <!-- Bob -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M44,52h20l-10,28z" />
+</vector>

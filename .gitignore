@@ -1,0 +1,32 @@
+# Gradle / Kotlin
+.gradle/
+build/
+.kotlin/
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local configuration (never commit: contains machine paths or secrets)
+local.properties
+*.keystore
+*.jks
+keystore.properties
+signing.properties
+
+# IDE
+.idea/
+*.iml
+.fleet/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Android
+captures/
+*.apk
+*.aab
+*.ap_
+output-metadata.json
+
+# Logs
+*.log

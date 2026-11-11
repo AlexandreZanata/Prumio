@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="today_section_summary">Seu dia, em resumo</string>
+    <string name="today_empty_title">Seu dia está livre</string>
+    <string name="today_empty_description">Tarefas, compromissos e pendências que precisam de você hoje aparecerão aqui.</string>
+</resources>

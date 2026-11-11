@@ -1,0 +1,27 @@
+version: 2
+updates:
+  - package-ecosystem: gradle
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Upgraded together by a plan task (docs/architecture/build-system.md#ci).
+      toolchain:
+        patterns:
+          - "com.android.tools.build:*"
+          - "com.android.*"
+          - "org.jetbrains.kotlin*"
+          - "org.jetbrains.compose*"
+      androidx:
+        patterns:
+          - "androidx.*"
+          - "org.jetbrains.androidx.*"
+      kotlinx:
+        patterns:
+          - "org.jetbrains.kotlinx*"
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Generic actions -->
+    <string name="action_back">Voltar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_close">Fechar</string>
+    <string name="action_delete">Excluir</string>
+    <string name="action_done">Concluir</string>
+    <string name="action_save">Salvar</string>
+    <string name="action_undo">Desfazer</string>
+
+    <!-- Destination names: bottom bar labels, screen titles and the actions that open them -->
+    <string name="destination_today">Hoje</string>
+    <string name="destination_agenda">Agenda</string>
+    <string name="destination_matters">Pendências</string>
+    <string name="destination_inbox">Entrada</string>
+    <string name="destination_search">Buscar</string>
+    <string name="destination_settings">Configurações</string>
+
+    <!-- DayPeriod (BR-TODAY-001) -->
+    <string name="greeting_morning">Bom dia</string>
+    <string name="greeting_afternoon">Boa tarde</string>
+    <string name="greeting_evening">Boa noite</string>
+
+    <!-- Placeholder shown by screens that are not implemented yet -->
+    <string name="coming_soon_title">Em breve</string>
+</resources>

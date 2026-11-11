@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="today_section_summary">Your day at a glance</string>
+    <string name="today_empty_title">Your day is clear</string>
+    <string name="today_empty_description">Tasks, appointments and matters that need you today will show up here.</string>
+</resources>

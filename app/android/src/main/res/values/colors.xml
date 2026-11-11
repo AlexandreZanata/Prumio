@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors PrumioColors (core/designsystem) for platform surfaces drawn before Compose starts. -->
+    <color name="prumio_primary">#FF2E6B5E</color>
+    <color name="prumio_background_light">#FFF7FAF8</color>
+    <color name="prumio_background_dark">#FF101413</color>
+    <color name="ic_launcher_background">#FF2E6B5E</color>
+</resources>

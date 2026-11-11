@@ -1,0 +1,24 @@
+-- User settings as a key-value store (docs/architecture/database-schema.md#setting).
+-- Keys and defaults are defined in code (SettingKey, :core:data); unknown keys are ignored.
+CREATE TABLE setting (
+    key TEXT NOT NULL PRIMARY KEY,
+    value TEXT NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+selectAll:
+SELECT key, value
+FROM setting;
+
+selectByKey:
+SELECT value
+FROM setting
+WHERE key = :key;
+
+upsert:
+INSERT OR REPLACE INTO setting(key, value, updated_at)
+VALUES (:key, :value, :updatedAt);
+
+deleteByKey:
+DELETE FROM setting
+WHERE key = :key;

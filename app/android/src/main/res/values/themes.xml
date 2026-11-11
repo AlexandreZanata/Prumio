@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window theme only (shown before Compose draws). Visual design lives in PrumioTheme. -->
+    <style name="Theme.Prumio" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/prumio_background_light</item>
+    </style>
+</resources>

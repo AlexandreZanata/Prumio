@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Shared strings. Reuse these from any feature; never redefine them (docs/architecture/i18n.md). -->
+<resources>
+    <!-- Generic actions -->
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_close">Close</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_done">Done</string>
+    <string name="action_save">Save</string>
+    <string name="action_undo">Undo</string>
+
+    <!-- Destination names: bottom bar labels, screen titles and the actions that open them -->
+    <string name="destination_today">Today</string>
+    <string name="destination_agenda">Agenda</string>
+    <string name="destination_matters">Matters</string>
+    <string name="destination_inbox">Inbox</string>
+    <string name="destination_search">Search</string>
+    <string name="destination_settings">Settings</string>
+
+    <!-- DayPeriod (BR-TODAY-001) -->
+    <string name="greeting_morning">Good morning</string>
+    <string name="greeting_afternoon">Good afternoon</string>
+    <string name="greeting_evening">Good evening</string>
+
+    <!-- Placeholder shown by screens that are not implemented yet -->
+    <string name="coming_soon_title">Coming soon</string>
+</resources>

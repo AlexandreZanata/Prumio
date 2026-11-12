@@ -12,8 +12,8 @@
 ## Responsibility
 
 - `PrumioApplication`: starts Koin with `prumioModules` from `:app:shell`.
-- `MainActivity`: enables edge-to-edge and calls `PrumioApp()`. Later (phase 4) it also turns
-  notification deep links into navigation keys.
+- `MainActivity`: enables edge-to-edge and calls `PrumioApp()` and forwards
+  initial/new notification deep links to the shell for domain validation and navigation.
 - `AndroidManifest.xml`: removes `INTERNET`, declares backup rules, per-app languages, launcher icon.
 - Platform resources only: launcher icon, window theme, backup and locale XML.
 
@@ -32,3 +32,13 @@
 ./gradlew :app:android:assembleDebug
 ./gradlew :app:android:installDebug
 ```
+
+## Phase 4 reminders
+
+Application starts ReminderRuntime after Koin. MainActivity forwards initial/new intents and requests forced reconciliation on resume. Version 0.1.0; debug remains app.prumio.debug. Release signing is optional local configuration; without a key assembleRelease produces an unsigned APK (see docs/architecture/release-signing.md). The custom Android instrumentation tests a real alarm/notification/Complete without clearing data.
+
+Run `./scripts/verify-reminders-device.sh <physical-adb-serial>` with the debug app's notification
+permission enabled and the phone unlocked. The test waits at most 60 seconds for delivery, asserts
+Complete closes the task and removes its notification, and removes only its own test task in finally.
+Test exact access allowed and denied separately using the system reliability screen. Restore the
+original permission/app-op state afterward. No emulator is selected and no release APK is installed.

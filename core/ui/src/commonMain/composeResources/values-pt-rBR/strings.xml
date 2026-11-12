@@ -105,4 +105,11 @@
     <string name="validation_end_before_start">O fim não pode ser antes do início</string>
     <string name="validation_future_date">Esta data está no futuro</string>
     <string name="validation_not_editable">Esta entrada não pode ser alterada</string>
+    <string name="reminder_field">Lembretes</string>
+    <string name="reminder_limit">Escolha até 5 lembretes. Toque em um lembrete selecionado para removê-lo.</string>
+    <string name="reminder_permission_title">Permitir lembretes?</string>
+    <string name="reminder_permission_text">O Prumio usa notificações para lembrar você; se recusar, seus lembretes serão salvos e você poderá ativá-las em Configurações depois.</string>
+    <string name="reminder_permission_allow">Continuar</string>
+    <string name="reminder_permission_later">Salvar sem notificações</string>
+    <string name="validation_reminder_offsets">Escolha até 5 lembretes diferentes.</string>
 </resources>

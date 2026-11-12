@@ -12,4 +12,25 @@
     <string name="settings_licenses">Licenses</string>
     <string name="settings_licenses_text">Prumio is licensed under Apache License 2.0. Built with Kotlin, Compose Multiplatform, AndroidX, SQLDelight and Koin, distributed under their open-source licenses.</string>
     <string name="settings_privacy">Prumio has no internet access. Your organizer stays on your device, with no account, ads or tracking.</string>
+    <string name="settings_reminders">Reminders</string>
+    <string name="settings_reminder_time">Time for date-only reminders</string>
+    <string name="settings_appointment_notice">Default appointment reminder</string>
+    <string name="settings_reliability">Reminder reliability</string>
+    <string name="reliability_notifications">Notifications</string>
+    <string name="reliability_exact">Exact alarms</string>
+    <string name="reliability_battery">Battery optimization</string>
+    <string name="reliability_enabled">Allowed</string>
+    <string name="reliability_disabled">Blocked</string>
+    <string name="reliability_inexact">Reminders still work, but Android may delay them.</string>
+    <string name="reliability_battery_text">Battery restrictions may delay reminders. Prumio cannot guarantee delivery while restricted or force-stopped.</string>
+    <string name="reliability_battery_optimized">Optimized</string>
+    <string name="reliability_battery_unrestricted">Unrestricted</string>
+    <string name="reliability_fix">Open system settings</string>
+    <string name="reliability_banner">Notifications are blocked. Your reminders are saved. Enable notifications to receive them.</string>
+    <string name="reliability_dismiss">Dismiss message</string>
+    <string name="snooze_title">Snooze reminder</string>
+    <string name="snooze_ten_minutes">In 10 minutes</string>
+    <string name="snooze_one_hour">In 1 hour</string>
+    <string name="snooze_tomorrow">Tomorrow at your default time</string>
+    <string name="snooze_saved">Reminder snoozed</string>
 </resources>

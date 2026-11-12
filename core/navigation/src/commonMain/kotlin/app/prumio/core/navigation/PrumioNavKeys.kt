@@ -67,3 +67,9 @@ data class MatterEditorKey(val matterId: String? = null) : NavKey
 /** [promptNextAction] opens the optional BR-MATTER-006 question after closing the last action. */
 @Serializable
 data class MatterDetailKey(val matterId: String, val promptNextAction: Boolean = false) : NavKey
+
+@Serializable
+data object ReminderReliabilityKey : NavKey
+
+@Serializable
+data class SnoozeKey(val alarmKey: String) : OverlayNavKey

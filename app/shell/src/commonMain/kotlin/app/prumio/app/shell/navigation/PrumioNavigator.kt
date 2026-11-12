@@ -34,6 +34,12 @@ internal class PrumioNavigator(private val backStack: MutableList<NavKey>) : Nav
         }
     }
 
+    /** Notification links always have Today immediately underneath (BR-REM-017). */
+    fun openLink(key: NavKey) {
+        resetTo(TodayKey)
+        if (key != TodayKey) backStack.add(key)
+    }
+
     override fun goBack() {
         if (backStack.size > 1) backStack.removeAt(backStack.lastIndex)
     }

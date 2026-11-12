@@ -24,6 +24,10 @@ import app.prumio.core.model.ThemePreference
 import app.prumio.core.navigation.CaptureKey
 import app.prumio.core.navigation.TodayKey
 import app.prumio.core.ui.message.LocalMessenger
+import app.prumio.core.ui.message.rememberMessageSender
+import app.prumio.core.ui.mvi.CollectEffects
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import org.jetbrains.compose.resources.stringResource
 
 /**
@@ -31,12 +35,16 @@ import org.jetbrains.compose.resources.stringResource
  * navigation host. Platform entry points (MainActivity) only call this.
  */
 @Composable
-fun PrumioApp(modifier: Modifier = Modifier) {
-    ShellRoute(modifier = modifier)
+fun PrumioApp(modifier: Modifier = Modifier, initialDeepLink: String? = null, onConsumeDeepLink: () -> Unit = {}) {
+    ShellRoute(modifier = modifier, initialDeepLink = initialDeepLink, onConsumeDeepLink = onConsumeDeepLink)
 }
 
 @Composable
-internal fun PrumioAppContent(state: ShellUiState, modifier: Modifier = Modifier) {
+internal fun PrumioAppContent(
+    state: ShellUiState,
+    modifier: Modifier = Modifier,
+    effects: Flow<ShellEffect> = emptyFlow(),
+) {
     val darkTheme = when (state.theme) {
         ThemePreference.System -> isSystemInDarkTheme()
         ThemePreference.Light -> false
@@ -49,6 +57,13 @@ internal fun PrumioAppContent(state: ShellUiState, modifier: Modifier = Modifier
         val messenger = rememberPrumioMessenger()
 
         CompositionLocalProvider(LocalMessenger provides messenger) {
+            val showMessage = rememberMessageSender()
+            CollectEffects(effects) { effect ->
+                when (effect) {
+                    is ShellEffect.OpenLink -> navigator.openLink(effect.key)
+                    is ShellEffect.ShowMessage -> showMessage(effect.message)
+                }
+            }
             PrumioScaffold(
                 modifier = modifier,
                 snackbarHost = { PrumioSnackbarHost(messenger) },

@@ -28,6 +28,8 @@ import app.prumio.core.designsystem.theme.PrumioTextStyle
 import app.prumio.core.designsystem.theme.PrumioTheme
 import app.prumio.core.domain.text.TextLimits
 import app.prumio.core.ui.component.DateField
+import app.prumio.core.ui.component.ReminderField
+import app.prumio.core.ui.component.ReminderPermissionDialog
 import app.prumio.core.ui.component.TimeField
 import app.prumio.core.ui.resources.action_back
 import app.prumio.core.ui.resources.action_save
@@ -72,6 +74,12 @@ internal fun AppointmentEditorScreen(
         },
     ) { padding ->
         if (!state.isLoading) AppointmentForm(state, onAction, Modifier.fillMaxSize().padding(padding))
+    }
+    if (state.showPermissionExplanation) {
+        ReminderPermissionDialog(
+            onConfirm = { onAction(AppointmentEditorAction.ConfirmPermission) },
+            onDismiss = { onAction(AppointmentEditorAction.PermissionResult(false)) },
+        )
     }
 }
 
@@ -147,6 +155,7 @@ private fun AppointmentForm(
                 modifier = horizontal,
             )
         }
+        ReminderField(state.reminderOffsets, { onAction(AppointmentEditorAction.ChangeReminders(it)) }, horizontal)
         PrumioTextField(
             value = state.location,
             onValueChange = { onAction(AppointmentEditorAction.ChangeLocation(it)) },

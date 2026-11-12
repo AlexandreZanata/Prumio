@@ -51,3 +51,7 @@ dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physica
 
 `SettingsPlatform` keeps package/version and language intents in `androidMain`; `commonMain`
 receives only platform-neutral values and callbacks. About is a section of Settings.
+
+## Phase 4 reminders
+
+Default reminder time/appointment notice controls, dismissible denied-notification banner, Reminder reliability system-status/fix screen and notification Snooze dialog. Platform links stay in androidMain; policies stay in domain.

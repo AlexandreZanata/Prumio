@@ -43,6 +43,7 @@ class MatterDetailViewModelTest {
             domain.resolveMatter, domain.reopenMatter, domain.setMatterFollowUp, domain.completeTask,
             domain.reopenTask, domain.addMatterNote, domain.editMatterNote, domain.deleteMatterNote,
             domain.restoreMatterNote, domain.deleteMatter, domain.restoreMatter, domain.time,
+            domain.checkReminderPermission, domain.recordNotificationPermission,
         )
     }
 

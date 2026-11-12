@@ -38,3 +38,7 @@ Internal: `PrumioNavigator` (the only `Navigator`), `PrumioNavDisplay` (Navigati
 
 - `ShellViewModelTest` — BR-INBOX-005 count and BR-SET-001 preference/default updates.
 - Runtime-injected navigation key types are declared in KoinModulesTest.
+
+## Phase 4 reminders
+
+Shell actions resolve incoming notification links against current domain data. The navigator rebuilds Today + target; missing records show a message. DI includes notification adapters/runtime and the shared ReminderCoordinator.

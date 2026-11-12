@@ -33,6 +33,8 @@ class TaskEditorViewModelTest {
         domain.createTask,
         domain.updateTask,
         domain.time,
+        domain.checkReminderPermission,
+        domain.recordNotificationPermission,
     )
 
     @Test

@@ -34,6 +34,8 @@ import app.prumio.core.designsystem.icon.PrumioIcons
 import app.prumio.core.designsystem.theme.PrumioTextStyle
 import app.prumio.core.designsystem.theme.PrumioTheme
 import app.prumio.core.domain.text.TextLimits
+import app.prumio.core.ui.component.ReminderField
+import app.prumio.core.ui.component.ReminderPermissionDialog
 import app.prumio.core.ui.component.TimeField
 import app.prumio.core.ui.resources.action_back
 import app.prumio.core.ui.resources.action_cancel
@@ -87,6 +89,12 @@ internal fun TaskEditorScreen(
             TaskForm(state, onAction, Modifier.fillMaxSize().padding(padding))
         }
     }
+    if (state.showPermissionExplanation) {
+        ReminderPermissionDialog(
+            onConfirm = { onAction(TaskEditorAction.ConfirmPermission) },
+            onDismiss = { onAction(TaskEditorAction.PermissionResult(false)) },
+        )
+    }
     if (state.isPickingMatter) MatterPicker(state, onAction)
 }
 
@@ -131,6 +139,9 @@ private fun TaskForm(state: TaskEditorUiState, onAction: (TaskEditorAction) -> U
                 time = state.dueTime,
                 onTimeChange = { onAction(TaskEditorAction.ChangeDueTime(it)) },
             )
+        }
+        if (state.dueDate != null) {
+            ReminderField(state.reminderOffsets, { onAction(TaskEditorAction.ChangeReminders(it)) }, horizontal)
         }
         PrumioListItem(
             headline = state.matterTitle ?: stringResource(Res.string.task_no_matter),

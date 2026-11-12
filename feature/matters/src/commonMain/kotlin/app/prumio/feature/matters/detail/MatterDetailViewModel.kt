@@ -23,6 +23,8 @@ import app.prumio.core.domain.matter.RestoreMatterUseCase
 import app.prumio.core.domain.matter.ResumeMatterUseCase
 import app.prumio.core.domain.matter.SetMatterFollowUpUseCase
 import app.prumio.core.domain.matter.WaitOnMatterUseCase
+import app.prumio.core.domain.reminder.CheckReminderPermissionUseCase
+import app.prumio.core.domain.reminder.RecordNotificationPermissionUseCase
 import app.prumio.core.domain.task.CompleteTaskUseCase
 import app.prumio.core.domain.task.ReopenTaskUseCase
 import app.prumio.core.domain.task.TaskOverduePolicy
@@ -62,6 +64,8 @@ internal class MatterDetailViewModel(
     private val deleteMatter: DeleteMatterUseCase,
     private val restoreMatter: RestoreMatterUseCase,
     private val time: TimeProvider,
+    private val checkPermission: CheckReminderPermissionUseCase,
+    private val recordPermission: RecordNotificationPermissionUseCase,
 ) : PrumioViewModel<MatterDetailUiState, MatterDetailAction, MatterDetailEffect>(
     MatterDetailUiState(promptNextAction = key.promptNextAction),
 ) {
@@ -88,6 +92,18 @@ internal class MatterDetailViewModel(
 
     override fun onAction(action: MatterDetailAction) {
         when (action) {
+            MatterDetailAction.ConfirmPermission -> {
+                updateState { it.copy(showPermissionExplanation = false) }
+                sendEffect(MatterDetailEffect.RequestPermission)
+            }
+
+            is MatterDetailAction.PermissionResult -> viewModelScope.launch {
+                updateState { it.copy(showPermissionExplanation = false) }
+                recordPermission(action.granted).onFailure {
+                    sendEffect(MatterDetailEffect.ShowMessage(it.toUiMessage()))
+                }
+            }
+
             MatterDetailAction.StartWaiting -> updateState {
                 it.copy(waiting = WaitingDraft(), promptNextAction = false)
             }
@@ -108,7 +124,13 @@ internal class MatterDetailViewModel(
             MatterDetailAction.Reopen -> perform { reopenMatter(id) }
 
             is MatterDetailAction.SetFollowUp -> perform {
-                setMatterFollowUp(id, action.date?.let { FollowUp(it, action.time) })
+                setMatterFollowUp(id, action.date?.let { FollowUp(it, action.time) }).onSuccess {
+                    if (action.date !=
+                        null
+                    ) {
+                        explainPermission()
+                    }
+                }
             }
 
             MatterDetailAction.AddNextAction -> {
@@ -168,10 +190,22 @@ internal class MatterDetailViewModel(
         }
     }
 
+    private suspend fun explainPermission() {
+        checkPermission(true).onSuccess { required -> updateState { it.copy(showPermissionExplanation = required) } }
+            .onFailure { sendEffect(MatterDetailEffect.ShowMessage(it.toUiMessage())) }
+    }
     private fun confirmWaiting() {
         val draft = currentState.waiting ?: return
         updateState { it.copy(waiting = null) }
-        perform { waitOnMatter(id, draft.waitingFor, draft.followUp?.let { FollowUp(it) }) }
+        perform {
+            waitOnMatter(id, draft.waitingFor, draft.followUp?.let { FollowUp(it) }).onSuccess {
+                if (it.followUpDate !=
+                    null
+                ) {
+                    explainPermission()
+                }
+            }
+        }
     }
 
     private fun saveNote() {

@@ -106,4 +106,11 @@
     <string name="validation_end_before_start">The end can’t be before the start</string>
     <string name="validation_future_date">This date is in the future</string>
     <string name="validation_not_editable">This entry can’t be changed</string>
+    <string name="reminder_field">Reminders</string>
+    <string name="reminder_limit">Choose up to 5 reminders. Tap a selected reminder to remove it.</string>
+    <string name="reminder_permission_title">Allow reminders?</string>
+    <string name="reminder_permission_text">Prumio uses notifications to remind you; if you decline, your reminders stay saved and you can enable notifications in Settings later.</string>
+    <string name="reminder_permission_allow">Continue</string>
+    <string name="reminder_permission_later">Save without notifications</string>
+    <string name="validation_reminder_offsets">Choose up to 5 different reminders.</string>
 </resources>

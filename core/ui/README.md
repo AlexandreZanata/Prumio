@@ -38,3 +38,7 @@
 
 `./gradlew :core:ui:testAndroidHostTest` — formatter and message unit tests, `DomainComponentScreenshotTest`
 (light/dark/200 % font). Re-record with `-PrecordScreenshots` and review the PNG diff.
+
+## Phase 4 reminders
+
+ReminderField and ReminderPermissionDialog are shared by editors. rememberNotificationPermissionRequest is an explicit expect/actual launcher used by Routes. ReminderSummary displays persisted offsets; UI never schedules alarms.

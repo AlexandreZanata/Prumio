@@ -8,6 +8,9 @@
         android:name="android.permission.INTERNET"
         tools:node="remove" />
 
+    <!-- Daily offline work never uses network constraints. -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" tools:node="remove" />
+
     <application
         android:name=".PrumioApplication"
         android:allowBackup="true"
@@ -29,6 +32,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="prumio" />
             </intent-filter>
         </activity>
     </application>

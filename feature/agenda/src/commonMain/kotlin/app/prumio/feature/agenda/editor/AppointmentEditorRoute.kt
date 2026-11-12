@@ -8,6 +8,7 @@ import app.prumio.core.navigation.AppointmentEditorKey
 import app.prumio.core.navigation.Navigator
 import app.prumio.core.ui.message.rememberMessageSender
 import app.prumio.core.ui.mvi.CollectEffects
+import app.prumio.core.ui.mvi.rememberNotificationPermissionRequest
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -21,8 +22,11 @@ internal fun AppointmentEditorRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val showMessage = rememberMessageSender()
+    val requestPermission =
+        rememberNotificationPermissionRequest { viewModel.onAction(AppointmentEditorAction.PermissionResult(it)) }
     CollectEffects(viewModel.effects) { effect ->
         when (effect) {
+            AppointmentEditorEffect.RequestPermission -> requestPermission()
             AppointmentEditorEffect.Close -> navigator.goBack()
             is AppointmentEditorEffect.ShowMessage -> showMessage(effect.message)
         }

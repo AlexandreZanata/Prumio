@@ -6,6 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import app.prumio.core.navigation.Navigator
+import app.prumio.core.navigation.ReminderReliabilityKey
 import app.prumio.core.ui.message.rememberMessageSender
 import app.prumio.core.ui.mvi.CollectEffects
 import org.koin.compose.viewmodel.koinViewModel
@@ -17,12 +18,16 @@ internal fun SettingsRoute(
     modifier: Modifier = Modifier,
     viewModel: SettingsViewModel = koinViewModel(),
 ) {
+    androidx.lifecycle.compose.LifecycleEventEffect(androidx.lifecycle.Lifecycle.Event.ON_RESUME) {
+        viewModel.onAction(SettingsAction.Refresh)
+    }
     val state by viewModel.state.collectAsStateWithLifecycle()
     val platform = rememberSettingsPlatform()
     val uriHandler = LocalUriHandler.current
     val showMessage = rememberMessageSender()
     CollectEffects(viewModel.effects) { effect ->
         when (effect) {
+            SettingsEffect.OpenReliability -> navigator.navigate(ReminderReliabilityKey)
             SettingsEffect.Close -> navigator.goBack()
             SettingsEffect.OpenLanguage -> platform.openAppLanguage()
             SettingsEffect.OpenSource -> uriHandler.openUri("https://github.com/AlexandreZanata/Prumio")

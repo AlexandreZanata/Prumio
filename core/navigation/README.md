@@ -33,3 +33,7 @@ Planned keys and back stack rules: [docs/architecture/navigation.md](../../docs/
 ## How to extend
 
 New destination → [docs/ai/recipes/add-navigation-key.md](../../docs/ai/recipes/add-navigation-key.md).
+
+## Phase 4 reminders
+
+ReminderReliabilityKey opens Settings reliability; SnoozeKey(alarmKey) is a dialog overlay. Both are serializable and registered. Notification links are resolved by domain and stacked by the shell.

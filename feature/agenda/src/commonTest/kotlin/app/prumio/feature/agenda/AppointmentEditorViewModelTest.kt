@@ -34,6 +34,9 @@ class AppointmentEditorViewModelTest {
         domain.createAppointment,
         domain.updateAppointment,
         domain.time,
+        domain.checkReminderPermission,
+        domain.recordNotificationPermission,
+        domain.observeSettings,
     )
 
     private suspend fun saved() = domain.repos.appointments.observeOverlapping(

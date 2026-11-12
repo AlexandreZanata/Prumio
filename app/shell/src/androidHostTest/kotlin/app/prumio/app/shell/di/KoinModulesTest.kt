@@ -6,6 +6,7 @@ import app.prumio.core.navigation.AppointmentDetailKey
 import app.prumio.core.navigation.AppointmentEditorKey
 import app.prumio.core.navigation.MatterDetailKey
 import app.prumio.core.navigation.MatterEditorKey
+import app.prumio.core.navigation.SnoozeKey
 import app.prumio.core.navigation.TaskDetailKey
 import app.prumio.core.navigation.TaskEditorKey
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -20,6 +21,7 @@ class KoinModulesTest {
         module { includes(prumioModules) }.verify(
             extraTypes = listOf(
                 Context::class,
+                SnoozeKey::class,
                 TaskEditorKey::class,
                 TaskDetailKey::class,
                 AllTasksKey::class,

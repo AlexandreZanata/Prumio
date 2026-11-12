@@ -17,7 +17,7 @@ class SettingsViewModelTest {
 
     @Test
     fun `BR-SET-001 default is system and theme changes persist and update live`() = runViewModelTest {
-        val vm = SettingsViewModel(domain.observeSettings, domain.updateSetting)
+        val vm = SettingsViewModel(domain.observeSettings, domain.updateSetting, domain.getReminderReliability)
         assertEquals(ThemePreference.System, vm.state.value.theme)
         ThemePreference.entries.forEach { theme ->
             vm.onAction(SettingsAction.ChangeTheme(theme))
@@ -29,7 +29,7 @@ class SettingsViewModelTest {
 
     @Test
     fun `platform actions are effects`() = runViewModelTest {
-        val vm = SettingsViewModel(domain.observeSettings, domain.updateSetting)
+        val vm = SettingsViewModel(domain.observeSettings, domain.updateSetting, domain.getReminderReliability)
         vm.effects.test {
             vm.onAction(SettingsAction.OpenLanguage)
             assertEquals(SettingsEffect.OpenLanguage, awaitItem())
@@ -47,7 +47,12 @@ class SettingsViewModelTest {
             override suspend fun setValue(key: String, value: String?, updatedAt: Instant): Unit =
                 error("Storage unavailable")
         }
-        val vm = SettingsViewModel(domain.observeSettings, UpdateSettingUseCase(failing, domain.time))
+        val vm =
+            SettingsViewModel(
+                domain.observeSettings,
+                UpdateSettingUseCase(failing, domain.time),
+                domain.getReminderReliability,
+            )
         vm.effects.test {
             vm.onAction(SettingsAction.ChangeTheme(ThemePreference.Dark))
             assertIs<SettingsEffect.ShowMessage>(awaitItem())

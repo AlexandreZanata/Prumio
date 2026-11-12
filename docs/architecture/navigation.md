@@ -79,3 +79,13 @@ first and navigates to its editor by id; cancelling the editor preserves the con
 After completing/dismissing the last action of an open matter from another screen, the domain
 result opens its detail with `promptNextAction = true`. The existing optional question offers
 Add next action, Mark as waiting and Resolve; adding an action or Undo closes the question.
+
+## Implemented notification links (phase 4)
+
+MainActivity handles ACTION_VIEW on first launch and onNewIntent. ShellViewModel resolves
+`prumio://task/<id>`, `appointment/<id>`, `matter/<id>`, `today`, `capture`, and `snooze/<alarmKey>`
+through ResolveReminderLinkUseCase. PrumioNavigator replaces the stack with Today and the target.
+Missing items open Today with the shared not-found message. Consumed intent data is cleared.
+`ReminderReliabilityKey` is a full Settings screen; `SnoozeKey` is a Settings-owned dialog overlay.
+Both are registered for saved back stacks. Snooze choices come from the domain, including
+Tomorrow-only matter follow-ups.

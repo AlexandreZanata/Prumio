@@ -152,3 +152,15 @@ Package `app.prumio.core.ui.message` ([presentation pattern](../architecture/pre
 3. Is it used by exactly one screen and unlikely to be reused? → `private` inside that feature's
    `XxxScreen.kt` (or a `component/` file in the feature, still `internal`).
 4. The moment a second feature needs it → move it to 1 or 2 and replace the original. Never copy.
+
+## Reminder editing and permissions (phase 4)
+
+- `ReminderField` (`:core:ui/component`): selected offset list and onChange callback; reusable preset
+  chips, including custom stored offsets. The domain validates the maximum of five (BR-REM-018).
+- `ReminderPermissionDialog` (`:core:ui/component`): shared contextual explanation and explicit
+  continue/save-without-notifications actions (BR-REM-014).
+- `rememberNotificationPermissionRequest` (`:core:ui/mvi`): expect/actual launcher; no implicit
+  launch. Routes invoke it from effects after the explanation. Android 13+ requests POST_NOTIFICATIONS.
+
+`ReminderSummary` now renders stored reminder offsets in task and appointment details. Shared
+validation mapping includes reminder-limit failures. Every label exists in English and pt-BR.

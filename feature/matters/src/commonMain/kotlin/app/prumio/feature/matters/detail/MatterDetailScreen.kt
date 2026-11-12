@@ -25,6 +25,7 @@ import app.prumio.core.model.MatterStatus
 import app.prumio.core.model.Task
 import app.prumio.core.ui.component.DateField
 import app.prumio.core.ui.component.MatterStatusChip
+import app.prumio.core.ui.component.ReminderPermissionDialog
 import app.prumio.core.ui.component.TaskRow
 import app.prumio.core.ui.component.TimeField
 import app.prumio.core.ui.component.TimelineEntryRow
@@ -153,6 +154,12 @@ internal fun MatterDetailScreen(
             }
         }
         MatterDetailSheets(state = state, onAction = onAction)
+        if (state.showPermissionExplanation) {
+            ReminderPermissionDialog(
+                onConfirm = { onAction(MatterDetailAction.ConfirmPermission) },
+                onDismiss = { onAction(MatterDetailAction.PermissionResult(false)) },
+            )
+        }
     }
 }
 

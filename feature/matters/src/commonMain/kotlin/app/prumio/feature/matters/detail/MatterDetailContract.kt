@@ -33,10 +33,13 @@ internal data class MatterDetailUiState(
     val note: NoteDraft? = null,
     val isConfirmingResolve: Boolean = false,
     val promptNextAction: Boolean = false,
+    val showPermissionExplanation: Boolean = false,
     val showOtherActions: Boolean = false,
 )
 
 internal sealed interface MatterDetailAction {
+    data object ConfirmPermission : MatterDetailAction
+    data class PermissionResult(val granted: Boolean) : MatterDetailAction
     data object StartWaiting : MatterDetailAction
 
     data class ChangeWaiting(val draft: WaitingDraft) : MatterDetailAction
@@ -84,6 +87,7 @@ internal sealed interface MatterDetailAction {
 internal sealed interface MatterDetailEffect {
     data class Navigate(val key: NavKey) : MatterDetailEffect
 
+    data object RequestPermission : MatterDetailEffect
     data object Close : MatterDetailEffect
 
     data class ShowMessage(val message: UiMessage) : MatterDetailEffect

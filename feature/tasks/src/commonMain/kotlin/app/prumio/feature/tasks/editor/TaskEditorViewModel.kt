@@ -8,6 +8,10 @@ import app.prumio.core.common.time.TimeProvider
 import app.prumio.core.common.time.today
 import app.prumio.core.domain.error.DomainError
 import app.prumio.core.domain.matter.ObserveMattersUseCase
+import app.prumio.core.domain.reminder.CheckReminderPermissionUseCase
+import app.prumio.core.domain.reminder.RecordNotificationPermissionUseCase
+import app.prumio.core.domain.reminder.ReminderPolicy
+import app.prumio.core.domain.reminder.normalizedOffsets
 import app.prumio.core.domain.task.CreateTaskUseCase
 import app.prumio.core.domain.task.ObserveTaskUseCase
 import app.prumio.core.domain.task.TaskDraft
@@ -33,6 +37,8 @@ internal class TaskEditorViewModel(
     private val createTask: CreateTaskUseCase,
     private val updateTask: UpdateTaskUseCase,
     time: TimeProvider,
+    private val checkPermission: CheckReminderPermissionUseCase,
+    private val recordPermission: RecordNotificationPermissionUseCase,
 ) : PrumioViewModel<TaskEditorUiState, TaskEditorAction, TaskEditorEffect>(
     TaskEditorUiState(isNew = key.taskId == null, matterId = key.matterId?.let(::MatterId), today = time.today()),
 ) {
@@ -52,6 +58,7 @@ internal class TaskEditorViewModel(
                         notes = it.notes.orEmpty(),
                         dueDate = it.dueDate,
                         dueTime = it.dueTime,
+                        reminderOffsets = it.reminders.map { reminder -> reminder.offsetMinutes },
                         matterId = it.matterId,
                     )
                 } ?: state
@@ -70,11 +77,36 @@ internal class TaskEditorViewModel(
                 it.copy(dueDate = action.date, dueTime = if (action.date == null) null else it.dueTime)
             }
 
-            is TaskEditorAction.ChangeDueTime -> updateState { it.copy(dueTime = action.time) }
+            is TaskEditorAction.ChangeDueTime -> updateState {
+                it.copy(
+                    dueTime = action.time,
+                    reminderOffsets = ReminderPolicy.taskOffsets(action.time, it.dueTime, it.reminderOffsets, null),
+                )
+            }
 
             is TaskEditorAction.PickMatter -> updateState { it.copy(isPickingMatter = action.open) }
 
             is TaskEditorAction.SelectMatter -> updateState { it.copy(matterId = action.id, isPickingMatter = false) }
+
+            is TaskEditorAction.ChangeReminders -> {
+                normalizedOffsets(action.offsets).onSuccess { offsets ->
+                    updateState { it.copy(reminderOffsets = offsets) }
+                }
+                    .onFailure { sendEffect(TaskEditorEffect.ShowMessage(it.toUiMessage())) }
+            }
+
+            TaskEditorAction.ConfirmPermission -> {
+                updateState { it.copy(showPermissionExplanation = false) }
+                sendEffect(TaskEditorEffect.RequestPermission)
+            }
+
+            is TaskEditorAction.PermissionResult -> viewModelScope.launch {
+                recordPermission(action.granted).onFailure {
+                    sendEffect(TaskEditorEffect.ShowMessage(it.toUiMessage()))
+                }
+                updateState { it.copy(showPermissionExplanation = false) }
+                save(skipPermission = true)
+            }
 
             TaskEditorAction.Save -> save()
 
@@ -82,19 +114,29 @@ internal class TaskEditorViewModel(
         }
     }
 
-    private fun save() {
+    private fun save(skipPermission: Boolean = false) {
         val state = currentState
         if (!state.canSave) return
         updateState { it.copy(isSaving = true) }
         val draft = TaskDraft(
             title = state.title,
             notes = state.notes,
+            reminderOffsets = state.reminderOffsets,
             dueDate = state.dueDate,
             dueTime = state.dueTime,
             recurrence = existing?.recurrence,
             matterId = state.matterId,
         )
         viewModelScope.launch {
+            if (!skipPermission) {
+                var needsPermission = false
+                checkPermission(state.reminderOffsets.isNotEmpty()).onSuccess { needsPermission = it }
+                    .onFailure { sendEffect(TaskEditorEffect.ShowMessage(it.toUiMessage())) }
+                if (needsPermission) {
+                    updateState { it.copy(isSaving = false, showPermissionExplanation = true) }
+                    return@launch
+                }
+            }
             val result: Outcome<Task, DomainError> = if (taskId ==
                 null
             ) {

@@ -8,6 +8,7 @@ import app.prumio.core.navigation.Navigator
 import app.prumio.core.navigation.TaskEditorKey
 import app.prumio.core.ui.message.rememberMessageSender
 import app.prumio.core.ui.mvi.CollectEffects
+import app.prumio.core.ui.mvi.rememberNotificationPermissionRequest
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -21,8 +22,11 @@ internal fun TaskEditorRoute(
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
     val showMessage = rememberMessageSender()
+    val requestPermission =
+        rememberNotificationPermissionRequest { viewModel.onAction(TaskEditorAction.PermissionResult(it)) }
     CollectEffects(viewModel.effects) { effect ->
         when (effect) {
+            TaskEditorEffect.RequestPermission -> requestPermission()
             TaskEditorEffect.Close -> navigator.goBack()
             is TaskEditorEffect.ShowMessage -> showMessage(effect.message)
         }

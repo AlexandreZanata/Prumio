@@ -21,6 +21,7 @@ import app.prumio.core.designsystem.theme.PrumioTheme
 import app.prumio.core.model.Appointment
 import app.prumio.core.model.AppointmentId
 import app.prumio.core.model.AppointmentTiming
+import app.prumio.core.ui.component.ReminderSummary
 import app.prumio.core.ui.format.dateTimeText
 import app.prumio.core.ui.format.timeText
 import app.prumio.core.ui.resources.action_back
@@ -80,6 +81,7 @@ internal fun AppointmentDetailScreen(
                 verticalArrangement = Arrangement.spacedBy(PrumioTheme.spacing.md),
             ) {
                 PrumioText(text = appointment.title, style = PrumioTextStyle.Headline)
+                ReminderSummary(appointment.reminders.map { it.offsetMinutes })
                 PrumioListItem(
                     headline = whenText(appointment, state),
                     leading = { PrumioIcon(icon = PrumioIcons.Schedule, contentDescription = null) },

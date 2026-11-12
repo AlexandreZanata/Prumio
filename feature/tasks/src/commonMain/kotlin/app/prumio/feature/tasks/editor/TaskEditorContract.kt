@@ -22,6 +22,8 @@ internal data class TaskEditorUiState(
     val today: LocalDate = LocalDate(1970, 1, 1),
     val titleError: StringResource? = null,
     val isPickingMatter: Boolean = false,
+    val reminderOffsets: List<Int> = emptyList(),
+    val showPermissionExplanation: Boolean = false,
     val isSaving: Boolean = false,
 ) {
     val matterTitle: String? get() = matters.firstOrNull { it.id == matterId }?.title
@@ -42,12 +44,16 @@ internal sealed interface TaskEditorAction {
 
     data class SelectMatter(val id: MatterId?) : TaskEditorAction
 
+    data class ChangeReminders(val offsets: List<Int>) : TaskEditorAction
+    data object ConfirmPermission : TaskEditorAction
+    data class PermissionResult(val granted: Boolean) : TaskEditorAction
     data object Save : TaskEditorAction
 
     data object Close : TaskEditorAction
 }
 
 internal sealed interface TaskEditorEffect {
+    data object RequestPermission : TaskEditorEffect
     data object Close : TaskEditorEffect
 
     data class ShowMessage(val message: UiMessage) : TaskEditorEffect

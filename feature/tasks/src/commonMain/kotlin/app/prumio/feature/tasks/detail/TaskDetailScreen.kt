@@ -32,6 +32,7 @@ import app.prumio.core.domain.task.PostponeOption
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
 import app.prumio.core.ui.component.DueLabel
+import app.prumio.core.ui.component.ReminderSummary
 import app.prumio.core.ui.label.label
 import app.prumio.core.ui.resources.action_back
 import app.prumio.core.ui.resources.action_cancel
@@ -104,6 +105,7 @@ private fun TaskDetails(
         verticalArrangement = Arrangement.spacedBy(PrumioTheme.spacing.md),
     ) {
         PrumioText(text = task.title, style = PrumioTextStyle.Headline)
+        ReminderSummary(task.reminders.map { it.offsetMinutes })
         PrumioText(
             text = stringResource(Res.string.task_status_line, task.status.label()),
             style = PrumioTextStyle.Label,

@@ -60,4 +60,15 @@ class PrumioNavigatorTest {
             assertEquals(tab, navigator.currentScreenKey)
         }
     }
+
+    @Test fun `BR-REM-017 deep links reset history and keep Today under the detail`() {
+        navigator.navigate(SettingsKey)
+        val detail = app.prumio.core.navigation.TaskDetailKey("t1")
+        navigator.openLink(detail)
+        assertEquals(listOf(TodayKey, detail), backStack)
+        navigator.goBack()
+        assertEquals(listOf<NavKey>(TodayKey), backStack)
+        navigator.openLink(TodayKey)
+        assertEquals(listOf<NavKey>(TodayKey), backStack)
+    }
 }

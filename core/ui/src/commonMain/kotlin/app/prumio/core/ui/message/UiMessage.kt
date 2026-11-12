@@ -15,6 +15,7 @@ import app.prumio.core.ui.resources.validation_blank
 import app.prumio.core.ui.resources.validation_end_before_start
 import app.prumio.core.ui.resources.validation_future_date
 import app.prumio.core.ui.resources.validation_not_editable
+import app.prumio.core.ui.resources.validation_reminder_offsets
 import app.prumio.core.ui.resources.validation_too_long
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
@@ -68,5 +69,6 @@ fun DomainError.Validation.fieldMessage(): StringResource = when (reason) {
     ValidationReasons.END_BEFORE_START -> Res.string.validation_end_before_start
     ValidationReasons.FUTURE_DATE -> Res.string.validation_future_date
     ValidationReasons.NOT_EDITABLE -> Res.string.validation_not_editable
+    "reminder_offsets" -> Res.string.validation_reminder_offsets
     else -> Res.string.error_generic
 }

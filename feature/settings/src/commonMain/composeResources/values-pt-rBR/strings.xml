@@ -12,4 +12,25 @@
     <string name="settings_licenses">Licenças</string>
     <string name="settings_licenses_text">Prumio usa a licença Apache 2.0. Feito com Kotlin, Compose Multiplatform, AndroidX, SQLDelight e Koin, distribuídos sob suas licenças de código aberto.</string>
     <string name="settings_privacy">Prumio não tem acesso à internet. Seu organizador fica no seu aparelho, sem conta, anúncios ou rastreamento.</string>
+    <string name="settings_reminders">Lembretes</string>
+    <string name="settings_reminder_time">Horário de lembretes sem hora</string>
+    <string name="settings_appointment_notice">Lembrete padrão de compromissos</string>
+    <string name="settings_reliability">Confiabilidade dos lembretes</string>
+    <string name="reliability_notifications">Notificações</string>
+    <string name="reliability_exact">Alarmes exatos</string>
+    <string name="reliability_battery">Otimização da bateria</string>
+    <string name="reliability_enabled">Permitidos</string>
+    <string name="reliability_disabled">Bloqueados</string>
+    <string name="reliability_inexact">Os lembretes continuam funcionando, mas o Android pode atrasá-los.</string>
+    <string name="reliability_battery_text">Restrições da bateria podem atrasar lembretes. O Prumio não pode garantir a entrega quando estiver restrito ou com parada forçada.</string>
+    <string name="reliability_battery_optimized">Otimizada</string>
+    <string name="reliability_battery_unrestricted">Sem restrições</string>
+    <string name="reliability_fix">Abrir ajustes do sistema</string>
+    <string name="reliability_banner">As notificações estão bloqueadas. Seus lembretes estão salvos. Ative as notificações para recebê-los.</string>
+    <string name="reliability_dismiss">Dispensar aviso</string>
+    <string name="snooze_title">Adiar lembrete</string>
+    <string name="snooze_ten_minutes">Em 10 minutos</string>
+    <string name="snooze_one_hour">Em 1 hora</string>
+    <string name="snooze_tomorrow">Amanhã no horário padrão</string>
+    <string name="snooze_saved">Lembrete adiado</string>
 </resources>

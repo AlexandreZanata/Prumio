@@ -48,3 +48,7 @@ ViewModel tests cover state, actions, navigation and error effects. Kover enforc
 for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
 use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
 dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.
+
+## Phase 4 reminders
+
+Explicit follow-up creation/update checks the shared contextual permission policy after saving. The shared explanation preserves follow-up data on refusal and respects the two-denial limit.

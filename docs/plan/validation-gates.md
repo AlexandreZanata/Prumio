@@ -63,14 +63,15 @@ Manual ([device QA](qa/device-qa-checklist.md) sections A–F, H, I):
 - [ ] Owner dogfoods for at least 3 days and logs friction issues; blocking ones fixed.
 
 Local implementation evidence is recorded in [phase-3-organize.md](phase-3-organize.md#gate-record).
-The reminder portion of BR-MATTER-009 remains planned for phase 5; its date/time/history
-logic and Phase 3 UI are implemented. The owner’s dogfooding and final sign-off remain open.
+The reminder portion of BR-MATTER-009 is implemented in phase 4; its date/time/history
+logic and Phase 3 UI remain covered. The owner’s dogfooding and final sign-off remain open.
 
 ## G4 — Reminders (release v0.1)
 
 Automated:
-- [ ] Planner and reconciler tests cover every BR-REM rule of phase 4, including DST and time zone travel.
-- [ ] Instrumented alarm tests pass on emulators API 26 and latest.
+- [x] Planner and reconciler tests cover every BR-REM rule of phase 4, including DST and time zone travel.
+- [ ] Instrumented alarm tests pass on physical API 26 and the latest available device (physical-only owner instruction in AGENTS.md).
+- [x] API 26/36 Android host adapter tests; API 36 physical exact/inexact alarm → notification → content intent → Complete tests.
 
 Manual (device QA section G, all items):
 - [ ] Reminders fire on time with exact alarms; are late but delivered without; survive reboot,
@@ -80,6 +81,9 @@ Manual (device QA section G, all items):
 
 Release:
 - [ ] Version 0.1.0, CHANGELOG, signed APK attached to a GitHub release.
+
+Local phase-4 evidence and remaining release work: [phase-4-reminders.md](phase-4-reminders.md#gate-record).
+The owner requested signing setup and an unsigned artifact while no release key exists.
 
 ## G5 — Automation (release v0.2)
 

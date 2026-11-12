@@ -17,6 +17,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
+        androidMain.dependencies { implementation(libs.androidx.activity.compose) }
         commonTest.dependencies {
             implementation(projects.core.testing)
         }

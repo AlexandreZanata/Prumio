@@ -26,7 +26,7 @@ class InboxUseCasesTest {
     private val ids = FakeIdGenerator()
     private val time = FakeTimeProvider(LocalDateTime(2026, 1, 15, 14, 20), TimeZone.of("America/Sao_Paulo"))
     private val capture = CaptureInboxItemUseCase(repos.inbox, ids, time)
-    private val convert = ConvertInboxItemUseCase(repos.inbox, ids, time)
+    private val convert = ConvertInboxItemUseCase(repos.inbox, ids, time, repos.settings)
 
     @Test
     fun `BR-INBOX-001 capture needs only non-blank text`() = runTest {

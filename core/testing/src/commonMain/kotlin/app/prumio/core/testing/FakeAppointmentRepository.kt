@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.datetime.LocalDate
 
 class FakeAppointmentRepository(private val store: FakeStore) : AppointmentRepository {
+    override fun observeAll(): Flow<List<Appointment>> = store.appointments.map { it.values.toList() }
+
     override fun observe(id: AppointmentId): Flow<Appointment?> = store.appointments.map { it[id] }
 
     override fun observeOverlapping(from: LocalDate, to: LocalDate): Flow<List<Appointment>> =

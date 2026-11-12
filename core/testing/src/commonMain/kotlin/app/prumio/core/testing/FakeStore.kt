@@ -47,4 +47,5 @@ class FakeRepositories(val store: FakeStore = FakeStore()) {
     val matters = FakeMatterRepository(store)
     val search = FakeSearchRepository(store)
     val settings = FakeSettingsRepository(store)
+    val reminders = FakeReminderRepository(store)
 }

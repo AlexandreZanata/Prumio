@@ -7,6 +7,7 @@ import app.prumio.core.model.AppointmentTiming
 import app.prumio.core.model.InboxItem
 import app.prumio.core.model.Matter
 import app.prumio.core.model.MatterEntry
+import app.prumio.core.model.ReminderOwner
 import app.prumio.core.model.Task
 
 // Synchronous upserts shared by every repository. Call them inside `database.transaction { }` on the
@@ -33,6 +34,7 @@ internal fun PrumioDatabase.upsertInboxItem(item: InboxItem) {
 }
 
 internal fun PrumioDatabase.upsertTask(task: Task) {
+    replaceReminders(ReminderOwner.Task(task.id), task.reminders)
     // Recurrence is stored once its codec exists (task P5.01); no flow can create it before.
     check(task.recurrence == null) { "Recurring tasks are stored from phase 5 (P5.01)" }
     if (taskQueries.countById(task.id.value).executeAsOne() > 0) {
@@ -72,6 +74,7 @@ internal fun PrumioDatabase.upsertTask(task: Task) {
 }
 
 internal fun PrumioDatabase.upsertAppointment(appointment: Appointment) {
+    replaceReminders(ReminderOwner.Appointment(appointment.id), appointment.reminders)
     check(appointment.recurrence == null) { "Recurring appointments are stored from phase 5 (P5.05)" }
     val columns = TimingColumns.of(appointment.timing)
     if (appointmentQueries.countById(appointment.id.value).executeAsOne() > 0) {

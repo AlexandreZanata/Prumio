@@ -31,8 +31,8 @@ class AppointmentUseCasesTest {
     private val repos = FakeRepositories()
     private val ids = FakeIdGenerator()
     private val time = FakeTimeProvider(LocalDateTime(2026, 1, 15, 9, 0), saoPaulo)
-    private val create = CreateAppointmentUseCase(repos.appointments, repos.matters, ids, time)
-    private val update = UpdateAppointmentUseCase(repos.appointments, repos.matters, time)
+    private val create = CreateAppointmentUseCase(repos.appointments, repos.matters, ids, time, repos.settings)
+    private val update = UpdateAppointmentUseCase(repos.appointments, repos.matters, time, ids)
     private val observeDays = ObserveAppointmentsUseCase(repos.appointments, time)
 
     private val doctor = AppointmentDraft("Doctor", AppointmentSchedule.Timed(LocalDateTime(2026, 1, 15, 16, 0)))

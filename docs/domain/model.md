@@ -226,3 +226,7 @@ later phases add theirs. Every key has a default (BR-SET-001).
 | `color` | `LabelColor` | One of 8 design-system colors |
 
 Assigned to tasks, appointments and matters through a join table. Optional everywhere.
+
+Phase 4 owner aggregates expose `reminders: List<Reminder>` so owner edits, history and reminder
+wishes are persisted atomically. Draft offsets: null preserves/applies defaults; an explicit empty
+list removes wishes. Permission denials (0–2) and banner dismissal are device-specific settings.

@@ -11,6 +11,10 @@ import app.prumio.core.domain.error.DomainError
 import app.prumio.core.domain.error.notFound
 import app.prumio.core.domain.error.storageCall
 import app.prumio.core.domain.matter.MatterHistory
+import app.prumio.core.domain.reminder.ReminderPolicy
+import app.prumio.core.domain.reminder.buildReminders
+import app.prumio.core.domain.settings.SettingKeys
+import app.prumio.core.domain.settings.SettingsRepository
 import app.prumio.core.domain.text.TextLimits
 import app.prumio.core.model.Appointment
 import app.prumio.core.model.AppointmentId
@@ -19,8 +23,10 @@ import app.prumio.core.model.InboxItemId
 import app.prumio.core.model.Matter
 import app.prumio.core.model.MatterEntryKind
 import app.prumio.core.model.MatterId
+import app.prumio.core.model.ReminderOwner
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
+import kotlinx.coroutines.flow.first
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.LocalTime
 import kotlinx.datetime.toInstant
@@ -44,6 +50,7 @@ class ConvertInboxItemUseCase(
     private val inbox: InboxRepository,
     private val ids: IdGenerator,
     private val time: TimeProvider,
+    private val settings: SettingsRepository,
 ) {
     private val history = MatterHistory(ids, time)
 
@@ -59,16 +66,32 @@ class ConvertInboxItemUseCase(
                 Task(id = TaskId(ids.newId()), title = title, notes = rest, createdAt = now, updatedAt = now),
             )
 
-            ConversionType.Appointment -> ConversionTarget.ToAppointment(
-                Appointment(
-                    id = AppointmentId(ids.newId()),
-                    title = title,
-                    notes = rest,
-                    timing = AppointmentTiming.Timed(start = nextFullHour(), end = null, timeZone = time.timeZone()),
-                    createdAt = now,
-                    updatedAt = now,
-                ),
-            )
+            ConversionType.Appointment -> {
+                val appointmentId = AppointmentId(ids.newId())
+                val preferences = storageCall { SettingKeys.read(settings.observeValues().first()) }
+                    .valueOr { return it.asFailure() }
+                ConversionTarget.ToAppointment(
+                    Appointment(
+                        id = appointmentId,
+                        reminders = buildReminders(
+                            ReminderOwner.Appointment(appointmentId),
+                            ReminderPolicy.appointmentOffsets(false, preferences),
+                            emptyList(),
+                            ids,
+                            now,
+                        ),
+                        title = title,
+                        notes = rest,
+                        timing = AppointmentTiming.Timed(
+                            start = nextFullHour(),
+                            end = null,
+                            timeZone = time.timeZone(),
+                        ),
+                        createdAt = now,
+                        updatedAt = now,
+                    ),
+                )
+            }
 
             ConversionType.Matter -> {
                 val matter = Matter(

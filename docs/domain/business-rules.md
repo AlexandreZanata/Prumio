@@ -57,7 +57,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   offered first in the UI.
 
 ### BR-GEN-006 — Nothing changes state by being ignored
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Ignoring or swiping away a notification, letting a date pass or not opening the app
   never completes, dismisses, resolves or deletes anything. Overdue items stay visible until the
   user acts on them.
@@ -201,7 +201,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   unless the series has ended (BR-REC-006).
 
 ### BR-TASK-006 — Default reminder
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** When a due time is set on a task that has no reminders, an "at time" reminder (offset 0)
   is added; the user may remove it. Tasks with only a due date get no reminder by default (they
   appear in Today and in the morning summary).
@@ -247,7 +247,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   Editing the time re-anchors it to the current device time zone.
 
 ### BR-APPT-004 — Default advance notice
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** A new timed appointment gets one reminder with the default advance notice from settings
   (default 30 minutes). A new all-day appointment gets one reminder on its first day at the default
   reminder time (BR-REM-004). The user may change or remove them.
@@ -320,7 +320,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   future dates rejected). Notes can be edited or deleted; system entries cannot.
 
 ### BR-MATTER-009 — Follow-up
-- **Status:** planned · **Phase:** 1 (logic), 5 (reminder)
+- **Status:** implemented · **Phase:** 1 (logic), 4 (reminder)
 - **Rule:** An `Open` or `Waiting` matter may have a follow-up date with an optional time. On that
   date a follow-up reminder is delivered (BR-REM-004). The follow-up is cleared when resolved and
   can be cleared or moved at any time; each change appends an entry.
@@ -356,53 +356,53 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
 Full design: [reminders-and-notifications.md](reminders-and-notifications.md).
 
 ### BR-REM-001 — Notifications are derived from data
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** The set of scheduled alarms is always the output of `ReminderPlanner` applied to the
   database. No feature, ViewModel or use case schedules or cancels an alarm directly.
 
 ### BR-REM-002 — Reconciliation triggers
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Alarms are reconciled on: app start; any change to reminder-relevant data or settings;
   device boot; app update; time or time zone change; exact-alarm permission change; after each alarm
   fires; and at least once every 24 hours by a background job.
 
 ### BR-REM-003 — Planning window
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Alarms are planned for the next 14 days, at most 200 at a time (earliest first).
   Reconciliation keeps the window moving.
 
 ### BR-REM-004 — Anchors and trigger times
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Anchor = task due date at due time (or the default reminder time when undated in time);
   appointment occurrence start instant (all-day: first day at the default reminder time); matter
   follow-up date at follow-up time (or the default reminder time). Trigger = anchor − offset.
   Matters have exactly one implicit follow-up reminder at offset 0.
 
 ### BR-REM-005 — What produces reminders
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Only open tasks, unresolved matters with a follow-up, and appointment occurrences whose
   trigger is in the future produce alarms. Completing, dismissing, resolving or deleting an item
   removes its alarms at the next reconciliation.
 
 ### BR-REM-006 — Ignored notifications change nothing
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** See BR-GEN-006. A delivered notification that the user ignores stays in the shade until
   dismissed by the user or replaced; the item is untouched.
 
 ### BR-REM-007 — Snooze
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Snooze options: 10 minutes, 1 hour, Tomorrow (at the default reminder time). Snoozing
   reschedules that notification only; a new snooze replaces the previous one; the item is unchanged.
   A snooze is discarded when the item is completed, dismissed, resolved, deleted or its anchor changes.
 
 ### BR-REM-008 — Notification actions
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Task reminder: Complete, Snooze, open on tap. Appointment reminder: Snooze, open on tap.
   Matter follow-up: Snooze (Tomorrow only), open on tap. Complete from a notification follows
   BR-TASK-003/BR-TASK-005 exactly as in the app.
 
 ### BR-REM-009 — Missed reminders
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** A reminder whose trigger passed while the device was off or the alarm could not fire is
   delivered once at the next reconciliation if it is less than 12 hours late; older ones are skipped
   (the item is still visible in Today). A reminder is never delivered twice.
@@ -426,33 +426,39 @@ Full design: [reminders-and-notifications.md](reminders-and-notifications.md).
   need attention. Not sent when all three counts are zero.
 
 ### BR-REM-013 — Exact alarms
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** With the exact-alarm permission granted, alarms fire at the exact minute; otherwise
   inexact alarms are used and Settings → Reminder reliability explains that reminders may be late by
   several minutes, with a button to grant the permission.
 
 ### BR-REM-014 — Asking for notification permission
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** The notification permission (Android 13+) is requested only when the user first creates
   a reminder or enables a summary, after a one-sentence explanation. If denied, reminders are still
   planned and a calm, dismissible banner in Settings explains how to enable them. Never ask again
   automatically after two denials.
 
 ### BR-REM-015 — One notification per item
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Each item has at most one visible notification; a newer reminder for the same item
   replaces the previous one.
 
 ### BR-REM-016 — Channels
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Notification channels: **Reminders** (tasks and appointments, high importance),
   **Follow-ups** (matters, default importance), **Summaries** (morning summary, weekly review, low
   importance). Users control them in system settings.
 
 ### BR-REM-017 — Opening a notification
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Tapping a notification opens the item's detail screen (task, appointment or matter) with
   Today underneath; summaries open Today. If the item no longer exists, Today opens with a short message.
+
+---
+
+### BR-REM-018 — Reminder offsets
+- **Status:** implemented · **Phase:** 4
+- **Rule:** An item has at most five unique nonnegative reminder offsets in minutes. Zero means at time. Explicitly removing all reminders is respected. Presets are listed in model.md.
 
 ---
 
@@ -537,7 +543,7 @@ Full specification: [recurrence.md](recurrence.md).
   without opening Settings. Unknown or invalid stored values fall back to the default.
 
 ### BR-SET-002 — Settings affect reminders immediately
-- **Status:** planned · **Phase:** 4
+- **Status:** implemented · **Phase:** 4
 - **Rule:** Changing a reminder-related setting (default reminder time, advance notice, quiet hours,
   summary, review) triggers reconciliation (BR-REM-002).
 

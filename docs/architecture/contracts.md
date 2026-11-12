@@ -158,7 +158,7 @@ the flow instead of spinning under virtual time.
 ```kotlin
 interface ReminderRepository {
     fun observeAll(): Flow<List<Reminder>>
-    suspend fun replaceFor(owner: ReminderOwner, offsets: Set<Int>)   // one transaction
+    suspend fun replaceFor(owner: ReminderOwner, reminders: List<Reminder>)   // one transaction
 }
 
 interface AlarmScheduler {                                            // :core:notifications
@@ -170,7 +170,10 @@ interface AlarmScheduler {                                            // :core:n
 interface NotificationPresenter {                                     // :core:notifications
     suspend fun show(content: NotificationContent)
     suspend fun cancelFor(itemKey: String)
-    fun areNotificationsEnabled(): Boolean
+}
+
+interface NotificationAccess {
+    fun status(): NotificationAccessState  // notification, requestability, exact access, battery facts
 }
 
 interface ScheduledAlarmStore {                                       // :core:data
@@ -192,7 +195,7 @@ interface DeliveredAlarmStore {
 
 /** Requests a reconciliation from anywhere (receivers, workers, settings changes). Debounced. */
 interface ReminderReconciliationTrigger {
-    fun request()
+    fun request(forceReschedule: Boolean = false)
 }
 ```
 

@@ -44,3 +44,7 @@ Specification: [docs/architecture/database-schema.md](../../docs/architecture/da
 `./gradlew :core:database:testAndroidHostTest` (in-memory database from `:core:database-testing`,
 `src/androidHostTest`). `SchemaTest` covers constraints, cascades and ordering.
 Migration verification runs in `check`.
+
+## Phase 4 reminders
+
+Schema 1 adds reminder, scheduled_alarm, snooze and delivered_alarm with a regenerated snapshot. Android onOpen preserves existing pre-release debug data using the additive bridge (ADR-0023). Tests cover constraints and old-v1 preservation on API 26/36.

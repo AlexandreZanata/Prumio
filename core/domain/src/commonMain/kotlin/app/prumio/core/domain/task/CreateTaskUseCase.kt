@@ -8,6 +8,9 @@ import app.prumio.core.common.valueOr
 import app.prumio.core.domain.error.DomainError
 import app.prumio.core.domain.matter.MatterHistory
 import app.prumio.core.domain.matter.MatterRepository
+import app.prumio.core.domain.reminder.ReminderPolicy
+import app.prumio.core.domain.reminder.buildReminders
+import app.prumio.core.model.ReminderOwner
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
 
@@ -34,6 +37,10 @@ class CreateTaskUseCase(
             createdAt = now,
             updatedAt = now,
         )
-        return writer.save(previous = null, task = task)
+        val offsets = ReminderPolicy.taskOffsets(valid.dueTime, null, emptyList(), valid.reminderOffsets)
+        return writer.save(
+            previous = null,
+            task = task.copy(reminders = buildReminders(ReminderOwner.Task(task.id), offsets, emptyList(), ids, now)),
+        )
     }
 }

@@ -5,15 +5,20 @@ import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
 import app.cash.sqldelight.coroutines.mapToOneOrNull
 import app.prumio.core.common.coroutines.DispatcherProvider
+import app.prumio.core.data.storage.byOwner
+import app.prumio.core.data.storage.remindersFor
+import app.prumio.core.data.storage.replaceReminders
 import app.prumio.core.data.storage.toColumn
 import app.prumio.core.data.storage.toModel
 import app.prumio.core.data.storage.upsertTask
 import app.prumio.core.database.PrumioDatabase
 import app.prumio.core.domain.task.TaskRepository
 import app.prumio.core.model.MatterId
+import app.prumio.core.model.ReminderOwner
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDate
@@ -26,11 +31,26 @@ internal class SqlDelightTaskRepository(
 ) : TaskRepository {
     private val queries = database.taskQueries
 
-    private fun Query<TaskRow>.observeList(): Flow<List<Task>> =
-        asFlow().mapToList(dispatchers.io).map { rows -> rows.map { it.toModel() } }
+    private fun Query<TaskRow>.observeList(): Flow<List<Task>> = asFlow().mapToList(
+        dispatchers.io,
+    ).combine(database.reminderQueries.selectAll().asFlow().mapToList(dispatchers.io)) {
+            rows,
+            reminders,
+        ->
+        val byOwner = reminders.byOwner("TASK")
+        rows.map { it.toModel(byOwner[it.id].orEmpty()) }
+    }
 
-    override fun observe(id: TaskId): Flow<Task?> =
-        queries.selectById(id.value).asFlow().mapToOneOrNull(dispatchers.io).map { it?.toModel() }
+    override fun observe(id: TaskId): Flow<Task?> = queries.selectById(
+        id.value,
+    ).asFlow().mapToOneOrNull(
+        dispatchers.io,
+    ).combine(database.reminderQueries.selectAll().asFlow().mapToList(dispatchers.io)) {
+            row,
+            reminders,
+        ->
+        row?.let { row -> row.toModel(reminders.byOwner("TASK")[row.id].orEmpty()) }
+    }
 
     override fun observeOpen(): Flow<List<Task>> = queries.selectOpen().observeList()
 
@@ -51,11 +71,13 @@ internal class SqlDelightTaskRepository(
         queries.selectByMatter(matterId.value).observeList()
 
     override suspend fun get(id: TaskId): Task? = withContext(dispatchers.io) {
-        queries.selectById(id.value).executeAsOneOrNull()?.toModel()
+        queries.selectById(id.value).executeAsOneOrNull()?.let { row ->
+            row.toModel(database.remindersFor("TASK", row.id))
+        }
     }
 
     override suspend fun getByMatter(matterId: MatterId): List<Task> = withContext(dispatchers.io) {
-        queries.selectByMatter(matterId.value).executeAsList().map { it.toModel() }
+        queries.selectByMatter(matterId.value).executeAsList().map { it.toModel(database.remindersFor("TASK", it.id)) }
     }
 
     override suspend fun save(task: Task) = withContext(dispatchers.io) {
@@ -63,7 +85,10 @@ internal class SqlDelightTaskRepository(
     }
 
     override suspend fun delete(id: TaskId) = withContext(dispatchers.io) {
-        queries.deleteById(id.value)
+        database.transaction {
+            database.replaceReminders(ReminderOwner.Task(id), emptyList())
+            queries.deleteById(id.value)
+        }
         Unit
     }
 }

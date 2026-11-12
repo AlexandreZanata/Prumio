@@ -30,3 +30,7 @@
   prefer them over mocking libraries (none are used in Prumio).
 - Classes named `Fake*` live only here (architecture test enforces it).
 - Builders give every field a sensible default so tests only state what matters.
+
+## Phase 4 reminders
+
+ReminderTestEnvironment wires real operations to controllable scheduler, notification, access and scheduling-state fakes. TestUseCases includes contextual permission/reliability and link operations. Appointment and task fakes preserve aggregate reminders.

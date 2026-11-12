@@ -5,6 +5,7 @@ import app.prumio.core.common.asFailure
 import app.prumio.core.common.asSuccess
 import app.prumio.core.common.valueOr
 import app.prumio.core.domain.error.DomainError
+import app.prumio.core.domain.reminder.normalizedOffsets
 import app.prumio.core.domain.text.TextLimits
 import app.prumio.core.domain.text.ValidationReasons
 import app.prumio.core.domain.text.optionalText
@@ -29,6 +30,7 @@ data class AppointmentDraft(
     val notes: String? = null,
     val location: String? = null,
     val matterId: MatterId? = null,
+    val reminderOffsets: List<Int>? = null,
 )
 
 /**
@@ -37,6 +39,7 @@ data class AppointmentDraft(
  * Rules: BR-APPT-001 (title and start required), BR-APPT-002 (end not before start), BR-GEN-002.
  */
 fun AppointmentDraft.normalized(): Outcome<AppointmentDraft, DomainError> {
+    val offsets = reminderOffsets?.let { normalizedOffsets(it).valueOr { error -> return error.asFailure() } }
     val title = requiredText(title, field = "title", max = TextLimits.TITLE, ruleId = "BR-APPT-001")
         .valueOr { return it.asFailure() }
     val notes = optionalText(notes, field = "notes", max = TextLimits.NOTES).valueOr { return it.asFailure() }
@@ -54,7 +57,7 @@ fun AppointmentDraft.normalized(): Outcome<AppointmentDraft, DomainError> {
             reason = ValidationReasons.END_BEFORE_START,
         ).asFailure()
     }
-    return copy(title = title, notes = notes, location = location).asSuccess()
+    return copy(reminderOffsets = offsets, title = title, notes = notes, location = location).asSuccess()
 }
 
 /** The stored timing: timed schedules are anchored to [zone] (BR-APPT-003, BR-TIME-002). */

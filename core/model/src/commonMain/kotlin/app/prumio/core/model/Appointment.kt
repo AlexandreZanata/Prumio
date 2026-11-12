@@ -14,6 +14,7 @@ data class Appointment(
     val timing: AppointmentTiming,
     val recurrence: RecurrenceRule? = null,
     val matterId: MatterId? = null,
+    val reminders: List<Reminder> = emptyList(),
     val createdAt: Instant,
     val updatedAt: Instant,
 ) {

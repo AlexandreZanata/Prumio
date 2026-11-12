@@ -21,6 +21,7 @@ compose-material3 = "1.9.0"
 
 # Libraries
 androidx-activity = "1.13.0"
+androidx-work = "2.12.0"
 androidx-core = "1.19.1"
 androidx-lifecycle-jb = "2.11.0"
 androidx-navigation3 = "1.2.0"
@@ -81,6 +82,7 @@ androidx-savedstate = { module = "org.jetbrains.androidx.savedstate:savedstate",
 
 # AndroidX, Android only (allowed in androidMain and :app:android)
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity" }
+androidx-work-runtime = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-work" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 
 # Dependency injection

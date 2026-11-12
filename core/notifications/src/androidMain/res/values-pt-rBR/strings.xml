@@ -1,0 +1,10 @@
+<resources>
+    <string name="channel_reminders">Lembretes</string>
+    <string name="channel_follow_ups">Acompanhamentos</string>
+    <string name="channel_summaries">Resumos</string>
+    <string name="reminder_task_due">Prazo: %1$s</string>
+    <string name="reminder_appointment_at">Em %1$s · %2$s</string>
+    <string name="reminder_matter_follow_up">Verificar novamente: %1$s</string>
+    <string name="reminder_complete">Concluir</string>
+    <string name="reminder_snooze">Lembrar depois</string>
+</resources>

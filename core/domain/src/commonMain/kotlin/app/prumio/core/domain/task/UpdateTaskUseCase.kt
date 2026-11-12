@@ -10,6 +10,9 @@ import app.prumio.core.domain.error.notFound
 import app.prumio.core.domain.error.storageCall
 import app.prumio.core.domain.matter.MatterHistory
 import app.prumio.core.domain.matter.MatterRepository
+import app.prumio.core.domain.reminder.ReminderPolicy
+import app.prumio.core.domain.reminder.buildReminders
+import app.prumio.core.model.ReminderOwner
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
 
@@ -17,7 +20,7 @@ import app.prumio.core.model.TaskId
 class UpdateTaskUseCase(
     private val tasks: TaskRepository,
     matters: MatterRepository,
-    ids: IdGenerator,
+    private val ids: IdGenerator,
     private val time: TimeProvider,
 ) {
     private val writer = TaskWriter(tasks, matters, MatterHistory(ids, time))
@@ -26,6 +29,20 @@ class UpdateTaskUseCase(
         val valid = draft.normalized().valueOr { return it.asFailure() }
         val task = storageCall { tasks.get(id) }.valueOr { return it.asFailure() } ?: return notFound("Task", id.value)
         val updated = task.copy(
+            reminders = buildReminders(
+                ReminderOwner.Task(task.id),
+                ReminderPolicy.taskOffsets(
+                    valid.dueTime,
+                    task.dueTime,
+                    task.reminders.map {
+                        it.offsetMinutes
+                    },
+                    valid.reminderOffsets,
+                ),
+                task.reminders,
+                ids,
+                time.now(),
+            ),
             title = valid.title,
             notes = valid.notes,
             dueDate = valid.dueDate,

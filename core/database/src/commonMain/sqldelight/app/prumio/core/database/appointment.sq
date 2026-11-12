@@ -80,3 +80,6 @@ WHERE id = :id;
 deleteById:
 DELETE FROM appointment
 WHERE id = :id;
+
+selectAll:
+SELECT * FROM appointment ORDER BY start_date, start_time, id;

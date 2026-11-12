@@ -1,0 +1,9 @@
+CREATE TABLE scheduled_alarm (key TEXT NOT NULL PRIMARY KEY, trigger_at INTEGER NOT NULL, request_code INTEGER NOT NULL UNIQUE);
+selectAll:
+SELECT * FROM scheduled_alarm ORDER BY key;
+put:
+INSERT OR REPLACE INTO scheduled_alarm(key, trigger_at, request_code) VALUES (?, ?, ?);
+deleteByKey:
+DELETE FROM scheduled_alarm WHERE key = :key;
+deleteAll:
+DELETE FROM scheduled_alarm;

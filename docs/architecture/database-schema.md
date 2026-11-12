@@ -145,3 +145,6 @@ Notes:
 - Every migration gets a data test: insert rows at version N, migrate, assert rows at N+1.
 
 Recipe: [ai/recipes/add-database-table.md](../ai/recipes/add-database-table.md).
+
+Phase 4 adds reminder and scheduling-state tables to unreleased schema v1. Owner repository
+transactions replace wishes with stable identities and delete them atomically with the owner.

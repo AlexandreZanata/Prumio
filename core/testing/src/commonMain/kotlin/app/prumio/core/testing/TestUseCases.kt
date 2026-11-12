@@ -29,6 +29,10 @@ import app.prumio.core.domain.matter.ResumeMatterUseCase
 import app.prumio.core.domain.matter.SetMatterFollowUpUseCase
 import app.prumio.core.domain.matter.UpdateMatterUseCase
 import app.prumio.core.domain.matter.WaitOnMatterUseCase
+import app.prumio.core.domain.reminder.CheckReminderPermissionUseCase
+import app.prumio.core.domain.reminder.GetReminderReliabilityUseCase
+import app.prumio.core.domain.reminder.RecordNotificationPermissionUseCase
+import app.prumio.core.domain.reminder.ResolveReminderLinkUseCase
 import app.prumio.core.domain.search.SearchUseCase
 import app.prumio.core.domain.settings.ObserveSettingsUseCase
 import app.prumio.core.domain.settings.UpdateSettingUseCase
@@ -56,9 +60,26 @@ class TestUseCases(
     val time: FakeTimeProvider = FakeTimeProvider(),
     val ids: FakeIdGenerator = FakeIdGenerator(),
 ) {
+    val notificationAccess = FakeNotificationAccess()
+    val getReminderReliability get() = GetReminderReliabilityUseCase(
+        notificationAccess,
+        repos.settings,
+        repos.reminders,
+        repos.matters,
+    )
+    val checkReminderPermission get() = CheckReminderPermissionUseCase(
+        notificationAccess,
+        repos.settings,
+    )
+    val recordNotificationPermission get() = RecordNotificationPermissionUseCase(
+        repos.settings,
+        time,
+    )
+    val resolveReminderLink get() = ResolveReminderLinkUseCase(repos.tasks, repos.appointments, repos.matters)
+
     // Inbox
     val captureInboxItem get() = CaptureInboxItemUseCase(repos.inbox, ids, time)
-    val convertInboxItem get() = ConvertInboxItemUseCase(repos.inbox, ids, time)
+    val convertInboxItem get() = ConvertInboxItemUseCase(repos.inbox, ids, time, repos.settings)
     val discardInboxItem get() = DiscardInboxItemUseCase(repos.inbox)
     val editInboxItem get() = EditInboxItemUseCase(repos.inbox, time)
     val observeInbox get() = ObserveInboxUseCase(repos.inbox)
@@ -79,13 +100,13 @@ class TestUseCases(
     val updateTask get() = UpdateTaskUseCase(repos.tasks, repos.matters, ids, time)
 
     // Appointments and agenda
-    val createAppointment get() = CreateAppointmentUseCase(repos.appointments, repos.matters, ids, time)
+    val createAppointment get() = CreateAppointmentUseCase(repos.appointments, repos.matters, ids, time, repos.settings)
     val deleteAppointment get() = DeleteAppointmentUseCase(repos.appointments)
     val observeAgenda get() = ObserveAgendaUseCase(observeAppointments, repos.tasks, time)
     val observeAppointment get() = ObserveAppointmentUseCase(repos.appointments)
     val observeAppointments get() = ObserveAppointmentsUseCase(repos.appointments, time)
     val restoreAppointment get() = RestoreAppointmentUseCase(repos.appointments, repos.matters)
-    val updateAppointment get() = UpdateAppointmentUseCase(repos.appointments, repos.matters, time)
+    val updateAppointment get() = UpdateAppointmentUseCase(repos.appointments, repos.matters, time, ids)
 
     // Matters
     val addMatterNote get() = AddMatterNoteUseCase(repos.matters, ids, time)

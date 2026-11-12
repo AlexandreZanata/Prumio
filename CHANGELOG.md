@@ -6,6 +6,15 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Phase 4 reminders: persistent wishes, deterministic 14-day/200-alarm planning, serialized reconciliation,
+  Android exact/inexact alarms, localized notifications and actions, snooze, validated deep links,
+  debounced updates, daily background recovery and permission/reliability settings.
+- Reminder editing/defaults and summaries; additive pre-release database upgrade preserving debug data.
+- Version 0.1.0 build and local release signing configuration. Unsigned artifact prepared at the owner's
+  request; signed publication and G4 dogfooding remain pending.
+
+
+### Added
 - Phase 3 Organize (P3.01–P3.14): capture, Inbox organization, task/appointment/matter screens,
   live Today/Agenda, offline search, theme/language/About, app-wide Inbox badge and Undo;
   English/pt-BR, ViewModel coverage gates and screen screenshot baselines.

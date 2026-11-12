@@ -49,3 +49,7 @@ New repository → [docs/ai/recipes/add-repository.md](../../docs/ai/recipes/add
 
 `./gradlew :core:data:testAndroidHostTest`. Repository tests use a real in-memory SQLite database
 (`src/androidHostTest`) — never mocks of SQLDelight.
+
+## Phase 4 reminders
+
+Reminder wishes are saved atomically with task/appointment writes and delete/Undo. ReminderRepository and scheduling/snooze/delivery stores implement domain ports; reminder-only edits invalidate aggregate observation flows.

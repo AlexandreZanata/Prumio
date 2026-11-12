@@ -5,6 +5,7 @@ import app.prumio.core.common.asFailure
 import app.prumio.core.common.asSuccess
 import app.prumio.core.common.valueOr
 import app.prumio.core.domain.error.DomainError
+import app.prumio.core.domain.reminder.normalizedOffsets
 import app.prumio.core.domain.text.TextLimits
 import app.prumio.core.domain.text.optionalText
 import app.prumio.core.domain.text.requiredText
@@ -21,6 +22,7 @@ data class TaskDraft(
     val dueTime: LocalTime? = null,
     val recurrence: TaskRecurrence? = null,
     val matterId: MatterId? = null,
+    val reminderOffsets: List<Int>? = null,
 )
 
 /**
@@ -30,10 +32,12 @@ data class TaskDraft(
  * time and recurrence).
  */
 fun TaskDraft.normalized(): Outcome<TaskDraft, DomainError> {
+    val offsets = reminderOffsets?.let { normalizedOffsets(it).valueOr { error -> return error.asFailure() } }
     val title = requiredText(title, field = "title", max = TextLimits.TITLE, ruleId = "BR-TASK-001")
         .valueOr { return it.asFailure() }
     val notes = optionalText(notes, field = "notes", max = TextLimits.NOTES).valueOr { return it.asFailure() }
     return copy(
+        reminderOffsets = offsets,
         title = title,
         notes = notes,
         dueTime = dueTime.takeIf { dueDate != null },

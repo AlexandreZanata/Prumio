@@ -28,6 +28,9 @@ re-litigates it by accident or breaks it unknowingly. Format: [template.md](temp
 
 | [0021](0021-scope-application-chrome-to-shell-viewmodel.md) | Sole ShellViewModel exception for application theme and Inbox badge (owner approved) | Accepted |
 
+| [0022](0022-use-workmanager-and-serialized-reminder-projection.md) | Serialized reminder projection and offline WorkManager safety net | Accepted |
+| [0023](0023-preserve-pre-release-debug-data-when-extending-schema-one.md) | Additive pre-release schema bridge preserves installed debug data | Accepted |
+
 ## When to write an ADR
 
 - Choosing or replacing a library, a pattern or a module boundary.

@@ -23,6 +23,7 @@ data class Task(
     val matterId: MatterId? = null,
     val completedAt: Instant? = null,
     val dismissedAt: Instant? = null,
+    val reminders: List<Reminder> = emptyList(),
     val createdAt: Instant,
     val updatedAt: Instant,
 ) {

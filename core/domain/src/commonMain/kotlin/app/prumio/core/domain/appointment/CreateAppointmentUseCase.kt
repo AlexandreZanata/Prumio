@@ -9,8 +9,14 @@ import app.prumio.core.common.valueOr
 import app.prumio.core.domain.error.DomainError
 import app.prumio.core.domain.error.storageCall
 import app.prumio.core.domain.matter.MatterRepository
+import app.prumio.core.domain.reminder.ReminderPolicy
+import app.prumio.core.domain.reminder.buildReminders
+import app.prumio.core.domain.settings.SettingKeys
+import app.prumio.core.domain.settings.SettingsRepository
 import app.prumio.core.model.Appointment
 import app.prumio.core.model.AppointmentId
+import app.prumio.core.model.ReminderOwner
+import kotlinx.coroutines.flow.first
 
 /** Creates an appointment anchored to the current device zone. Rules: BR-APPT-001, BR-APPT-002, BR-APPT-003. */
 class CreateAppointmentUseCase(
@@ -18,6 +24,7 @@ class CreateAppointmentUseCase(
     private val matters: MatterRepository,
     private val ids: IdGenerator,
     private val time: TimeProvider,
+    private val settings: SettingsRepository,
 ) {
     suspend operator fun invoke(draft: AppointmentDraft): Outcome<Appointment, DomainError> {
         val valid = draft.normalized().valueOr { return it.asFailure() }
@@ -33,6 +40,13 @@ class CreateAppointmentUseCase(
             createdAt = now,
             updatedAt = now,
         )
-        return storageCall { appointments.save(appointment) }.map { appointment }
+        val preferences = storageCall {
+            SettingKeys.read(settings.observeValues().first())
+        }.valueOr { return it.asFailure() }
+        val offsets = valid.reminderOffsets ?: ReminderPolicy.appointmentOffsets(appointment.isAllDay, preferences)
+        val saved = appointment.copy(
+            reminders = buildReminders(ReminderOwner.Appointment(appointment.id), offsets, emptyList(), ids, now),
+        )
+        return storageCall { appointments.save(saved) }.map { saved }
     }
 }

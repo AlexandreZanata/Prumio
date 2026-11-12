@@ -7,6 +7,8 @@ import kotlinx.datetime.LocalDate
 
 /** Port: storage of appointments (docs/architecture/contracts.md#appointments-phase-1-exceptions-phase-5). */
 interface AppointmentRepository {
+    fun observeAll(): Flow<List<Appointment>>
+
     fun observe(id: AppointmentId): Flow<Appointment?>
 
     /**

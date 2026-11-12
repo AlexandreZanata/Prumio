@@ -11,6 +11,7 @@ import app.prumio.core.model.MatterEntryId
 import app.prumio.core.model.MatterEntryKind
 import app.prumio.core.model.MatterId
 import app.prumio.core.model.MatterStatus
+import app.prumio.core.model.Reminder
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
 import app.prumio.core.model.TaskStatus
@@ -31,7 +32,8 @@ internal fun InboxItemRow.toModel() = InboxItem(
     updatedAt = updated_at.toInstant(),
 )
 
-internal fun TaskRow.toModel() = Task(
+internal fun TaskRow.toModel(reminders: List<Reminder> = emptyList()) = Task(
+    reminders = reminders,
     id = TaskId(id),
     title = title,
     notes = notes,
@@ -46,7 +48,7 @@ internal fun TaskRow.toModel() = Task(
     updatedAt = updated_at.toInstant(),
 )
 
-internal fun AppointmentRow.toModel(): Appointment {
+internal fun AppointmentRow.toModel(reminders: List<Reminder> = emptyList()): Appointment {
     val timing = if (all_day == 1L) {
         AppointmentTiming.AllDay(startDate = start_date.toLocalDate(), endDate = end_date.toLocalDate())
     } else {
@@ -57,7 +59,7 @@ internal fun AppointmentRow.toModel(): Appointment {
         )
     }
     return Appointment(
-        id = AppointmentId(id),
+        reminders = reminders, id = AppointmentId(id),
         title = title,
         notes = notes,
         location = location,

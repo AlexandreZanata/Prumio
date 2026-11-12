@@ -29,6 +29,18 @@ import app.prumio.core.domain.matter.ResumeMatterUseCase
 import app.prumio.core.domain.matter.SetMatterFollowUpUseCase
 import app.prumio.core.domain.matter.UpdateMatterUseCase
 import app.prumio.core.domain.matter.WaitOnMatterUseCase
+import app.prumio.core.domain.reminder.CheckReminderPermissionUseCase
+import app.prumio.core.domain.reminder.CompleteTaskFromNotificationUseCase
+import app.prumio.core.domain.reminder.DeliverAlarmUseCase
+import app.prumio.core.domain.reminder.GetReminderReliabilityUseCase
+import app.prumio.core.domain.reminder.NotificationContentFactory
+import app.prumio.core.domain.reminder.ObserveReminderInputsUseCase
+import app.prumio.core.domain.reminder.ReconcileRemindersUseCase
+import app.prumio.core.domain.reminder.RecordNotificationPermissionUseCase
+import app.prumio.core.domain.reminder.ReminderCoordinator
+import app.prumio.core.domain.reminder.ReminderPlanner
+import app.prumio.core.domain.reminder.ResolveReminderLinkUseCase
+import app.prumio.core.domain.reminder.SnoozeAlarmUseCase
 import app.prumio.core.domain.search.SearchUseCase
 import app.prumio.core.domain.settings.ObserveSettingsUseCase
 import app.prumio.core.domain.settings.UpdateSettingUseCase
@@ -48,10 +60,24 @@ import app.prumio.core.domain.today.GetDayPeriodUseCase
 import app.prumio.core.domain.today.ObserveCurrentDateUseCase
 import app.prumio.core.domain.today.ObserveTodayUseCase
 import org.koin.core.module.dsl.factoryOf
+import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-/** Registers every use case. Use cases are stateless: always `factoryOf`. Keep alphabetical. */
+/** Use cases are factories. ReminderCoordinator is the shared serialization state (ADR-0022). */
 val coreDomainModule = module {
+    singleOf(::ReminderCoordinator)
+    factoryOf(::ResolveReminderLinkUseCase)
+    factoryOf(::GetReminderReliabilityUseCase)
+    factoryOf(::ReminderPlanner)
+    factoryOf(::NotificationContentFactory)
+    factoryOf(::ObserveReminderInputsUseCase)
+    factoryOf(::ReconcileRemindersUseCase)
+    factoryOf(::DeliverAlarmUseCase)
+    factoryOf(::SnoozeAlarmUseCase)
+    factoryOf(::CompleteTaskFromNotificationUseCase)
+    factoryOf(::CheckReminderPermissionUseCase)
+    factoryOf(::RecordNotificationPermissionUseCase)
+
     factoryOf(::AddMatterNoteUseCase)
     factoryOf(::CaptureInboxItemUseCase)
     factoryOf(::CompleteTaskUseCase)

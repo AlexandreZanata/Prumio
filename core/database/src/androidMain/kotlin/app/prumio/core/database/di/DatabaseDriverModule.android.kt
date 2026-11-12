@@ -15,6 +15,11 @@ internal actual val databaseDriverModule: Module = module {
             context = androidContext(),
             name = DATABASE_FILE_NAME,
             callback = object : AndroidSqliteDriver.Callback(PrumioDatabase.Schema) {
+                override fun onOpen(db: SupportSQLiteDatabase) {
+                    super.onOpen(db)
+                    ensurePreReleaseReminderTables(db)
+                }
+
                 override fun onConfigure(db: SupportSQLiteDatabase) {
                     super.onConfigure(db)
                     db.setForeignKeyConstraintsEnabled(true)

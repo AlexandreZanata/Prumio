@@ -33,8 +33,9 @@ app.prumio.core.domain
 ├── appointment/  AppointmentRepository, AppointmentDraft/Schedule, AppointmentTimePolicy, use cases
 ├── matter/       MatterRepository, MatterDraft, FollowUp, MatterHistory, NextActionPolicy,
 │                 MatterAttentionPolicy, status/notes/follow-up/overview/detail use cases
-├── today/        GetDayPeriodUseCase, ObserveTodayUseCase (TodaySnapshot)
-├── search/       SearchRepository, SearchText (normalization), SearchUseCase
+├── agenda/       ObserveAgendaUseCase (ordered AgendaDay/AgendaItem projection)
+├── today/        GetDayPeriodUseCase, ObserveCurrentDateUseCase, ObserveTodayUseCase (TodaySnapshot)
+├── search/       SearchRepository, SearchText (normalization), SearchUseCase, highlightRanges
 ├── settings/     SettingsRepository, SettingKey/SettingKeys, observe/update use cases
 ├── reminder/     (phase 4) planner, reconciler, scheduling ports
 ├── recurrence/   (phase 5) RRULE subset and occurrence engine

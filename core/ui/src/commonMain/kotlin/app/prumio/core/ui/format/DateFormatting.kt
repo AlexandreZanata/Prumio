@@ -24,6 +24,12 @@ expect fun formatShortDate(date: LocalDate, languageTag: String): String
 /** Full weekday name: "Friday" / "sexta-feira". */
 expect fun formatWeekday(date: LocalDate, languageTag: String): String
 
+/** Abbreviated weekday for compact rows such as the agenda week strip: "Mon" / "seg.". */
+expect fun formatShortWeekday(date: LocalDate, languageTag: String): String
+
+/** Month and year: "November 2026" / "novembro de 2026". */
+expect fun formatMonthYear(date: LocalDate, languageTag: String): String
+
 /** "15:30" or "3:30 PM" depending on [is24Hour]. */
 expect fun formatTime(time: LocalTime, is24Hour: Boolean, languageTag: String): String
 
@@ -39,6 +45,18 @@ private fun languageTag(): String = Locale.current.toLanguageTag()
 fun LocalDate.dayHeaderText(): String {
     val tag = languageTag()
     return remember(this, tag) { formatDayHeader(this, tag) }
+}
+
+@Composable
+fun LocalDate.shortWeekdayText(): String {
+    val tag = languageTag()
+    return remember(this, tag) { formatShortWeekday(this, tag) }
+}
+
+@Composable
+fun LocalDate.monthYearText(): String {
+    val tag = languageTag()
+    return remember(this, tag) { formatMonthYear(this, tag) }
 }
 
 /** "Today", "Tomorrow", "Yesterday", a weekday within the next week, else "Mon, 26 Jan". */

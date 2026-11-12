@@ -15,7 +15,7 @@
 | Test class | Rules |
 |---|---|
 | `LayerDependencyTest` | Features import only allowed layers; only the design system imports Material; common/model/domain are pure Kotlin; `commonMain` is platform neutral; Koin only in DI files and Routes |
-| `NamingConventionTest` | Use cases (location, single `operator fun invoke`); ViewModels (extend `PrumioViewModel`, internal, in features); screen file set; repositories (ports in domain, adapters in data); fakes in `:core:testing` |
+| `NamingConventionTest` | Use cases (location, single `operator fun invoke`); ViewModels (extend `PrumioViewModel`, internal, in features; exact ShellViewModel exception in ADR-0021); screen file set; repositories (ports in domain, adapters in data); fakes in `:core:testing` |
 | `DesignSystemTest` | `Prumio*` prefix; every shared composable listed in docs/design-system/components.md; no public composables in features |
 | `CodeHygieneTest` | No `GlobalScope`, `runBlocking`, `println`, `!!`, direct clocks/UUIDs; no `removeFirst/removeLast`; files ≤ 400 lines; package mirrors module and folders |
 | `ModuleStructureTest` | Every module has README.md + CLAUDE.md, is listed in docs/architecture/modules.md and wired in the shell; every navigation key is serializable |

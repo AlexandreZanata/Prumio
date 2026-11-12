@@ -24,6 +24,12 @@ actual fun formatShortDate(date: LocalDate, languageTag: String): String =
 actual fun formatWeekday(date: LocalDate, languageTag: String): String =
     pattern("EEEE", languageTag).format(date.toJavaLocalDate())
 
+actual fun formatShortWeekday(date: LocalDate, languageTag: String): String =
+    pattern("EEE", languageTag).format(date.toJavaLocalDate())
+
+actual fun formatMonthYear(date: LocalDate, languageTag: String): String =
+    pattern("MMMMy", languageTag).format(date.toJavaLocalDate())
+
 actual fun formatTime(time: LocalTime, is24Hour: Boolean, languageTag: String): String =
     pattern(if (is24Hour) "Hm" else "hm", languageTag).format(time.toJavaLocalTime())
 

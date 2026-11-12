@@ -1,5 +1,6 @@
 package app.prumio.core.domain.di
 
+import app.prumio.core.domain.agenda.ObserveAgendaUseCase
 import app.prumio.core.domain.appointment.CreateAppointmentUseCase
 import app.prumio.core.domain.appointment.DeleteAppointmentUseCase
 import app.prumio.core.domain.appointment.ObserveAppointmentUseCase
@@ -22,6 +23,7 @@ import app.prumio.core.domain.matter.ObserveMatterDetailUseCase
 import app.prumio.core.domain.matter.ObserveMattersUseCase
 import app.prumio.core.domain.matter.ReopenMatterUseCase
 import app.prumio.core.domain.matter.ResolveMatterUseCase
+import app.prumio.core.domain.matter.RestoreMatterNoteUseCase
 import app.prumio.core.domain.matter.RestoreMatterUseCase
 import app.prumio.core.domain.matter.ResumeMatterUseCase
 import app.prumio.core.domain.matter.SetMatterFollowUpUseCase
@@ -40,8 +42,10 @@ import app.prumio.core.domain.task.ObserveTaskUseCase
 import app.prumio.core.domain.task.PostponeTaskUseCase
 import app.prumio.core.domain.task.ReopenTaskUseCase
 import app.prumio.core.domain.task.RestoreTaskUseCase
+import app.prumio.core.domain.task.SetTaskDoneUseCase
 import app.prumio.core.domain.task.UpdateTaskUseCase
 import app.prumio.core.domain.today.GetDayPeriodUseCase
+import app.prumio.core.domain.today.ObserveCurrentDateUseCase
 import app.prumio.core.domain.today.ObserveTodayUseCase
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
@@ -65,8 +69,10 @@ val coreDomainModule = module {
     factoryOf(::EditMatterNoteUseCase)
     factoryOf(::GetDayPeriodUseCase)
     factoryOf(::LinkTaskToMatterUseCase)
+    factoryOf(::ObserveAgendaUseCase)
     factoryOf(::ObserveAppointmentUseCase)
     factoryOf(::ObserveAppointmentsUseCase)
+    factoryOf(::ObserveCurrentDateUseCase)
     factoryOf(::ObserveInboxCountUseCase)
     factoryOf(::ObserveInboxUseCase)
     factoryOf(::ObserveMatterDetailUseCase)
@@ -81,11 +87,13 @@ val coreDomainModule = module {
     factoryOf(::ResolveMatterUseCase)
     factoryOf(::RestoreAppointmentUseCase)
     factoryOf(::RestoreInboxItemUseCase)
+    factoryOf(::RestoreMatterNoteUseCase)
     factoryOf(::RestoreMatterUseCase)
     factoryOf(::RestoreTaskUseCase)
     factoryOf(::ResumeMatterUseCase)
     factoryOf(::SearchUseCase)
     factoryOf(::SetMatterFollowUpUseCase)
+    factoryOf(::SetTaskDoneUseCase)
     factoryOf(::UpdateAppointmentUseCase)
     factoryOf(::UpdateMatterUseCase)
     factoryOf(::UpdateSettingUseCase)

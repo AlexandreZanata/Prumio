@@ -3,7 +3,6 @@ package app.prumio.core.ui.message
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.staticCompositionLocalOf
 import app.prumio.core.designsystem.component.PrumioMessenger
 import app.prumio.core.domain.error.DomainError
@@ -17,19 +16,19 @@ import app.prumio.core.ui.resources.validation_end_before_start
 import app.prumio.core.ui.resources.validation_future_date
 import app.prumio.core.ui.resources.validation_not_editable
 import app.prumio.core.ui.resources.validation_too_long
-import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.getString
 
 /**
  * A short message for the user, emitted by ViewModels as an effect (docs/architecture/presentation-pattern.md).
- * [onAction] runs when the user taps [actionLabel] (e.g. Undo, BR-GEN-005).
+ * [onAction] runs when the user taps [actionLabel] (e.g. Undo, BR-GEN-005), in the app's scope: call
+ * use cases directly there, not ViewModel actions (the ViewModel may be gone).
  */
 data class UiMessage(
     val text: StringResource,
     val args: List<Any> = emptyList(),
     val actionLabel: StringResource? = null,
-    val onAction: (() -> Unit)? = null,
+    val onAction: (suspend () -> Unit)? = null,
 )
 
 /** The app's messenger, provided once by the app shell. */
@@ -37,18 +36,18 @@ val LocalMessenger: ProvidableCompositionLocal<PrumioMessenger?> = staticComposi
 
 /**
  * Returns a function that shows a [UiMessage] and runs its action when tapped. Use it in Routes.
- * It returns at once: the message is shown in the background, so later effects are not delayed.
+ * It returns at once; the message and its action run in the app's scope, so they survive the
+ * screen that sent them (Undo after a detail screen closed).
  */
 @Composable
 fun rememberMessageSender(): (UiMessage) -> Unit {
     val messenger = LocalMessenger.current
-    val scope = rememberCoroutineScope()
-    return remember(messenger, scope) {
+    return remember(messenger) {
         { message ->
-            scope.launch {
+            messenger?.post {
                 val text = getString(message.text, *message.args.toTypedArray())
                 val action = message.actionLabel?.let { getString(it) }
-                if (messenger?.show(text, action) == true) message.onAction?.invoke()
+                if (show(text, action)) message.onAction?.invoke()
             }
         }
     }

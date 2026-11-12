@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.settings` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Placeholder screen. Grows in tasks P3.13 (base), P4.10 (reminder reliability), P5.08–P5.12 (summary, quiet hours, backup). |
+| **Status** | Implemented in Phase 3. Appearance preferences applied app-wide, Android 13+ per-app language settings, version, source, licenses and privacy statement. Reminder/backup settings arrive in later phases. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | `SettingsKey`; planned: `ReminderReliabilityKey`, `BackupKey`, `AboutKey` |
+| Navigation keys | SettingsKey |
 | Business rules | BR-SET-*, BR-BACKUP-*, BR-REM-010 … BR-REM-014 (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#settings) |
 | Plan tasks | P3.13, P4.10, P5.08–P5.12 (docs/plan/) |
-| Files today | `SettingsRoute.kt`, `SettingsScreen.kt`, `SettingsNavigation.kt`, `SettingsFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,13 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:settings:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.
+
+`SettingsPlatform` keeps package/version and language intents in `androidMain`; `commonMain`
+receives only platform-neutral values and callbacks. About is a section of Settings.

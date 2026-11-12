@@ -127,22 +127,31 @@ object SettingKeys { Theme; WeekStart; fun read(values): Settings }       // reg
 
 Adding a setting = one `SettingKey` + one `Settings` field ([recipe](../ai/recipes/add-setting.md)); no migration.
 
-## Use cases (implemented, phase 1)
+## Use cases (implemented, phases 1–3)
 
 All registered in `coreDomainModule`. Writes return `Outcome<T, DomainError>`; observations return `Flow`.
 
 | Area | Use cases |
 |---|---|
 | Inbox | `CaptureInboxItemUseCase`, `EditInboxItemUseCase`, `DiscardInboxItemUseCase`, `RestoreInboxItemUseCase`, `ConvertInboxItemUseCase`, `ObserveInboxUseCase`, `ObserveInboxCountUseCase` |
-| Tasks | `CreateTaskUseCase`, `UpdateTaskUseCase`, `CompleteTaskUseCase`, `DismissTaskUseCase` (both return `ClosedTask` with `matterNeedsNextAction`), `ReopenTaskUseCase`, `PostponeTaskUseCase`, `LinkTaskToMatterUseCase`, `DeleteTaskUseCase`, `RestoreTaskUseCase`, `ObserveTaskUseCase`, `ObserveTaskListUseCase` |
+| Tasks | `CreateTaskUseCase`, `UpdateTaskUseCase`, `SetTaskDoneUseCase`, `CompleteTaskUseCase`, `DismissTaskUseCase` (both return `ClosedTask` with `matterNeedsNextAction`), `ReopenTaskUseCase`, `PostponeTaskUseCase`, `LinkTaskToMatterUseCase`, `DeleteTaskUseCase`, `RestoreTaskUseCase`, `ObserveTaskUseCase`, `ObserveTaskListUseCase` |
+| Agenda | `ObserveAgendaUseCase(from, to)` (`AgendaDay`, ordered appointment/task items; BR-APPT-007) |
 | Appointments | `CreateAppointmentUseCase`, `UpdateAppointmentUseCase`, `DeleteAppointmentUseCase`, `RestoreAppointmentUseCase`, `ObserveAppointmentUseCase`, `ObserveAppointmentsUseCase` (per day) |
-| Matters | `CreateMatterUseCase`, `UpdateMatterUseCase`, `WaitOnMatterUseCase`, `ResumeMatterUseCase`, `ResolveMatterUseCase`, `ReopenMatterUseCase`, `SetMatterFollowUpUseCase`, `AddMatterNoteUseCase`, `EditMatterNoteUseCase`, `DeleteMatterNoteUseCase`, `DeleteMatterUseCase`, `RestoreMatterUseCase`, `ObserveMattersUseCase`, `ObserveMatterDetailUseCase` |
-| Today | `GetDayPeriodUseCase`, `ObserveTodayUseCase` (`TodaySnapshot`) |
+| Matters | `CreateMatterUseCase`, `UpdateMatterUseCase`, `WaitOnMatterUseCase`, `ResumeMatterUseCase`, `ResolveMatterUseCase`, `ReopenMatterUseCase`, `SetMatterFollowUpUseCase`, `AddMatterNoteUseCase`, `EditMatterNoteUseCase`, `DeleteMatterNoteUseCase`, `RestoreMatterNoteUseCase`, `DeleteMatterUseCase`, `RestoreMatterUseCase`, `ObserveMattersUseCase`, `ObserveMatterDetailUseCase` |
+| Today | `GetDayPeriodUseCase`, `ObserveCurrentDateUseCase`, `ObserveTodayUseCase` (`TodaySnapshot`) |
 | Search / Settings | `SearchUseCase`, `ObserveSettingsUseCase`, `UpdateSettingUseCase` |
 
 Pure policies (no I/O): `TaskOverduePolicy` (BR-TASK-004), `AppointmentTimePolicy` (BR-APPT-005),
 `NextActionPolicy` (BR-MATTER-005), `MatterAttentionPolicy` (BR-MATTER-010), draft validation
 (`TaskDraft`, `AppointmentDraft`, `MatterDraft`, `TextRules`).
+
+Phase 3 additions: `SetTaskDoneUseCase(id, done)` delegates complete/reopen and returns ClosedTask, preserving the domain’s next-action prompt.
+`RestoreMatterNoteUseCase(note)` restores the original note identity/date/text and touches its
+matter in the same transaction. `highlightRanges(text, query)` returns merged ranges in the
+original text using the same normalization as search. Search rendering uses these ranges.
+`ObserveCurrentDateUseCase()` emits the local date immediately and after local midnight; Today
+and Agenda re-subscribe on resume and live clock/date/zone broadcasts via core UI’s OnTimeChange adapter. A frozen clock completes
+the flow instead of spinning under virtual time.
 
 ## Reminders (phase 4)
 

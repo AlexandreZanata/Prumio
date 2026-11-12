@@ -10,6 +10,7 @@ import app.prumio.core.domain.error.notFound
 import app.prumio.core.domain.error.storageCall
 import app.prumio.core.domain.matter.MatterRepository
 import app.prumio.core.model.MatterEntryKind
+import app.prumio.core.model.MatterId
 import app.prumio.core.model.MatterStatus
 import app.prumio.core.model.Task
 import app.prumio.core.model.TaskId
@@ -19,7 +20,10 @@ import app.prumio.core.model.TaskStatus
  * Result of completing or dismissing a task. [matterNeedsNextAction] is true when the task was the
  * last open action of an open matter, so the UI asks "What's the next action?" (BR-MATTER-006).
  */
-data class ClosedTask(val task: Task, val matterNeedsNextAction: Boolean)
+data class ClosedTask(val task: Task, val matterNeedsNextAction: Boolean) {
+    /** The matter whose next-action question the UI should open (BR-MATTER-006). */
+    val nextActionMatterId: MatterId? get() = task.matterId.takeIf { matterNeedsNextAction }
+}
 
 /** Shared transition Open → Completed/Dismissed (BR-TASK-003, BR-MATTER-006). */
 internal suspend fun closeTask(

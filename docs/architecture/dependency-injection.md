@@ -13,7 +13,7 @@ plain Kotlin files an agent can read in one pass (ADR-0004).
 | `:core:domain` | `coreDomainModule` | Every use case and policy (`factoryOf`) |
 | `:core:notifications` | `coreNotificationsModule` | `AlarmScheduler`, `NotificationPresenter`, reconciliation trigger |
 | `:feature:x` | `xFeatureModule` | The feature's ViewModels (`viewModelOf`) |
-| `:app:shell` | `prumioModules` | The list of all modules above |
+| `:app:shell` | `shellModule`, `prumioModules` | Root ShellViewModel and the list of all modules above |
 
 `:app:android` starts Koin once: `startKoin { androidContext(app); modules(prumioModules) }`.
 
@@ -43,3 +43,7 @@ viewModel { params -> TaskDetailViewModel(taskId = TaskId(params.get()), observe
 // Route
 val viewModel: TaskDetailViewModel = koinViewModel { parametersOf(key.taskId) }
 ```
+
+Phase 3 editor/detail ViewModels take their whole navigation key as an injected parameter:
+`koinViewModel { parametersOf(key) }`. The graph verification declares those key types as
+runtime-provided `extraTypes`; use cases and repositories are still fully verified.

@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="settings_placeholder_description">Reminders, quiet hours, backup and privacy options will live here.</string>
+    <string name="settings_appearance">Appearance</string>
+    <string name="settings_theme_system">System</string>
+    <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_dark">Dark</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_language_description">Choose the app language in Android settings</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version</string>
+    <string name="settings_source">Source code</string>
+    <string name="settings_licenses">Licenses</string>
+    <string name="settings_licenses_text">Prumio is licensed under Apache License 2.0. Built with Kotlin, Compose Multiplatform, AndroidX, SQLDelight and Koin, distributed under their open-source licenses.</string>
+    <string name="settings_privacy">Prumio has no internet access. Your organizer stays on your device, with no account, ads or tracking.</string>
 </resources>

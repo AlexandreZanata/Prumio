@@ -10,8 +10,7 @@ behavior: code implements these rules, tests prove them, UI copy explains them.
 - **Status** is `planned` (specified, not yet enforced by code) or `implemented` (enforced by code
   **and** proven by at least one test whose name or comment cites the id).
   `BusinessRuleTraceabilityTest` checks this.
-- **Phase** is the plan phase where the rule is implemented (docs/plan/). An implemented rule whose
-  screen is still pending has a **Screen:** line naming the task that builds it.
+- **Phase** is the plan phase where the rule is implemented (docs/plan/). The **Screen:** line identifies the plan task that implements its presentation.
 - Code that enforces a rule cites it in KDoc (`Rule: BR-TASK-003`); the test that proves it starts
   its name with the id: ``fun `BR-TASK-003 completing an open task sets completedAt`()``.
 - To add or change a rule follow [ai/recipes/add-business-rule.md](../ai/recipes/add-business-rule.md).
@@ -51,7 +50,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   entity's own fields. Both are UTC instants from `TimeProvider`.
 
 ### BR-GEN-005 — Deleting is explicit and undoable for a moment
-- **Status:** planned · **Phase:** 3
+- **Status:** implemented · **Phase:** 3
 - **Rule:** Deleting an item is permanent and only happens through an explicit Delete action. After
   deleting, an Undo action is offered for 5 seconds; Undo restores the item with the same id and
   fields. Dismissing (tasks) and resolving (matters) are the non-destructive alternatives and are
@@ -122,12 +121,12 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   with its status and next action. "See all" opens the Matters tab.
 
 ### BR-TODAY-006 — Inbox nudge
-- **Status:** planned · **Phase:** 3
+- **Status:** implemented · **Phase:** 3
 - **Rule:** When the inbox is not empty, Today shows "N items to organize" linking to the Inbox.
   Hidden when the inbox is empty.
 
 ### BR-TODAY-007 — Day rollover
-- **Status:** planned · **Phase:** 3
+- **Status:** implemented · **Phase:** 3
 - **Rule:** When the local date changes while the app is open or resumed (midnight, time zone or
   clock change), Today recomputes greeting, date and lists without user action.
 
@@ -142,7 +141,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   immediately, asking nothing else. Saving closes the capture dialog and confirms with a short message.
 
 ### BR-INBOX-002 — Capture is one tap away
-- **Status:** planned · **Phase:** 3
+- **Status:** implemented · **Phase:** 3
 - **Rule:** "Add anything" is visible on every top-level screen. From any of them, a thought is saved
   with: tap Add → type → tap Save (or the keyboard's done key). The text field is focused and the
   keyboard open as soon as the dialog appears.
@@ -162,7 +161,7 @@ Areas: [GEN](#general) · [TIME](#time) · [TODAY](#today) · [INBOX](#inbox) ·
   canceling the editor after conversion keeps the converted entity with just its title.
 
 ### BR-INBOX-005 — Inbox badge
-- **Status:** planned · **Phase:** 3
+- **Status:** implemented · **Phase:** 3
 - **Rule:** The Inbox tab shows the number of items as a badge; hidden at 0, "99+" above 99.
 
 ### BR-INBOX-006 — Discarding an item

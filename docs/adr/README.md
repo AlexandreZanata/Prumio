@@ -26,6 +26,8 @@ re-litigates it by accident or breaks it unknowingly. Format: [template.md](temp
 | [0019](0019-core-ui-uses-domain-types.md) | `:core:ui` may use domain result types (shared error messages) | Accepted |
 | [0020](0020-screenshot-testing.md) | Screenshot tests with Roborazzi and Robolectric in `:core:screenshot-testing` | Accepted |
 
+| [0021](0021-scope-application-chrome-to-shell-viewmodel.md) | Sole ShellViewModel exception for application theme and Inbox badge (owner approved) | Accepted |
+
 ## When to write an ADR
 
 - Choosing or replacing a library, a pattern or a module boundary.

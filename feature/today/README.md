@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.today` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Reference implementation of the presentation pattern (greeting + date, BR-TODAY-001). Full screen in task P3.07. |
+| **Status** | Implemented in Phase 3. Live day summary, tasks/completion with Undo, appointments, attention matters and Inbox nudge; refreshes on midnight and resume. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | `TodayKey` (top-level) |
+| Navigation keys | TodayKey |
 | Business rules | BR-TODAY-001 … BR-TODAY-007 (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#today) |
 | Plan tasks | P3.07 (docs/plan/) |
-| Files today | `TodayContract.kt`, `TodayViewModel.kt`, `TodayRoute.kt`, `TodayScreen.kt`, `TodayNavigation.kt`, `TodayFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,10 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:today:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.

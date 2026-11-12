@@ -1,5 +1,6 @@
 package app.prumio.app.shell
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import app.prumio.core.designsystem.component.PrumioSnackbarHost
 import app.prumio.core.designsystem.component.rememberPrumioMessenger
 import app.prumio.core.designsystem.icon.PrumioIcons
 import app.prumio.core.designsystem.theme.PrumioTheme
+import app.prumio.core.model.ThemePreference
 import app.prumio.core.navigation.CaptureKey
 import app.prumio.core.navigation.TodayKey
 import app.prumio.core.ui.message.LocalMessenger
@@ -30,7 +32,17 @@ import org.jetbrains.compose.resources.stringResource
  */
 @Composable
 fun PrumioApp(modifier: Modifier = Modifier) {
-    PrumioTheme {
+    ShellRoute(modifier = modifier)
+}
+
+@Composable
+internal fun PrumioAppContent(state: ShellUiState, modifier: Modifier = Modifier) {
+    val darkTheme = when (state.theme) {
+        ThemePreference.System -> isSystemInDarkTheme()
+        ThemePreference.Light -> false
+        ThemePreference.Dark -> true
+    }
+    PrumioTheme(darkTheme = darkTheme) {
         val backStack = rememberNavBackStack(navSavedStateConfiguration, TodayKey)
         val navigator = remember(backStack) { PrumioNavigator(backStack) }
         val showChrome = navigator.isShowingTopLevel
@@ -42,7 +54,11 @@ fun PrumioApp(modifier: Modifier = Modifier) {
                 snackbarHost = { PrumioSnackbarHost(messenger) },
                 bottomBar = {
                     if (showChrome) {
-                        PrumioBottomBar(selected = navigator.currentTopLevelKey, onSelect = navigator::navigate)
+                        PrumioBottomBar(
+                            selected = navigator.currentTopLevelKey,
+                            onSelect = navigator::navigate,
+                            inboxCount = state.inboxCount,
+                        )
                     }
                 },
                 floatingActionButton = {

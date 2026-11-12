@@ -49,11 +49,15 @@ class PrumioNavigatorTest {
     }
 
     @Test
-    fun `dialogs keep the bottom bar of the screen below`() {
-        navigator.navigate(AgendaKey)
-        navigator.navigate(CaptureKey)
-
-        assertEquals(AgendaKey, navigator.currentScreenKey)
-        assertTrue(navigator.isShowingTopLevel)
+    fun `BR-INBOX-002 capture stays one tap away on every tab`() {
+        listOf(TodayKey, AgendaKey, MattersKey, InboxKey).forEach { tab ->
+            navigator.navigate(tab)
+            assertTrue(navigator.isShowingTopLevel)
+            navigator.navigate(CaptureKey)
+            assertEquals(tab, navigator.currentScreenKey)
+            assertTrue(navigator.isShowingTopLevel)
+            navigator.goBack()
+            assertEquals(tab, navigator.currentScreenKey)
+        }
     }
 }

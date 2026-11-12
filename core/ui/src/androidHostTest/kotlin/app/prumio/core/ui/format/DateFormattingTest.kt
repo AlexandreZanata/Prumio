@@ -19,6 +19,9 @@ class DateFormattingTest {
         assertEquals("seg., 26 de jan.", formatShortDate(date, "pt-BR"))
         assertEquals("Monday", formatWeekday(date, "en-US"))
         assertEquals("segunda-feira", formatWeekday(date, "pt-BR"))
+        assertEquals("Mon", formatShortWeekday(date, "en-US"))
+        assertEquals("January 2026", formatMonthYear(date, "en-US"))
+        assertEquals("janeiro de 2026", formatMonthYear(date, "pt-BR"))
     }
 
     @Test

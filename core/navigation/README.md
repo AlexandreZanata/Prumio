@@ -18,6 +18,7 @@
 | `TodayKey`, `AgendaKey`, `MattersKey`, `InboxKey` | `PrumioNavKeys.kt` | Top-level destinations |
 | `CaptureKey` | `PrumioNavKeys.kt` | Quick capture dialog |
 | `SearchKey`, `SettingsKey` | `PrumioNavKeys.kt` | Full screens |
+| Task, appointment and matter editor/detail keys; `AllTasksKey(filter?)` | `PrumioNavKeys.kt` | Phase 3 screens with primitive id/date/filter arguments |
 | `navKeySerializersModule` | `NavKeySerialization.kt` | Registers every key for back stack persistence |
 | `Navigator` | `Navigator.kt` | `navigate(key)`, `goBack()`; implemented by `:app:shell` |
 

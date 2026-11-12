@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.tasks` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Empty module (contract only). Implemented in tasks P3.04–P3.06. |
+| **Status** | Implemented in Phase 3. Task editor, detail/actions with Undo, and All tasks filters. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | planned: `TaskEditorKey`, `TaskDetailKey`, `AllTasksKey` |
+| Navigation keys | TaskEditorKey, TaskDetailKey, AllTasksKey |
 | Business rules | BR-TASK-* (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#tasks) |
 | Plan tasks | P3.04, P3.05, P3.06 (docs/plan/) |
-| Files today | `TasksFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,10 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:tasks:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.

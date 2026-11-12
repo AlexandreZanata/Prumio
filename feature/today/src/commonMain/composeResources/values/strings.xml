@@ -3,4 +3,16 @@
     <string name="today_section_summary">Your day at a glance</string>
     <string name="today_empty_title">Your day is clear</string>
     <string name="today_empty_description">Tasks, appointments and matters that need you today will show up here.</string>
+    <string name="today_tasks">Tasks</string>
+    <string name="today_appointments">Appointments</string>
+    <plurals name="today_inbox_nudge">
+        <item quantity="one">%1$d item to organize</item>
+        <item quantity="other">%1$d items to organize</item>
+    </plurals>
+    <string name="today_what_to_do">What to do today</string>
+    <string name="today_all_tasks">All tasks</string>
+    <string name="today_done">Done today (%1$d)</string>
+    <string name="today_next_appointment">Next appointment</string>
+    <string name="today_attention">Matters that deserve attention</string>
+    <string name="today_task_completed">Task completed</string>
 </resources>

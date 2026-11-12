@@ -11,7 +11,7 @@ phase closes with a validation gate signed off by the owner.
 | [0 — Foundation](phase-0-foundation.md) | Architecture, docs, build, quality gates, app shell | — | G0 | ✅ done (pending owner sign-off) |
 | [1 — Domain and persistence](phase-1-domain-and-persistence.md) | All entities, rules and storage for v0.1, no UI | — | G1 | ✅ done (pending owner review) |
 | [2 — Design system](phase-2-design-system.md) | Components, domain UI, screenshots, accessibility base | — | G2 | ✅ done (pending owner review) |
-| [3 — Organize](phase-3-organize.md) | Capture, inbox, tasks, Today, agenda, matters, search, settings | — | G3 | todo |
+| [3 — Organize](phase-3-organize.md) | Capture, inbox, tasks, Today, agenda, matters, search, settings | — | G3 | ✅ implemented (pending owner dogfooding/sign-off) |
 | [4 — Reminders](phase-4-reminders.md) | Offline notifications, reliable and honest | **v0.1** | G4 | todo |
 | [5 — Automation](phase-5-automation.md) | Recurrence, follow-ups, summary, quiet hours, backup | **v0.2** | G5 | todo |
 | [6 — Android complete](phase-6-android-complete.md) | Review, widgets, share, voice, labels, ICS, a11y, performance | v0.3 → v0.9 | G6 | todo |

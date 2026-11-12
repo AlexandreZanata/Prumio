@@ -69,7 +69,7 @@ Kover instruments every shared module (`prumio.kmp.library` → `CoverageRules.k
 |---|---|---|
 | `:core:domain` | 90 % | `:core:domain:koverVerify` (part of `check`) |
 | `:core:data` | 80 % | `:core:data:koverVerify` (part of `check`) |
-| Features (ViewModels) | 80 % — enforced from phase 3 | planned |
+| Features (ViewModels) | 80 % | Each `:feature:*:koverVerify` (part of `check`), includes `*ViewModel` and `*ViewModel$*` |
 
 - Excluded (wiring or generated, not logic): `app.prumio.*.di.*`, generated `*.resources.*`,
   `ComposableSingletons*`.

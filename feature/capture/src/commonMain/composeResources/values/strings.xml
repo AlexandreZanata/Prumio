@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="capture_title">Quick capture</string>
-    <string name="capture_placeholder_description">Soon: type anything in a few seconds and organize it later.</string>
+    <string name="capture_placeholder">What's on your mind?</string>
+    <string name="capture_saved">Saved to Inbox</string>
 </resources>

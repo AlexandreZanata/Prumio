@@ -47,3 +47,7 @@ New component → [docs/ai/recipes/add-design-system-component.md](../../docs/ai
   `src/androidHostTest/screenshots/`), `PrumioColorsContrastTest` (WCAG), `PrumioBadgeTest`.
 - Re-record after an intended visual change: add `-PrecordScreenshots`, then review the PNG diff
   (docs/architecture/testing-strategy.md#screenshot-tests).
+
+Phase 3 extends PrumioText with an AnnotatedString overload, PrumioNavigationBarItem with an
+optional badgeCount and PrumioMessenger with app-scope post. Action messages stay 5 seconds
+(or the longer accessibility timeout); these contracts are in the component catalog.

@@ -14,6 +14,7 @@
 
 | Symbol | Purpose |
 |---|---|
+| `TestUseCases` | All real domain use cases wired to one FakeRepositories/clock/id generator; shared fixture for feature tests |
 | `FakeTimeProvider` | Controllable clock and time zone: `advanceBy`, `setLocal`, `moveTo` |
 | `FakeIdGenerator` | Deterministic UUID-shaped ids |
 | `runViewModelTest { }` | `runTest` with `Dispatchers.Main` replaced, for ViewModel tests |

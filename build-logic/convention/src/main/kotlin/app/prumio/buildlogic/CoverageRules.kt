@@ -28,10 +28,14 @@ internal object CoverageRules {
 
 internal fun Project.configureCoverage() {
     pluginManager.apply("org.jetbrains.kotlinx.kover")
-    val minimum = CoverageRules.minimumLineCoverage[path]
+    val isFeature = path.startsWith(":feature:")
+    val minimum = CoverageRules.minimumLineCoverage[path] ?: if (isFeature) 80 else null
     extensions.configure<KoverProjectExtension> {
         reports {
             filters {
+                if (isFeature) {
+                    includes { classes("*ViewModel", "*ViewModel$*") }
+                }
                 excludes {
                     classes(CoverageRules.excludedClasses)
                 }

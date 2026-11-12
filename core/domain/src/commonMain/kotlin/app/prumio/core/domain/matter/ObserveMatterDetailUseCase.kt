@@ -6,6 +6,7 @@ import app.prumio.core.domain.task.TaskRepository
 import app.prumio.core.model.Matter
 import app.prumio.core.model.MatterEntry
 import app.prumio.core.model.MatterId
+import app.prumio.core.model.MatterStatus
 import app.prumio.core.model.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -18,7 +19,10 @@ data class MatterDetail(
     val openActions: List<Task>,
     val closedActions: List<Task>,
     val needsAttention: Boolean,
-)
+) {
+    /** BR-MATTER-006: the next-action question applies only to open matters without an open action. */
+    val needsNextAction: Boolean get() = matter.status == MatterStatus.Open && nextAction == null
+}
 
 /** One matter with its history and actions, live; null once deleted. Rules: BR-MATTER-005, BR-MATTER-010. */
 class ObserveMatterDetailUseCase(

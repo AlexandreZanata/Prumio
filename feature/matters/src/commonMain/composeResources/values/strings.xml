@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="matters_placeholder_description">Life's unfinished business, each with its next action and history.</string>
+    <!-- Matters list -->
+    <string name="matters_new">New matter</string>
+    <string name="matters_needs_attention">Needs attention</string>
+    <string name="matters_waiting">Waiting</string>
+    <string name="matters_open">Open</string>
+    <string name="matters_resolved">Resolved (%1$d)</string>
+    <string name="matters_empty_title">No matters yet</string>
+    <string name="matters_empty_description">A matter is unfinished business with a next action and a history, like "Sort out the car documents".</string>
+    <!-- Matter editor -->
+    <string name="matter_new">New matter</string>
+    <string name="matter_edit">Edit matter</string>
+    <string name="matter_title">Title</string>
+    <string name="matter_title_placeholder">What needs sorting out?</string>
+    <string name="matter_description">Description</string>
+    <string name="matter_saved">Matter saved</string>
+    <!-- Matter detail -->
+    <string name="matter_detail">Matter</string>
+    <string name="matter_mark_waiting">Mark as waiting</string>
+    <string name="matter_resume">Resume</string>
+    <string name="matter_resolve">Resolve</string>
+    <string name="matter_reopen">Reopen</string>
+    <string name="matter_next_action_title">Next action</string>
+    <string name="matter_add_next_action">Add next action</string>
+    <string name="matter_other_actions">Other open actions (%1$d)</string>
+    <string name="matter_follow_up_label">Check again on</string>
+    <string name="matter_history">History</string>
+    <string name="matter_add_note">Add note</string>
+    <string name="matter_note">Note</string>
+    <string name="matter_note_date">Date</string>
+    <string name="matter_note_delete">Delete note</string>
+    <string name="matter_waiting_for_label">Waiting for (optional)</string>
+    <string name="matter_waiting_for_placeholder">Who or what?</string>
+    <string name="matter_resolve_title">Resolve this matter?</string>
+    <plurals name="matter_resolve_text">
+        <item quantity="one">It still has %1$d open action. Dismiss it, or keep it as a standalone task?</item>
+        <item quantity="other">It still has %1$d open actions. Dismiss them, or keep them as standalone tasks?</item>
+    </plurals>
+    <string name="matter_resolve_dismiss">Dismiss them</string>
+    <string name="matter_resolve_keep">Keep as tasks</string>
+    <string name="matter_resolved_message">Matter resolved</string>
+    <string name="matter_deleted">Matter deleted</string>
+    <string name="matter_follow_up_time">Check again at</string>
+    <string name="matter_in_days">In %1$d days</string>
+    <string name="matter_next_action_prompt">What’s the next action?</string>
+    <string name="matter_note_deleted">Note deleted</string>
 </resources>

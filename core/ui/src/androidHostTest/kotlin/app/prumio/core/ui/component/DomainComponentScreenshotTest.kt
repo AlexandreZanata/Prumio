@@ -23,6 +23,16 @@ import kotlin.time.Instant
 // How each domain object is drawn everywhere (P2.04–P2.06), in light, dark and 200% font.
 class DomainComponentScreenshotTest : ScreenshotTest() {
     @Test
+    fun dateAndTimeFields() = screenshot("date_time_fields") {
+        Column {
+            DateField(label = "Due date", date = null, today = Today, onDateChange = {})
+            DateField(label = "Due date", date = Today, today = Today, onDateChange = {})
+            TimeField(label = "Time", time = null, onTimeChange = {})
+            TimeField(label = "Time", time = LocalTime(15, 30), onTimeChange = {})
+        }
+    }
+
+    @Test
     fun tasks() = screenshot("tasks") {
         Column {
             TaskRow(aTask(title = "Call the accountant"), Today, isOverdue = false, onToggle = {}, onClick = {})

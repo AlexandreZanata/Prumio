@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.inbox` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Placeholder screen. Implemented in tasks P3.02–P3.03. |
+| **Status** | Implemented in Phase 3. Reactive Inbox list, edit/discard with Undo, and atomic conversion to task, appointment or matter followed by its editor. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | `InboxKey` (top-level) |
+| Navigation keys | InboxKey |
 | Business rules | BR-INBOX-003 … BR-INBOX-006 (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#inbox) |
 | Plan tasks | P3.02, P3.03 (docs/plan/) |
-| Files today | `InboxRoute.kt`, `InboxScreen.kt`, `InboxNavigation.kt`, `InboxFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,10 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:inbox:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.

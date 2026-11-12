@@ -96,6 +96,8 @@ re-plans alarms. Features never call alarm or notification APIs.
 | Sprout logo and Prumio Green brand identity | [ADR-0018](../adr/0018-brand-identity.md) |
 | `:core:ui` uses domain result types | [ADR-0019](../adr/0019-core-ui-uses-domain-types.md) |
 
+| Sole application chrome ViewModel | [ADR-0021](../adr/0021-scope-application-chrome-to-shell-viewmodel.md) |
+
 ## Where does my code go?
 
 | I am writing… | Module | Package / file |

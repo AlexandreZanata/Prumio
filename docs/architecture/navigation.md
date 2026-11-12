@@ -15,14 +15,14 @@ in `:app:shell`.
 | `CaptureKey` | overlay (dialog) | `:feature:capture` | 0 ✅ |
 | `SearchKey` | screen | `:feature:search` | 0 ✅ |
 | `SettingsKey` | screen | `:feature:settings` | 0 ✅ |
-| `TaskEditorKey(taskId: String?, matterId: String?, prefillTitle: String?)` | screen | `:feature:tasks` | 3 |
+| `TaskEditorKey(taskId: String?, matterId: String?)` | screen | `:feature:tasks` | 3 |
 | `TaskDetailKey(taskId: String)` | screen | `:feature:tasks` | 3 |
-| `AllTasksKey` | screen | `:feature:tasks` | 3 |
+| `AllTasksKey(filter: String?)` | screen | `:feature:tasks` | 3 |
 | `AppointmentEditorKey(appointmentId: String?, date: String?)` | screen | `:feature:agenda` | 3 |
 | `AppointmentDetailKey(appointmentId: String)` | screen | `:feature:agenda` | 3 |
-| `MatterDetailKey(matterId: String)` | screen | `:feature:matters` | 3 |
+| `MatterDetailKey(matterId: String, promptNextAction: Boolean = false)` | screen | `:feature:matters` | 3 |
 | `MatterEditorKey(matterId: String?)` | screen | `:feature:matters` | 3 |
-| `ReminderReliabilityKey`, `BackupKey`, `AboutKey` | screen | `:feature:settings` | 3–5 |
+| `ReminderReliabilityKey`, `BackupKey` | screen | `:feature:settings` | 4–5 |
 | `ReviewKey` | screen | `:feature:review` | 6 |
 
 Rules:
@@ -72,3 +72,10 @@ Each entry gets its own `ViewModelStore` (`rememberViewModelStoreNavEntryDecorat
 ViewModel lives exactly as long as its screen is on the back stack.
 
 Recipe: [ai/recipes/add-navigation-key.md](../ai/recipes/add-navigation-key.md).
+
+About is a section inside Settings, without an AboutKey. Inbox conversion creates the target
+first and navigates to its editor by id; cancelling the editor preserves the converted item.
+
+After completing/dismissing the last action of an open matter from another screen, the domain
+result opens its detail with `promptNextAction = true`. The existing optional question offers
+Add next action, Mark as waiting and Resolve; adding an action or Undo closes the question.

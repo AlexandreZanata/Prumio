@@ -35,6 +35,7 @@ class TaskUseCasesTest {
     private val complete = CompleteTaskUseCase(repos.tasks, repos.matters, ids, time)
     private val dismiss = DismissTaskUseCase(repos.tasks, repos.matters, ids, time)
     private val reopen = ReopenTaskUseCase(repos.tasks, repos.matters, ids, time)
+    private val setDone = SetTaskDoneUseCase(complete, reopen)
 
     private suspend fun historyKinds(matterId: String) = repos.matters.observeHistory(MatterId(matterId)).first().map {
         it.kind
@@ -242,5 +243,14 @@ class TaskUseCasesTest {
         assertEquals(listOf("done"), ids(TaskListFilter.Completed))
         assertEquals(listOf("dropped"), ids(TaskListFilter.Dismissed))
         assertEquals("today", ObserveTaskUseCase(repos.tasks)(TaskId("today")).first()?.id?.value)
+    }
+
+    @Test
+    fun `BR-TASK-003 the completion control completes and reopens`() = runTest {
+        val task = create(TaskDraft("Pay rent")).assertSuccess()
+
+        assertEquals(TaskStatus.Completed, setDone(task.id, done = true).assertSuccess().task.status)
+        assertEquals(TaskStatus.Open, setDone(task.id, done = false).assertSuccess().task.status)
+        setDone(task.id, done = false).assertInvalidTransition("BR-TASK-003")
     }
 }

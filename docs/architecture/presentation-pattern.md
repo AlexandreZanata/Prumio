@@ -127,10 +127,12 @@ always **ViewModel effect → Route → `rememberMessageSender()`**, so it is te
 - Failures: `result.onFailure { sendEffect(XxxEffect.ShowMessage(it.toUiMessage())) }`.
   `DomainError.toUiMessage()` (`:core:ui/message`) is the only error → text mapping; validation
   errors shown under a field use `DomainError.Validation.fieldMessage()` instead.
-- The Route maps the effect to `showMessage(effect.message)`; it returns at once.
+- The Route maps the effect to `showMessage(effect.message)`; it returns at once and the message
+  survives the screen, so a screen may send a message and close in the same breath.
 
-**Undo (BR-GEN-005).** The ViewModel keeps what is needed to restore the item and puts the restore
-in `onAction`; the snackbar stays ≥ 5 s when it has an action:
+**Undo (BR-GEN-005).** The ViewModel puts the restore in `onAction`, calling the use case directly:
+the action runs in the app's scope after the snackbar is tapped, when the screen (and its
+ViewModel) may already be gone. The snackbar stays 5 s when it has an action (extended by accessibility preferences):
 
 ```kotlin
 is XxxAction.Delete -> viewModelScope.launch {
@@ -140,7 +142,7 @@ is XxxAction.Delete -> viewModelScope.launch {
                 UiMessage(
                     text = Res.string.task_deleted,
                     actionLabel = Res.string.action_undo,
-                    onAction = { onAction(XxxAction.Restore(deleted)) },
+                    onAction = { restoreTask(deleted) },
                 ),
             ),
         )
@@ -148,8 +150,8 @@ is XxxAction.Delete -> viewModelScope.launch {
 }
 ```
 
-Test it like any effect: assert the `ShowMessage` effect, invoke `message.onAction`, then assert
-the item is back (`awaitItem()` on `effects`, Turbine).
+Test it like any effect: assert the `ShowMessage` effect, call `message.onAction?.invoke()`, then
+assert the item is back.
 
 ## UI models
 
@@ -163,3 +165,10 @@ times in composables via `:core:ui` formatters (they depend on locale), not in t
   Name tests after the rule they prove. See `TodayViewModelTest`.
 - Screen: previews, plus screenshot tests (`ScreenshotTest` from `:core:screenshot-testing`) of
   realistic states in light, dark and 200 % font. See [testing strategy](testing-strategy.md#screenshot-tests).
+
+## Application chrome
+
+The only ViewModel outside a feature is the internal ShellViewModel in `:app:shell`, explicitly
+approved in [ADR-0021](../adr/0021-scope-application-chrome-to-shell-viewmodel.md). It extends
+PrumioViewModel, observes domain use cases for theme and Inbox count, and is scoped by ShellRoute
+to the root lifecycle. NamingConventionTest permits only that exact class/path.

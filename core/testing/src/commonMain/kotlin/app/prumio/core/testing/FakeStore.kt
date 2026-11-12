@@ -29,6 +29,10 @@ class FakeStore {
 
     fun putMatter(matter: Matter) = matters.update { it + (matter.id to matter) }
 
+    fun putAppointment(appointment: Appointment) = appointments.update { it + (appointment.id to appointment) }
+
+    fun putInboxItem(item: InboxItem) = inboxItems.update { it + (item.id to item) }
+
     fun putEntries(entries: List<MatterEntry>) = matterEntries.update { current ->
         current +
             entries.associateBy { it.id }

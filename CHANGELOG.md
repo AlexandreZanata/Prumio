@@ -6,6 +6,9 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Phase 3 Organize (P3.01–P3.14): capture, Inbox organization, task/appointment/matter screens,
+  live Today/Agenda, offline search, theme/language/About, app-wide Inbox badge and Undo;
+  English/pt-BR, ViewModel coverage gates and screen screenshot baselines.
 - Phase 2 design system (P2.01–P2.09): screenshot tests with Roborazzi + Robolectric
   (`:core:screenshot-testing`, ADR-0020) in light, dark and 200 % font; Material Symbols icon set
   replacing `material-icons-core`; shape, elevation and motion tokens; generic components

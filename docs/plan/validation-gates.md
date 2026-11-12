@@ -54,13 +54,17 @@ Manual:
 ## G3 — Organize (functional v0.1 without reminders)
 
 Automated:
-- [ ] All BR-INBOX/TASK/APPT/MATTER/TODAY/SEARCH rules of phases 1–3 `implemented`.
-- [ ] ViewModel tests for every screen; screenshot tests for every screen state.
-- [ ] No placeholder screen remains in Today, Agenda, Matters, Inbox, Capture, Search.
+- [x] All BR-INBOX/TASK/APPT/MATTER/TODAY/SEARCH rules of phases 1–3 `implemented`.
+- [x] ViewModel tests for every screen; screenshot tests for every screen state.
+- [x] No placeholder screen remains in Today, Agenda, Matters, Inbox, Capture, Search.
 
 Manual ([device QA](qa/device-qa-checklist.md) sections A–F, H, I):
-- [ ] Capture → organize → complete flows work in English and pt-BR.
+- [x] Capture → organize → complete flows work in English and pt-BR.
 - [ ] Owner dogfoods for at least 3 days and logs friction issues; blocking ones fixed.
+
+Local implementation evidence is recorded in [phase-3-organize.md](phase-3-organize.md#gate-record).
+The reminder portion of BR-MATTER-009 remains planned for phase 5; its date/time/history
+logic and Phase 3 UI are implemented. The owner’s dogfooding and final sign-off remain open.
 
 ## G4 — Reminders (release v0.1)
 

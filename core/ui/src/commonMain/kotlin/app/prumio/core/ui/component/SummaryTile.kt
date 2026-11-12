@@ -15,9 +15,9 @@ import app.prumio.core.designsystem.theme.PrumioTheme
 @Composable
 fun SummaryTile(count: Int, label: String, modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
     PrumioCard(modifier = modifier.clearAndSetSemantics { contentDescription = "$count $label" }, onClick = onClick) {
-        Column(modifier = Modifier.padding(PrumioTheme.spacing.md)) {
+        Column(modifier = Modifier.padding(horizontal = PrumioTheme.spacing.sm, vertical = PrumioTheme.spacing.md)) {
             PrumioText(text = count.toString(), style = PrumioTextStyle.Display, color = PrumioTheme.colors.primary)
-            PrumioText(text = label, style = PrumioTextStyle.Label, color = PrumioTheme.colors.onSurfaceVariant)
+            PrumioText(text = label, style = PrumioTextStyle.Caption, color = PrumioTheme.colors.onSurfaceVariant)
         }
     }
 }

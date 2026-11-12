@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agenda_placeholder_description">Seus compromissos e tarefas com data, dia a dia.</string>
+    <!-- Agenda -->
+    <string name="agenda_jump_to_date">Ir para data</string>
+    <string name="agenda_add_appointment">Novo compromisso</string>
+    <string name="agenda_previous_week">Semana anterior</string>
+    <string name="agenda_next_week">Próxima semana</string>
+    <string name="agenda_today">Voltar para hoje</string>
+    <string name="agenda_nothing_this_week">Nada agendado nesta semana</string>
+    <string name="agenda_nothing_today">Nada agendado</string>
+    <string name="agenda_has_items">%1$s, com itens</string>
+    <!-- Appointment editor -->
+    <string name="appointment_new">Novo compromisso</string>
+    <string name="appointment_edit">Editar compromisso</string>
+    <string name="appointment_title">Título</string>
+    <string name="appointment_title_placeholder">Onde você precisa estar?</string>
+    <string name="appointment_all_day">Dia inteiro</string>
+    <string name="appointment_start_date">Começa</string>
+    <string name="appointment_start_time">Horário de início</string>
+    <string name="appointment_end_date">Termina</string>
+    <string name="appointment_end_time">Horário de término</string>
+    <string name="appointment_location">Local</string>
+    <string name="appointment_notes">Notas</string>
+    <string name="appointment_saved">Compromisso salvo</string>
+    <!-- Appointment detail -->
+    <string name="appointment_detail">Compromisso</string>
+    <string name="appointment_deleted">Compromisso excluído</string>
+    <string name="appointment_until">Até %1$s</string>
 </resources>

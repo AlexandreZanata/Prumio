@@ -1,4 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="agenda_placeholder_description">Your appointments and dated tasks, day by day.</string>
+    <!-- Agenda -->
+    <string name="agenda_jump_to_date">Go to date</string>
+    <string name="agenda_add_appointment">New appointment</string>
+    <string name="agenda_previous_week">Previous week</string>
+    <string name="agenda_next_week">Next week</string>
+    <string name="agenda_today">Back to today</string>
+    <string name="agenda_nothing_this_week">Nothing scheduled this week</string>
+    <string name="agenda_nothing_today">Nothing scheduled</string>
+    <string name="agenda_has_items">%1$s, has items</string>
+    <!-- Appointment editor -->
+    <string name="appointment_new">New appointment</string>
+    <string name="appointment_edit">Edit appointment</string>
+    <string name="appointment_title">Title</string>
+    <string name="appointment_title_placeholder">Where do you need to be?</string>
+    <string name="appointment_all_day">All day</string>
+    <string name="appointment_start_date">Starts</string>
+    <string name="appointment_start_time">Start time</string>
+    <string name="appointment_end_date">Ends</string>
+    <string name="appointment_end_time">End time</string>
+    <string name="appointment_location">Location</string>
+    <string name="appointment_notes">Notes</string>
+    <string name="appointment_saved">Appointment saved</string>
+    <!-- Appointment detail -->
+    <string name="appointment_detail">Appointment</string>
+    <string name="appointment_deleted">Appointment deleted</string>
+    <string name="appointment_until">Until %1$s</string>
 </resources>

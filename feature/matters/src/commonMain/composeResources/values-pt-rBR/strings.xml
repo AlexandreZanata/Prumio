@@ -1,4 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="matters_placeholder_description">Os assuntos da vida em aberto, cada um com sua próxima ação e histórico.</string>
+    <!-- Matters list -->
+    <string name="matters_new">Nova pendência</string>
+    <string name="matters_needs_attention">Precisam de atenção</string>
+    <string name="matters_waiting">Aguardando</string>
+    <string name="matters_open">Em aberto</string>
+    <string name="matters_resolved">Resolvidas (%1$d)</string>
+    <string name="matters_empty_title">Nenhuma pendência ainda</string>
+    <string name="matters_empty_description">Uma pendência é um assunto em andamento, com próxima ação e histórico, como "Resolver os documentos do carro".</string>
+    <!-- Matter editor -->
+    <string name="matter_new">Nova pendência</string>
+    <string name="matter_edit">Editar pendência</string>
+    <string name="matter_title">Título</string>
+    <string name="matter_title_placeholder">O que precisa ser resolvido?</string>
+    <string name="matter_description">Descrição</string>
+    <string name="matter_saved">Pendência salva</string>
+    <!-- Matter detail -->
+    <string name="matter_detail">Pendência</string>
+    <string name="matter_mark_waiting">Marcar como aguardando</string>
+    <string name="matter_resume">Retomar</string>
+    <string name="matter_resolve">Resolver</string>
+    <string name="matter_reopen">Reabrir</string>
+    <string name="matter_next_action_title">Próxima ação</string>
+    <string name="matter_add_next_action">Adicionar próxima ação</string>
+    <string name="matter_other_actions">Outras ações em aberto (%1$d)</string>
+    <string name="matter_follow_up_label">Verificar novamente em</string>
+    <string name="matter_history">Histórico</string>
+    <string name="matter_add_note">Adicionar nota</string>
+    <string name="matter_note">Nota</string>
+    <string name="matter_note_date">Data</string>
+    <string name="matter_note_delete">Excluir nota</string>
+    <string name="matter_waiting_for_label">Aguardando (opcional)</string>
+    <string name="matter_waiting_for_placeholder">Quem ou o quê?</string>
+    <string name="matter_resolve_title">Resolver esta pendência?</string>
+    <plurals name="matter_resolve_text">
+        <item quantity="one">Ainda há %1$d ação em aberto. Descartá-la ou mantê-la como tarefa avulsa?</item>
+        <item quantity="other">Ainda há %1$d ações em aberto. Descartá-las ou mantê-las como tarefas avulsas?</item>
+    </plurals>
+    <string name="matter_resolve_dismiss">Descartar</string>
+    <string name="matter_resolve_keep">Manter como tarefas</string>
+    <string name="matter_resolved_message">Pendência resolvida</string>
+    <string name="matter_deleted">Pendência excluída</string>
+    <string name="matter_follow_up_time">Conferir às</string>
+    <string name="matter_in_days">Em %1$d dias</string>
+    <string name="matter_next_action_prompt">Qual é a próxima ação?</string>
+    <string name="matter_note_deleted">Nota excluída</string>
 </resources>

@@ -13,6 +13,9 @@ import org.gradle.api.artifacts.ProjectDependency
  */
 internal object ModuleRules {
     private const val TESTING_MODULE = ":core:testing"
+    private const val DATABASE_TESTING_MODULE = ":core:database-testing"
+    private const val SCREENSHOT_TESTING_MODULE = ":core:screenshot-testing"
+    private val testOnlyModules = setOf(TESTING_MODULE, DATABASE_TESTING_MODULE, SCREENSHOT_TESTING_MODULE)
 
     private data class Rule(val module: String, val allowed: List<String>, val reason: String)
 
@@ -41,8 +44,8 @@ internal object ModuleRules {
         ),
         Rule(
             module = ":core:ui",
-            allowed = listOf(":core:common", ":core:designsystem", ":core:model"),
-            reason = "shared UI renders models; it never loads data.",
+            allowed = listOf(":core:common", ":core:designsystem", ":core:domain", ":core:model"),
+            reason = "shared UI renders models and domain results (ADR-0019); it never loads data.",
         ),
         Rule(
             module = ":core:designsystem",
@@ -70,6 +73,16 @@ internal object ModuleRules {
             reason = "the database module owns SQL only.",
         ),
         Rule(
+            module = SCREENSHOT_TESTING_MODULE,
+            allowed = listOf(":core:common", ":core:designsystem"),
+            reason = "screenshot tests render components inside PrumioTheme.",
+        ),
+        Rule(
+            module = DATABASE_TESTING_MODULE,
+            allowed = listOf(":core:common", ":core:database"),
+            reason = "the in-memory test database wraps the production schema.",
+        ),
+        Rule(
             module = TESTING_MODULE,
             allowed = listOf(":core:common", ":core:domain", ":core:model"),
             reason = "test doubles implement domain ports.",
@@ -82,7 +95,7 @@ internal object ModuleRules {
 
     fun check(from: String, to: String, configurationName: String) {
         if (from == to) return
-        if (to == TESTING_MODULE && configurationName.contains("test", ignoreCase = true)) return
+        if (to in testOnlyModules && configurationName.contains("test", ignoreCase = true)) return
         val rule = rules.firstOrNull { from.matchesPattern(it.module) }
             ?: throw GradleException(
                 "Module '$from' has no dependency rule. Add it to build-logic/.../ModuleRules.kt " +
@@ -102,7 +115,7 @@ internal object ModuleRules {
         }
     }
 
-    private fun testingNote() = " (plus $TESTING_MODULE in test source sets)"
+    private fun testingNote() = " (plus ${testOnlyModules.joinToString()} in test source sets)"
 
     private fun String.matchesPattern(pattern: String): Boolean =
         if (pattern.endsWith(":*")) startsWith(pattern.dropLast(1)) else this == pattern

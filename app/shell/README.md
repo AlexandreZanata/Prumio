@@ -19,7 +19,8 @@
 | `prumioModules` | `di/PrumioModules.kt` | Every Koin module of the app |
 
 Internal: `PrumioNavigator` (the only `Navigator`), `PrumioNavDisplay` (Navigation 3 host),
-`PrumioBottomBar` + `TopLevelDestination` (tab order), `navSavedStateConfiguration`.
+`PrumioBottomBar` + `TopLevelDestination` (tab order), `navSavedStateConfiguration`,
+`ShellViewModel` + `ShellRoute` (root lifecycle, theme preference and Inbox badge; ADR-0021).
 
 ## Rules
 
@@ -34,3 +35,10 @@ Internal: `PrumioNavigator` (the only `Navigator`), `PrumioNavDisplay` (Navigati
 `./gradlew :app:shell:testAndroidHostTest`:
 - `PrumioNavigatorTest` — back stack rules.
 - `KoinModulesTest` — every Koin definition can be resolved (catches missing bindings).
+
+- `ShellViewModelTest` — BR-INBOX-005 count and BR-SET-001 preference/default updates.
+- Runtime-injected navigation key types are declared in KoinModulesTest.
+
+## Phase 4 reminders
+
+Shell actions resolve incoming notification links against current domain data. The navigator rebuilds Today + target; missing records show a message. DI includes notification adapters/runtime and the shared ReminderCoordinator.

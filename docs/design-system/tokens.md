@@ -7,7 +7,7 @@ The only place where visual constants are defined. Code: `core/designsystem/src/
 Access: `PrumioTheme.colors.<token>`. Defined in `PrumioColors.kt` for light and dark; Material 3's
 color scheme is derived from these values (`toMaterialColorScheme`), so no off-brand Material color
 can leak into components. Contrast of every text pair is enforced by `PrumioColorsContrastTest`
-(≥ 4.5:1 for text, ≥ 3:1 for outlines).
+(see [Contrast](#contrast)).
 
 ### Brand
 
@@ -37,18 +37,28 @@ Prumio Green tonal scale (hue ≈ 138°)
 | `secondaryContainer` / `onSecondaryContainer` | `#D0E8D5` / `#0C1F12` | `#364B3C` / `#D0E8D5` | Selected tab indicator, chips, tonal surfaces |
 | `background` = `surface` | `#F6FAF6` | `#0F1511` | Screen background |
 | `onBackground` = `onSurface` | `#171D19` | `#DEE5DE` | Main text |
-| `surfaceVariant` / `onSurfaceVariant` | `#DDE6DE` / `#414942` | `#414942` / `#C0C9C0` | Cards; secondary text |
-| `surfaceContainerLowest … Highest` | `#FFFFFF` `#F0F5F0` `#EAF0EA` `#E4EBE5` `#DEE5DF` | `#0A0F0C` `#171D19` `#1B211D` `#252B27` `#303631` | Bottom bar, sheets, menus, dialogs (green-tinted neutrals) |
+| `surfaceVariant` / `onSurfaceVariant` | `#DDE6DE` / `#414942` | `#414942` / `#C0C9C0` | Tonal fills (unchecked switch track); secondary text |
+| `surfaceContainerLowest … Highest` | `#FFFFFF` `#F0F5F0` `#EAF0EA` `#E4EBE5` `#DEE5DF` | `#0A0F0C` `#171D19` `#1B211D` `#252B27` `#303631` | Bottom bar, sheets, menus, dialogs; **cards use `surfaceContainerHigh`** (green-tinted neutrals) |
 | `inverseSurface` / `inverseOnSurface` | `#2C322D` / `#EDF2EC` | `#DEE5DE` / `#2C322D` | Snackbars |
 | `inversePrimary` | `#88C29A` | `#2E6E47` | Actions inside snackbars |
 | `outline` / `outlineVariant` | `#717971` / `#C0C9C0` | `#8B938B` / `#414942` | Borders, dividers, empty-state icons |
 | `error` / `onError` | `#BA1A1A` / `#FFFFFF` | `#FFB4AB` / `#690005` | Destructive actions, errors |
 | `statusOpen` | `#2B5F8E` | `#9CCBFA` | Matter Open (always with text) |
-| `statusWaiting` | `#8A5A00` | `#FFB951` | Matter Waiting |
-| `statusResolved` | `#2E6E47` | `#94D69B` | Matter Resolved, completed |
-| `statusOverdue` | `#B3261E` | `#FFB4AB` | Overdue labels |
+| `statusWaiting` | `#784E00` | `#FFB951` | Matter Waiting |
+| `statusResolved` | `#235E3B` | `#94D69B` | Matter Resolved, completed |
+| `statusOverdue` | `#A3221B` | `#FFB4AB` | Overdue labels |
 
 Material's tertiary role is mapped to secondary: Prumio has a single accent hue.
+
+### Contrast
+
+`PrumioColorsContrastTest` (`core/designsystem/src/commonTest`) computes the WCAG 2.2 ratio of
+every text color on every background it is drawn on, in both themes, and fails below **4.5:1**:
+`on*` colors on their containers, secondary text on screens and cards, `primary` text, errors,
+snackbars, and each status color on the screen, and as a `PrumioTag` (12 % tint of itself) on the
+screen and inside a card. The light status colors are deliberately deep for that last case.
+`brand`/`onBrand` are excluded: they only draw the logo, which WCAG exempts. Adding a color or a
+new text/background combination means adding its pair to the test.
 The Android window background and launcher icon background (`app/android/src/main/res/values/colors.xml`)
 mirror `background` and `brand`.
 
@@ -86,10 +96,35 @@ Access: `PrumioTheme.spacing.<token>` (4 dp grid).
 
 ## Shape
 
-Material shapes: extraSmall 4, small 8, medium 12, large 16, extraLarge 28 dp (rounded corners).
-Cards use medium; dialogs and sheets extraLarge.
+Access: `PrumioTheme.shape.<token>` (`PrumioTokens.kt`); also fed to Material's `Shapes`, so Material
+components inside the design system get the same corners.
+
+| Token | Corner | Use |
+|---|---|---|
+| `small` | 8 dp | Chips, text fields, small buttons |
+| `medium` | 12 dp | Cards, list highlights |
+| `large` | 16 dp | FAB, large cards |
+| `extraLarge` | 28 dp | Dialogs, bottom sheets |
+| `pill` | fully rounded | Tags, badges, selected tab indicator |
+
+## Elevation
+
+Access: `PrumioTheme.elevation.<token>`. Prumio is mostly flat; tonal surfaces carry hierarchy.
+
+| Token | dp | Use |
+|---|---|---|
+| `flat` | 0 | Everything by default, including cards |
+| `raised` | 1 | Bottom bar, sticky headers |
+| `floating` | 3 | FAB, menus, sheets |
+
+## Motion
+
+`PrumioMotion` durations (ms): `SHORT_MILLIS` 150 (state changes, ripples), `MEDIUM_MILLIS` 250
+(expand/collapse, list item moves), `LONG_MILLIS` 400 (screen-level transitions). Animations are
+calm and never block input; the system "remove animations" setting is respected by Compose.
 
 ## Changing tokens
 
 Tokens are global: a change affects every screen. Update this page and both themes, check light,
-dark and contrast (≥ 4.5:1 for text), and re-record screenshots (from phase 2).
+dark and `PrumioColorsContrastTest`, and re-record screenshots (`./gradlew testAndroidHostTest -PrecordScreenshots`,
+then review the changed PNGs in the diff).

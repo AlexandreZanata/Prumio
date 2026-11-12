@@ -15,7 +15,7 @@ SQLite via SQLDelight, file `prumio.db` in app-private storage. One `.sq` file p
 
 ## Version 1 (phase 1)
 
-Status: `setting` exists (phase 0). Phase 1 task P1.04 adds the rest. **Until the first public
+Status: implemented (P1.04). The `.sq` files are the source of truth; this listing is a readable summary. **Until the first public
 release (v0.1), schema version 1 may still be edited and `databases/1.db` regenerated**; after
 release, every change is a migration (below).
 
@@ -47,7 +47,9 @@ CREATE TABLE matter (
     last_activity_at INTEGER NOT NULL,
     search_text TEXT NOT NULL,
     created_at INTEGER NOT NULL,
-    updated_at INTEGER NOT NULL
+    updated_at INTEGER NOT NULL,
+    CHECK (status IN ('OPEN', 'WAITING', 'RESOLVED')),
+    CHECK (follow_up_time IS NULL OR follow_up_date IS NOT NULL)
 );
 CREATE INDEX matter_status ON matter(status);
 CREATE INDEX matter_follow_up_date ON matter(follow_up_date);
@@ -61,6 +63,7 @@ CREATE TABLE matter_entry (
     to_status TEXT,
     task_id TEXT,                            -- no FK: entries keep history after a task is deleted
     occurred_on TEXT NOT NULL,
+    search_text TEXT NOT NULL,               -- normalized note text; '' for system entries
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL
 );
@@ -81,6 +84,7 @@ CREATE TABLE task (
     search_text TEXT NOT NULL,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL,
+    CHECK (status IN ('OPEN', 'COMPLETED', 'DISMISSED')),
     CHECK (due_time IS NULL OR due_date IS NOT NULL),
     CHECK (recurrence IS NULL OR due_date IS NOT NULL)
 );
@@ -103,7 +107,7 @@ CREATE TABLE appointment (
     search_text TEXT NOT NULL,
     created_at INTEGER NOT NULL,
     updated_at INTEGER NOT NULL,
-    CHECK ((all_day = 1 AND start_time IS NULL AND time_zone IS NULL) OR
+    CHECK ((all_day = 1 AND start_time IS NULL AND end_time IS NULL AND time_zone IS NULL) OR
            (all_day = 0 AND start_time IS NOT NULL AND time_zone IS NOT NULL)),
     CHECK (end_date >= start_date)
 );
@@ -121,6 +125,14 @@ CREATE INDEX appointment_dates ON appointment(start_date, end_date);
 Owners in `reminder`/`label_assignment` are polymorphic (no FK); the owning repository deletes them
 in the same transaction when deleting the owner.
 
+Notes:
+- A timed appointment without end time stores `end_date = start_date` and `end_time = NULL`.
+- `recurrence` columns stay NULL until the recurrence codec exists (P5.01); the data layer refuses
+  to store a recurring item before that.
+- Enums are stored in `UPPER_SNAKE_CASE` (`STATUS_CHANGED`, `FOLLOW_UP_SET`) and mapped explicitly.
+- SQLDelight generates query parameters in the order they appear in the SQL: always call queries
+  with **named arguments**.
+
 ## Migrations
 
 - File `N.sqm` migrates from version N to N+1 (`1.sqm`: 1 → 2). Pure SQL, no data loss: create
@@ -133,3 +145,6 @@ in the same transaction when deleting the owner.
 - Every migration gets a data test: insert rows at version N, migrate, assert rows at N+1.
 
 Recipe: [ai/recipes/add-database-table.md](../ai/recipes/add-database-table.md).
+
+Phase 4 adds reminder and scheduling-state tables to unreleased schema v1. Owner repository
+transactions replace wishes with stable identities and delete them atomically with the owner.

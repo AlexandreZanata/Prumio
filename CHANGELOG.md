@@ -6,6 +6,35 @@ versions follow [Semantic Versioning](https://semver.org/).
 ## [Unreleased]
 
 ### Added
+- Phase 4 reminders: persistent wishes, deterministic 14-day/200-alarm planning, serialized reconciliation,
+  Android exact/inexact alarms, localized notifications and actions, snooze, validated deep links,
+  debounced updates, daily background recovery and permission/reliability settings.
+- Reminder editing/defaults and summaries; additive pre-release database upgrade preserving debug data.
+- Version 0.1.0 build and local release signing configuration. Unsigned artifact prepared at the owner's
+  request; signed publication and G4 dogfooding remain pending.
+- Phase 3 Organize (P3.01–P3.14): capture, Inbox organization, task/appointment/matter screens,
+  live Today/Agenda, offline search, theme/language/About, app-wide Inbox badge and Undo;
+  English/pt-BR, ViewModel coverage gates and screen screenshot baselines.
+- Phase 2 design system (P2.01–P2.09): screenshot tests with Roborazzi + Robolectric
+  (`:core:screenshot-testing`, ADR-0020) in light, dark and 200 % font; Material Symbols icon set
+  replacing `material-icons-core`; shape, elevation and motion tokens; generic components
+  (`PrumioTextField`, `PrumioCheckbox`, `PrumioChip`, `PrumioTag`, `PrumioListItem`, `PrumioSwitch`,
+  `PrumioBadge`, `PrumioDivider`, `PrumioBottomSheet`, `PrumioConfirmDialog`,
+  `PrumioLoadingIndicator`, date/time pickers and quick date chips); domain components in `:core:ui`
+  (`TaskRow`, `AppointmentRow`, `MatterCard`, `MatterStatusChip`, `InboxItemRow`, `DueLabel`,
+  `ReminderSummary`, `TimelineEntryRow`, `SummaryTile`); localized date, time, age and reminder
+  formatters; snackbar messages with Undo hosted by the app (`UiMessage`, ADR-0019); heading and
+  row semantics for TalkBack.
+- Phase 1 domain and persistence (P1.02–P1.16): model types; input validation; SQLite schema v1
+  (inbox items, tasks, appointments, matters, history); `:core:database-testing`; repositories for
+  inbox, tasks, appointments, matters, search and settings; 43 use cases covering capture and
+  conversion, task lifecycle and postpone, appointments across time zones, matters (waiting,
+  resolve, notes, follow-up, next action, attention), Today snapshot, accent-insensitive search
+  and typed settings. 44 business rules implemented with tests.
+- Coverage gate (P1.01): Kover on every shared module, `:core:domain` ≥ 90 % and `:core:data` ≥ 80 %
+  lines enforced in `check`; merged report with `./gradlew koverHtmlReport`.
+- `DomainError.Validation` and `InvalidTransition` require a business rule id (`BR-AREA-NNN`).
+- `main` branch protection: pull requests only, green CI required (documented in AGENTS.md and CONTRIBUTING.md).
 - Brand identity (ADR-0018): vectorized sprout logo (SVG/PNG/Android adaptive icon), `PrumioLogo`,
   Prumio Green `#88C29A` tonal color system with WCAG contrast tests, brand usage guide.
 - Device testing rule: manual checks run on the physical phone over adb.
@@ -18,3 +47,8 @@ versions follow [Semantic Versioning](https://semver.org/).
   privacy gate (no INTERNET permission), SQLDelight migration verification, `scripts/verify.sh`, CI.
 - Documentation: product vision, domain model and business rules, architecture, design system,
   AI agent manual and recipes, execution plan with validation gates, ADR-0001 … ADR-0017.
+
+### Changed
+- Gradle Wrapper 9.9.0 from the pending Dependabot PR, validated with the existing toolchain and full quality gate.
+- Cards use `surfaceContainerHigh` and the light status colors are deeper, so status tags inside
+  cards keep 4.5:1 contrast (the contrast test now covers tags, cards, errors and snackbars).

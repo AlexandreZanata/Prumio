@@ -1,0 +1,47 @@
+-- Captured thoughts not yet organized (docs/architecture/database-schema.md#version-1-phase-1).
+CREATE TABLE inbox_item (
+    id TEXT NOT NULL PRIMARY KEY,
+    text TEXT NOT NULL,
+    search_text TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+CREATE INDEX inbox_item_created_at ON inbox_item(created_at);
+
+selectAll:
+SELECT *
+FROM inbox_item
+ORDER BY created_at DESC, id;
+
+countAll:
+SELECT count(*)
+FROM inbox_item;
+
+selectById:
+SELECT *
+FROM inbox_item
+WHERE id = :id;
+
+selectByIds:
+SELECT *
+FROM inbox_item
+WHERE id IN :ids;
+
+selectIdsMatching:
+SELECT id
+FROM inbox_item
+WHERE search_text LIKE '%' || :term || '%';
+
+insert:
+INSERT INTO inbox_item(id, text, search_text, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?);
+
+update:
+UPDATE inbox_item
+SET text = :text, search_text = :searchText, updated_at = :updatedAt
+WHERE id = :id;
+
+deleteById:
+DELETE FROM inbox_item
+WHERE id = :id;

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="search_placeholder_description">Find anything you wrote, instantly and offline.</string>
+    <string name="search_hint">Type at least 2 characters to search</string>
+    <string name="search_nothing_found">Nothing found for '%1$s'</string>
+    <string name="search_tasks">Tasks</string>
+    <string name="search_appointments">Appointments</string>
 </resources>

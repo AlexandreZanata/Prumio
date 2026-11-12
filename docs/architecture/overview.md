@@ -94,6 +94,9 @@ re-plans alarms. Features never call alarm or notification APIs.
 | Android system backup enabled | [ADR-0016](../adr/0016-android-system-backup.md) |
 | Documentation and repository designed for AI agents | [ADR-0017](../adr/0017-ai-first-repository.md) |
 | Sprout logo and Prumio Green brand identity | [ADR-0018](../adr/0018-brand-identity.md) |
+| `:core:ui` uses domain result types | [ADR-0019](../adr/0019-core-ui-uses-domain-types.md) |
+
+| Sole application chrome ViewModel | [ADR-0021](../adr/0021-scope-application-chrome-to-shell-viewmodel.md) |
 
 ## Where does my code go?
 

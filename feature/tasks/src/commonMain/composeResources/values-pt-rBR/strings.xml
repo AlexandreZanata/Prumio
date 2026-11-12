@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Task editor -->
+    <string name="task_new">Nova tarefa</string>
+    <string name="task_edit">Editar tarefa</string>
+    <string name="task_title">Título</string>
+    <string name="task_title_placeholder">O que precisa ser feito?</string>
+    <string name="task_notes">Notas</string>
+    <string name="task_due_date">Data</string>
+    <string name="task_due_time">Horário</string>
+    <string name="task_matter">Pendência</string>
+    <string name="task_no_matter">Nenhuma pendência</string>
+    <string name="task_date_next_week">Próxima semana</string>
+    <string name="task_saved">Tarefa salva</string>
+    <!-- Task detail -->
+    <string name="task_detail">Tarefa</string>
+    <string name="task_complete">Concluir</string>
+    <string name="task_reopen">Reabrir</string>
+    <string name="task_postpone">Adiar</string>
+    <string name="task_dismiss">Descartar</string>
+    <string name="task_no_due_date">Sem data</string>
+    <string name="task_completed">Tarefa concluída</string>
+    <string name="task_dismissed">Tarefa descartada</string>
+    <string name="task_deleted">Tarefa excluída</string>
+    <string name="task_postponed">Adiada para %1$s</string>
+    <string name="task_postpone_tomorrow">Amanhã</string>
+    <string name="task_postpone_next_week">Próxima semana</string>
+    <string name="task_postpone_pick">Escolher data…</string>
+    <string name="task_status_line">Situação: %1$s</string>
+    <!-- All tasks -->
+    <string name="tasks_all">Todas as tarefas</string>
+    <string name="tasks_filter_anytime">Sem data</string>
+    <string name="tasks_filter_upcoming">Próximas</string>
+    <string name="tasks_filter_overdue">Atrasadas</string>
+    <string name="tasks_filter_completed">Concluídas</string>
+    <string name="tasks_filter_dismissed">Descartadas</string>
+    <string name="tasks_empty_anytime">Nenhuma tarefa sem data</string>
+    <string name="tasks_empty_upcoming">Nada pela frente</string>
+    <string name="tasks_empty_overdue">Nada atrasado. Muito bem!</string>
+    <string name="tasks_empty_completed">Nada concluído nos últimos 30 dias</string>
+    <string name="tasks_empty_dismissed">Nenhuma tarefa descartada</string>
+</resources>

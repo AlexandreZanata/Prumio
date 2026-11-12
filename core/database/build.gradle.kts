@@ -5,6 +5,15 @@ plugins {
 
 kotlin {
     sourceSets {
+        getByName("commonMain").resources.apply {
+            srcDir("src/commonMain/sqldelight")
+            include(
+                "app/prumio/core/database/reminder.sq",
+                "app/prumio/core/database/scheduled_alarm.sq",
+                "app/prumio/core/database/snooze.sq",
+                "app/prumio/core/database/delivered_alarm.sq",
+            )
+        }
         commonMain.dependencies {
             api(libs.sqldelight.runtime)
             implementation(projects.core.common)
@@ -16,7 +25,8 @@ kotlin {
             implementation(libs.sqldelight.android.driver)
         }
         getByName("androidHostTest").dependencies {
-            implementation(libs.sqldelight.sqlite.driver)
+            implementation(projects.core.databaseTesting)
+            implementation(libs.robolectric)
         }
     }
 }
@@ -30,4 +40,9 @@ sqldelight {
             verifyMigrations.set(true)
         }
     }
+}
+
+// Robolectric API 36 uses the JDK 21 FileDescriptor bridge.
+tasks.withType<Test>().configureEach {
+    jvmArgs("--add-opens=java.base/jdk.internal.access=ALL-UNNAMED")
 }

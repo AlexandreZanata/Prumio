@@ -1,0 +1,11 @@
+CREATE TABLE delivered_alarm (key TEXT NOT NULL PRIMARY KEY, delivered_at INTEGER NOT NULL);
+selectAll:
+SELECT * FROM delivered_alarm ORDER BY key;
+put:
+INSERT OR REPLACE INTO delivered_alarm(key, delivered_at) VALUES (?, ?);
+deleteByKey:
+DELETE FROM delivered_alarm WHERE key = :key;
+deleteAll:
+DELETE FROM delivered_alarm;
+prune:
+DELETE FROM delivered_alarm WHERE delivered_at < :beforeAt;

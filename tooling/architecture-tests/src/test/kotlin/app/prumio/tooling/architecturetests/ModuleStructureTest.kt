@@ -51,6 +51,27 @@ class ModuleStructureTest {
     }
 
     @Test
+    fun `every shared module is part of the merged coverage report`() {
+        val rootBuild = Repository.read("build.gradle.kts")
+        val violations = Repository.modules
+            .filterNot { it == "app/android" || it.startsWith("tooling/") }
+            .map { module ->
+                module to
+                    "kover(projects." + module.split('/').joinToString(".") { it.toCamelCase() } + ")"
+            }
+            .filterNot { (_, declaration) -> declaration in rootBuild }
+            .map { (module, declaration) -> "$module: add `$declaration` to the root build.gradle.kts" }
+        assertNoViolations(
+            "coverage covers every shared module (docs/architecture/testing-strategy.md#coverage)",
+            violations,
+        )
+    }
+
+    private fun String.toCamelCase() = split('-').mapIndexed { index, part ->
+        if (index == 0) part else part.replaceFirstChar(Char::uppercase)
+    }.joinToString("")
+
+    @Test
     fun `every navigation key is registered for serialization`() {
         val serialization = Repository.read(navigationSerialization)
         val keys = Regex("""data (?:object|class) (\w+)""").findAll(Repository.read(navigationKeys))

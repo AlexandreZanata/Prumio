@@ -49,11 +49,26 @@ class PrumioNavigatorTest {
     }
 
     @Test
-    fun `dialogs keep the bottom bar of the screen below`() {
-        navigator.navigate(AgendaKey)
-        navigator.navigate(CaptureKey)
+    fun `BR-INBOX-002 capture stays one tap away on every tab`() {
+        listOf(TodayKey, AgendaKey, MattersKey, InboxKey).forEach { tab ->
+            navigator.navigate(tab)
+            assertTrue(navigator.isShowingTopLevel)
+            navigator.navigate(CaptureKey)
+            assertEquals(tab, navigator.currentScreenKey)
+            assertTrue(navigator.isShowingTopLevel)
+            navigator.goBack()
+            assertEquals(tab, navigator.currentScreenKey)
+        }
+    }
 
-        assertEquals(AgendaKey, navigator.currentScreenKey)
-        assertTrue(navigator.isShowingTopLevel)
+    @Test fun `BR-REM-017 deep links reset history and keep Today under the detail`() {
+        navigator.navigate(SettingsKey)
+        val detail = app.prumio.core.navigation.TaskDetailKey("t1")
+        navigator.openLink(detail)
+        assertEquals(listOf(TodayKey, detail), backStack)
+        navigator.goBack()
+        assertEquals(listOf<NavKey>(TodayKey), backStack)
+        navigator.openLink(TodayKey)
+        assertEquals(listOf<NavKey>(TodayKey), backStack)
     }
 }

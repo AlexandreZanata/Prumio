@@ -8,16 +8,21 @@
 | **Layer** | Presentation (shared) |
 | **Plugin** | `prumio.kmp.compose` (public `Res`) |
 | **Package** | `app.prumio.core.ui` |
-| **May depend on** | `:core:common`, `:core:designsystem`, `:core:model` |
+| **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain` (types only, ADR-0019), `:core:model` |
 | **Used by** | `:feature:*`, `:app:shell` |
 
 ## Responsibility
 
-- `mvi/`: `PrumioViewModel` and `CollectEffects` (docs/architecture/presentation-pattern.md).
-- `label/`: localized text for model enums and values (`DayPeriod.greeting()`, later `MatterStatus.label()`).
-- `format/`: localized date/time formatting (`dayHeaderText()`), expect/actual per platform.
-- `component/` (phase 2): `TaskRow`, `AppointmentRow`, `MatterCard`, `MatterStatusChip`,
-  `InboxItemRow`, `DueLabel`… — every way a domain object is drawn, defined once.
+- `mvi/`: `PrumioViewModel`, `CollectEffects` and the platform-neutral `OnTimeChange` callback (docs/architecture/presentation-pattern.md).
+- `label/`: localized text for model enums and values (`DayPeriod.greeting()`, `MatterStatus.label()`,
+  `reminderOffsetText()`).
+- `format/`: localized date/time formatting (`relativeDateText()`, `timeText()`, `ageText()`…),
+  expect/actual per platform, including compact weekday and month/year headers.
+- `component/`: `TaskRow`, `AppointmentRow`, `MatterCard`, `MatterStatusChip`, `InboxItemRow`,
+  `DueLabel`, `ReminderSummary`, `TimelineEntryRow`, `SummaryTile`, `DateField`, `TimeField` — every way a domain object is
+  drawn, defined once.
+- `message/`: `UiMessage`, `rememberMessageSender()`, `DomainError.toUiMessage()` (snackbars and Undo,
+  docs/architecture/presentation-pattern.md#messages-and-undo). Undo callbacks suspend in the app scope and survive the originating screen.
 - `composeResources/`: shared strings (actions such as Save/Cancel, destination names, labels).
   `Res` is public so features reuse these strings instead of redefining them.
 
@@ -31,4 +36,9 @@
 
 ## Tests
 
-`./gradlew :core:ui:testAndroidHostTest`; screenshot tests from phase 2.
+`./gradlew :core:ui:testAndroidHostTest` — formatter and message unit tests, `DomainComponentScreenshotTest`
+(light/dark/200 % font). Re-record with `-PrecordScreenshots` and review the PNG diff.
+
+## Phase 4 reminders
+
+ReminderField and ReminderPermissionDialog are shared by editors. rememberNotificationPermissionRequest is an explicit expect/actual launcher used by Routes. ReminderSummary displays persisted offsets; UI never schedules alarms.

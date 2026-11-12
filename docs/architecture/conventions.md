@@ -36,6 +36,9 @@ read and change it without guessing. Items marked 🔒 are enforced by tests or 
 | String resource | `<feature>_<screen?>_<meaning>` snake_case | `today_empty_title`, `action_save` |
 | SQL table / column | singular `snake_case` | `matter_entry.occurred_on` |
 
+The sole ViewModel placement exception is internal ShellViewModel in `:app:shell`, approved
+by the owner and constrained to its exact source path (ADR-0021). Feature rules otherwise stand.
+
 ## Kotlin style
 
 - Formatting: ktlint (Android Studio style) + Compose rules, via `./gradlew spotlessApply` 🔒.

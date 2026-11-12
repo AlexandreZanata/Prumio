@@ -33,3 +33,7 @@ Specification: [docs/domain/reminders-and-notifications.md](../../docs/domain/re
 
 `./gradlew :core:notifications:testAndroidHostTest` and the instrumented alarm tests added in
 phase 4 (docs/plan/phase-4-reminders.md). Manual: docs/plan/qa/device-qa-checklist.md.
+
+## Phase 4 reminders
+
+Implemented AndroidAlarmScheduler, localized AndroidNotificationPresenter and channels, asynchronous alarm/action/reconciliation receivers, app-scoped debounced observer and a unique daily ReconcileWorker. Exact access has an inexact fallback. WorkManager uses no network constraints. Permissions/status are exposed through domain ports.

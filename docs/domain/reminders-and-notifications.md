@@ -1,7 +1,7 @@
 # Reminders and notifications
 
 Reminders are the heart of Prumio: the promise that the app remembers for you. This document
-specifies how that promise is kept offline, reliably and predictably. Rules: BR-REM-001 … BR-REM-017,
+specifies how that promise is kept offline, reliably and predictably. Rules: BR-REM-001 … BR-REM-018,
 BR-GEN-006, BR-MATTER-009, BR-TASK-006, BR-APPT-004. Implemented in phases 4 and 5.
 
 ## Principle: notifications are derived from data (BR-REM-001)
@@ -154,3 +154,22 @@ delivery under every device configuration.
 - Android: instrumented tests for schedule → fire → notification (emulator, API 26 and latest).
 - Manual: [device QA checklist](../plan/qa/device-qa-checklist.md) (reboot, Doze, time zone change,
   permissions denied, exact alarms denied, app killed).
+
+## Phase 4 implementation boundaries
+
+The implemented planner uses Settings and aggregate Task/Appointment reminder lists. Recurrence,
+quiet hours, summaries and weekly review remain phase 5; their sketches above describe that
+future extension. Phase 4 includes the existing matter follow-up anchor. Defaults are 09:00 and
+30 minutes, editable in Settings. Draft reminderOffsets=null means default/preserve; [] explicitly
+removes wishes. Unchanged offsets retain their ReminderId, including delete/Undo snapshots.
+
+ReminderCoordinator is a singleton shared across use-case instances; use cases remain factories.
+Forced reconciliation restores all desired OS alarms after boot/update/time/exact-access changes,
+even if the persisted projection is unchanged. Permission-denied due alarms are deferred until
+access returns, preventing a catch-up self-rescheduling loop. Wishes and future alarms are kept.
+Android native resources localize notification text; Android date/time formats respect locale,
+12/24-hour preference and the injected zone. Notification tag=itemKey/id=0 avoids hash collisions.
+Dismissal never changes item state. Delivery records are pruned after 30 days.
+
+See ADR-0022 for the daily WorkManager safety net and ADR-0023 for the additive pre-release schema
+bridge. No signed/public release is claimed before the owner's key and G4 sign-off exist.

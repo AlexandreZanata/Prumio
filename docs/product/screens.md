@@ -24,7 +24,7 @@ flowchart TB
     Inbox --> Organize{{Organize item}} --> TaskEditor & AppointmentEditor & MatterEditor
     TaskDetail --> TaskEditor
     AllTasks --> TaskDetail
-    Settings --> ReminderReliability & Backup & About
+    Settings --> ReminderReliability & Backup
     Today --> Review[Weekly review]
 ```
 

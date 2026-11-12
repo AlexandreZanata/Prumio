@@ -1,0 +1,6 @@
+# Copy to signing.properties at the repository root; never commit the real file or keystore.
+# Absolute path or path relative to the repository root.
+storeFile=/absolute/path/to/prumio-release.jks
+storePassword=REPLACE_LOCALLY
+keyAlias=prumio
+keyPassword=REPLACE_LOCALLY

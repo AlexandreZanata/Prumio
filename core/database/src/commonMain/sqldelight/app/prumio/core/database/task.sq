@@ -1,0 +1,110 @@
+-- Concrete actions (docs/architecture/database-schema.md#version-1-phase-1).
+CREATE TABLE task (
+    id TEXT NOT NULL PRIMARY KEY,
+    title TEXT NOT NULL,
+    notes TEXT,
+    status TEXT NOT NULL,
+    due_date TEXT,
+    due_time TEXT,
+    recurrence TEXT,
+    recurrence_basis TEXT,
+    matter_id TEXT REFERENCES matter(id) ON DELETE SET NULL,
+    completed_at INTEGER,
+    dismissed_at INTEGER,
+    search_text TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL,
+    CHECK (status IN ('OPEN', 'COMPLETED', 'DISMISSED')),
+    CHECK (due_time IS NULL OR due_date IS NOT NULL),
+    CHECK (recurrence IS NULL OR due_date IS NOT NULL)
+);
+
+CREATE INDEX task_status_due ON task(status, due_date, due_time);
+CREATE INDEX task_matter ON task(matter_id);
+
+selectById:
+SELECT *
+FROM task
+WHERE id = :id;
+
+selectByIds:
+SELECT *
+FROM task
+WHERE id IN :ids;
+
+selectOpen:
+SELECT *
+FROM task
+WHERE status = 'OPEN'
+ORDER BY due_date, due_time, created_at, id;
+
+selectOpenDueOnOrBefore:
+SELECT *
+FROM task
+WHERE status = 'OPEN' AND due_date <= :date
+ORDER BY due_date, due_time, created_at, id;
+
+selectOpenDueBetween:
+SELECT *
+FROM task
+WHERE status = 'OPEN' AND due_date BETWEEN :fromDate AND :toDate
+ORDER BY due_date, due_time, created_at, id;
+
+selectOpenUndated:
+SELECT *
+FROM task
+WHERE status = 'OPEN' AND due_date IS NULL
+ORDER BY created_at DESC, id;
+
+selectCompletedSince:
+SELECT *
+FROM task
+WHERE status = 'COMPLETED' AND completed_at >= :since
+ORDER BY completed_at DESC, id;
+
+selectDismissed:
+SELECT *
+FROM task
+WHERE status = 'DISMISSED'
+ORDER BY dismissed_at DESC, id;
+
+selectByMatter:
+SELECT *
+FROM task
+WHERE matter_id = :matterId
+ORDER BY created_at, id;
+
+selectIdsMatching:
+SELECT id
+FROM task
+WHERE search_text LIKE '%' || :term || '%';
+
+countById:
+SELECT count(*)
+FROM task
+WHERE id = :id;
+
+insert:
+INSERT INTO task(id, title, notes, status, due_date, due_time, recurrence, recurrence_basis, matter_id,
+                 completed_at, dismissed_at, search_text, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE task
+SET title = :title,
+    notes = :notes,
+    status = :status,
+    due_date = :dueDate,
+    due_time = :dueTime,
+    recurrence = :recurrence,
+    recurrence_basis = :recurrenceBasis,
+    matter_id = :matterId,
+    completed_at = :completedAt,
+    dismissed_at = :dismissedAt,
+    search_text = :searchText,
+    updated_at = :updatedAt
+WHERE id = :id;
+
+deleteById:
+DELETE FROM task
+WHERE id = :id;

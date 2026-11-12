@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="inbox_placeholder_description">Thoughts captured in seconds, waiting to become tasks, appointments or matters.</string>
+    <string name="inbox_empty_title">Inbox zero</string>
+    <string name="inbox_empty_description">Anything on your mind? Tap Add and write it down.</string>
+    <string name="inbox_organize_title">Organize as…</string>
+    <string name="inbox_as_task">Task</string>
+    <string name="inbox_as_appointment">Appointment</string>
+    <string name="inbox_as_matter">Matter</string>
+    <string name="inbox_edit">Edit text</string>
+    <string name="inbox_discard">Discard</string>
+    <string name="inbox_discarded">Item discarded</string>
+    <string name="inbox_item_actions">Options for %1$s</string>
 </resources>

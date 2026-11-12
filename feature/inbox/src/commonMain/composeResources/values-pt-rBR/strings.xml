@@ -1,4 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="inbox_placeholder_description">Pensamentos anotados em segundos, esperando para virar tarefas, compromissos ou pendências.</string>
+    <string name="inbox_empty_title">Entrada vazia</string>
+    <string name="inbox_empty_description">Algo na cabeça? Toque em Adicionar e anote.</string>
+    <string name="inbox_organize_title">Organizar como…</string>
+    <string name="inbox_as_task">Tarefa</string>
+    <string name="inbox_as_appointment">Compromisso</string>
+    <string name="inbox_as_matter">Pendência</string>
+    <string name="inbox_edit">Editar texto</string>
+    <string name="inbox_discard">Descartar</string>
+    <string name="inbox_discarded">Item descartado</string>
+    <string name="inbox_item_actions">Opções de %1$s</string>
 </resources>

@@ -8,6 +8,12 @@
     <string name="action_delete">Delete</string>
     <string name="action_done">Done</string>
     <string name="action_save">Save</string>
+    <string name="action_clear">Clear %1$s</string>
+    <string name="no_time">No time</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_add">Add</string>
+    <string name="action_more">More options</string>
+    <string name="action_see_all">See all</string>
     <string name="action_undo">Undo</string>
 
     <!-- Destination names: bottom bar labels, screen titles and the actions that open them -->
@@ -25,4 +31,86 @@
 
     <!-- Placeholder shown by screens that are not implemented yet -->
     <string name="coming_soon_title">Coming soon</string>
+
+    <!-- Actions on dates and pickers -->
+    <string name="action_pick_date">Pick a date…</string>
+
+    <!-- Relative dates and times (format/) -->
+    <string name="date_today">Today</string>
+    <string name="date_tomorrow">Tomorrow</string>
+    <string name="date_yesterday">Yesterday</string>
+    <string name="date_with_time">%1$s, %2$s</string>
+    <string name="time_range">%1$s – %2$s</string>
+    <string name="all_day">All day</string>
+    <string name="age_just_now">Just now</string>
+    <plurals name="age_minutes">
+        <item quantity="one">%1$d minute ago</item>
+        <item quantity="other">%1$d minutes ago</item>
+    </plurals>
+    <plurals name="age_hours">
+        <item quantity="one">%1$d hour ago</item>
+        <item quantity="other">%1$d hours ago</item>
+    </plurals>
+    <plurals name="age_days">
+        <item quantity="one">%1$d day ago</item>
+        <item quantity="other">%1$d days ago</item>
+    </plurals>
+
+    <!-- Reminders (label/) -->
+    <string name="reminder_at_time">At time</string>
+    <plurals name="reminder_minutes_before">
+        <item quantity="one">%1$d minute before</item>
+        <item quantity="other">%1$d minutes before</item>
+    </plurals>
+    <plurals name="reminder_hours_before">
+        <item quantity="one">%1$d hour before</item>
+        <item quantity="other">%1$d hours before</item>
+    </plurals>
+    <plurals name="reminder_days_before">
+        <item quantity="one">%1$d day before</item>
+        <item quantity="other">%1$d days before</item>
+    </plurals>
+
+    <!-- Statuses (label/) -->
+    <string name="matter_status_open">Open</string>
+    <string name="matter_status_waiting">Waiting</string>
+    <string name="matter_status_resolved">Resolved</string>
+    <string name="task_status_open">Open</string>
+    <string name="task_status_completed">Done</string>
+    <string name="task_status_dismissed">Dismissed</string>
+    <string name="overdue_since">Overdue · %1$s</string>
+
+    <!-- Domain components (component/) -->
+    <string name="task_complete">Complete task %1$s</string>
+    <string name="task_reopen">Reopen task %1$s</string>
+    <string name="matter_waiting_for">Waiting for %1$s</string>
+    <string name="matter_follow_up">Check again: %1$s</string>
+    <string name="matter_next_action">Next: %1$s</string>
+    <string name="matter_no_next_action">No next action yet</string>
+    <string name="task_matter">Matter: %1$s</string>
+    <string name="entry_created">Matter created</string>
+    <string name="entry_status_changed">Marked as %1$s</string>
+    <string name="entry_action_linked">Next action added: %1$s</string>
+    <string name="entry_action_completed">Done: %1$s</string>
+    <string name="entry_action_dismissed">Dismissed: %1$s</string>
+    <string name="entry_action_unlinked">No longer an action: %1$s</string>
+    <string name="entry_follow_up_set">Check again on %1$s</string>
+    <string name="entry_follow_up_cleared">Follow-up removed</string>
+
+    <!-- Messages (message/) -->
+    <string name="error_storage">Couldn’t save. Your data is safe; please try again.</string>
+    <string name="error_not_found">This item no longer exists.</string>
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="validation_blank">Please fill this in</string>
+    <string name="validation_too_long">This is too long</string>
+    <string name="validation_end_before_start">The end can’t be before the start</string>
+    <string name="validation_future_date">This date is in the future</string>
+    <string name="validation_not_editable">This entry can’t be changed</string>
+    <string name="reminder_field">Reminders</string>
+    <string name="reminder_limit">Choose up to 5 reminders. Tap a selected reminder to remove it.</string>
+    <string name="reminder_permission_title">Allow reminders?</string>
+    <string name="reminder_permission_text">Prumio uses notifications to remind you; if you decline, your reminders stay saved and you can enable notifications in Settings later.</string>
+    <string name="reminder_permission_allow">Continue</string>
+    <string name="reminder_permission_later">Save without notifications</string>
+    <string name="validation_reminder_offsets">Choose up to 5 different reminders.</string>
 </resources>

@@ -18,6 +18,7 @@ import app.prumio.feature.inbox.inboxEntries
 import app.prumio.feature.matters.mattersEntries
 import app.prumio.feature.search.searchEntries
 import app.prumio.feature.settings.settingsEntries
+import app.prumio.feature.tasks.tasksEntries
 import app.prumio.feature.today.todayEntries
 
 /** Saves the back stack across process death; knows every key through [navKeySerializersModule]. */
@@ -48,6 +49,7 @@ internal fun PrumioNavDisplay(backStack: NavBackStack<NavKey>, navigator: Naviga
             captureEntries(navigator)
             searchEntries(navigator)
             settingsEntries(navigator)
+            tasksEntries(navigator)
         },
     )
 }

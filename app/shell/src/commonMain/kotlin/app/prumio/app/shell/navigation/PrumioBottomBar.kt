@@ -23,8 +23,8 @@ import org.jetbrains.compose.resources.stringResource
 internal enum class TopLevelDestination(
     val key: TopLevelNavKey,
     val label: StringResource,
-    val icon: () -> ImageVector,
-    val selectedIcon: () -> ImageVector,
+    val icon: @Composable () -> ImageVector,
+    val selectedIcon: @Composable () -> ImageVector,
 ) {
     Today(TodayKey, Res.string.destination_today, { PrumioIcons.Today }, { PrumioIcons.TodaySelected }),
     Agenda(AgendaKey, Res.string.destination_agenda, { PrumioIcons.Agenda }, { PrumioIcons.AgendaSelected }),
@@ -37,6 +37,7 @@ internal fun PrumioBottomBar(
     selected: TopLevelNavKey,
     onSelect: (TopLevelNavKey) -> Unit,
     modifier: Modifier = Modifier,
+    inboxCount: Int = 0,
 ) {
     PrumioNavigationBar(modifier = modifier) {
         TopLevelDestination.entries.forEach { destination ->
@@ -46,6 +47,7 @@ internal fun PrumioBottomBar(
                 icon = destination.icon(),
                 selectedIcon = destination.selectedIcon(),
                 label = stringResource(destination.label),
+                badgeCount = if (destination.key == InboxKey) inboxCount else 0,
             )
         }
     }

@@ -19,4 +19,27 @@ class OutcomeTest {
 
         assertEquals(Outcome.Success("ok"), result)
     }
+
+    @Test
+    fun `valueOr returns the value or runs the failure branch`() {
+        fun firstChar(text: String): Outcome<Char, String> = text.firstOrNull()?.asSuccess() ?: "empty".asFailure()
+        fun describe(text: String): String {
+            val char = firstChar(text).valueOr { return "failed: $it" }
+            return "starts with $char"
+        }
+
+        assertEquals("starts with a", describe("abc"))
+        assertEquals("failed: empty", describe(""))
+        assertEquals('a', firstChar("a").valueOrNull())
+        assertEquals(null, firstChar("").valueOrNull())
+    }
+
+    @Test
+    fun `callbacks run only for their branch`() {
+        var seen = ""
+        1.asSuccess().onSuccess { seen += "s$it" }.onFailure { seen += "f" }
+        "x".asFailure().onSuccess { seen += "s" }.onFailure { seen += "f$it" }
+
+        assertEquals("s1fx", seen)
+    }
 }

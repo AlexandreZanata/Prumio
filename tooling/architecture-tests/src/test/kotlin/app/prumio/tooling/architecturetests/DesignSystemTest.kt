@@ -20,9 +20,9 @@ class DesignSystemTest {
     @Test
     fun `design system components are prefixed with Prumio`() {
         val violations = composables.publicIn("core/designsystem")
-            .filterNot { it.name.startsWith("Prumio") }
+            .filterNot { it.name.startsWith("Prumio") || it.name.startsWith("rememberPrumio") }
             .map { "${it.name} in ${it.path.substringAfterLast('/')}" }
-        assertNoViolations("design system components are named Prumio*", violations)
+        assertNoViolations("design system components are named Prumio* (state holders rememberPrumio*)", violations)
     }
 
     @Test

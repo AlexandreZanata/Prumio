@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.matters` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Placeholder screen. Implemented in tasks P3.10–P3.11. |
+| **Status** | Implemented in Phase 3. Grouped matters list, editor, status/actions, follow-up date/time and dated notes/history with Undo. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | `MattersKey` (top-level); planned: `MatterDetailKey`, `MatterEditorKey` |
+| Navigation keys | MattersKey, MatterEditorKey, MatterDetailKey |
 | Business rules | BR-MATTER-* (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#matters) |
 | Plan tasks | P3.10, P3.11 (docs/plan/) |
-| Files today | `MattersRoute.kt`, `MattersScreen.kt`, `MattersNavigation.kt`, `MattersFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,14 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:matters:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.
+
+## Phase 4 reminders
+
+Explicit follow-up creation/update checks the shared contextual permission policy after saving. The shared explanation preserves follow-up data on refusal and respects the two-denial limit.

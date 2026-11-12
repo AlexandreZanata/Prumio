@@ -20,6 +20,7 @@ import org.koin.core.module.Module
  * otherwise its definitions are missing at runtime (KoinModulesTest catches it).
  */
 val prumioModules: List<Module> = listOf(
+    shellModule,
     coreCommonModule,
     coreDatabaseModule,
     coreDataModule,

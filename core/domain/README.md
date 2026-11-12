@@ -26,19 +26,24 @@ One package per aggregate or capability:
 
 ```
 app.prumio.core.domain
-├── error/        DomainError
-├── today/        GetDayPeriodUseCase (reference implementation, BR-TODAY-001)
-├── inbox/        (phase 1) ports + use cases for InboxItem
-├── task/         (phase 1)
-├── appointment/  (phase 1)
-├── matter/       (phase 1)
-├── settings/     (phase 1)
-├── search/       (phase 1)
+├── error/        DomainError, storageCall (storage failures → DomainError.Storage)
+├── text/         TextLimits, ValidationReasons, requiredText/optionalText (BR-GEN-002)
+├── inbox/        InboxRepository, ConversionTarget, capture/edit/discard/restore/convert/observe
+├── task/         TaskRepository, TaskDraft, TaskWriter, TaskOverduePolicy, task use cases
+├── appointment/  AppointmentRepository, AppointmentDraft/Schedule, AppointmentTimePolicy, use cases
+├── matter/       MatterRepository, MatterDraft, FollowUp, MatterHistory, NextActionPolicy,
+│                 MatterAttentionPolicy, status/notes/follow-up/overview/detail use cases
+├── agenda/       ObserveAgendaUseCase (ordered AgendaDay/AgendaItem projection)
+├── today/        GetDayPeriodUseCase, ObserveCurrentDateUseCase, ObserveTodayUseCase (TodaySnapshot)
+├── search/       SearchRepository, SearchText (normalization), SearchUseCase, highlightRanges
+├── settings/     SettingsRepository, SettingKey/SettingKeys, observe/update use cases
 ├── reminder/     (phase 4) planner, reconciler, scheduling ports
 ├── recurrence/   (phase 5) RRULE subset and occurrence engine
 ├── backup/       (phase 5)
-└── di/           coreDomainModule
+└── di/           coreDomainModule (every use case, alphabetical)
 ```
+
+Every port, use case and policy is listed in [docs/architecture/contracts.md](../../docs/architecture/contracts.md).
 
 ## Rules
 
@@ -59,3 +64,7 @@ app.prumio.core.domain
 
 `./gradlew :core:domain:testAndroidHostTest`. Tests in `src/commonTest`, using fakes from
 `:core:testing`. Test names start with the rule id they prove. Target coverage: ≥ 90 % lines.
+
+## Phase 4 reminders
+
+`reminder/` owns default/offset validation, pure planning, serialized reconciliation, delivery, snooze, notification task completion, permission policy, reliability and deep-link validation. Platform capabilities are ports. ReminderCoordinator alone is a singleton; operations remain factories.

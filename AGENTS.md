@@ -86,6 +86,10 @@ Start at `docs/README.md` for the documentation map.
 
 ## 5. How to execute a task from the plan
 
+> `main` is protected: no direct pushes, no force pushes, no deletion. Every change reaches `main`
+> through a pull request whose CI check **"Verify (format, tests, architecture, privacy, assemble)"**
+> is green and up to date with `main`. Work on a branch (`task/p1-07-…`, `fix/…`, `docs/…`).
+
 1. Open `docs/plan/README.md`, find the first task whose status is `todo` and whose
    dependencies are `done` (or the task the owner assigned you).
 2. Read the task's **Inputs**. Follow the linked recipe in `docs/ai/recipes/` if there is one.

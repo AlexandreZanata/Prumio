@@ -145,7 +145,8 @@ One line of a matter's history. Phase 1.
 
 `MatterEntryKind`: `Created`, `Note`, `StatusChanged`, `ActionLinked`, `ActionCompleted`,
 `ActionDismissed`, `ActionUnlinked`, `FollowUpSet`, `FollowUpCleared`.
-Only `Note` entries are editable or deletable.
+Only `Note` entries are editable or deletable. Action entries keep a snapshot of the task title in
+`text`; `FollowUpSet` entries carry the follow-up as ISO text (`2026-11-14` or `2026-11-14T09:00`).
 
 ## Reminder
 
@@ -191,8 +192,9 @@ Not user data; never exported in backups. Phase 4.
 
 ## Settings
 
-Typed view over the `setting` key-value table. Phase 1 (keys added by later phases as listed).
-Every key has a default (BR-SET-001).
+Typed view over the `setting` key-value table: `Settings(theme: ThemePreference, weekStart: DayOfWeek?)`
+in `:core:model`, keys in `SettingKeys` (`:core:domain`). Implemented keys: `theme`, `week_start`;
+later phases add theirs. Every key has a default (BR-SET-001).
 
 | Key | Type | Default | Phase |
 |---|---|---|---|
@@ -224,3 +226,7 @@ Every key has a default (BR-SET-001).
 | `color` | `LabelColor` | One of 8 design-system colors |
 
 Assigned to tasks, appointments and matters through a join table. Optional everywhere.
+
+Phase 4 owner aggregates expose `reminders: List<Reminder>` so owner edits, history and reminder
+wishes are persisted atomically. Draft offsets: null preserves/applies defaults; an explicit empty
+list removes wishes. Permission denials (0–2) and banner dismissal are device-specific settings.

@@ -11,6 +11,8 @@ import kotlinx.serialization.modules.subclass
  */
 val navKeySerializersModule = SerializersModule {
     polymorphic(NavKey::class) {
+        subclass(ReminderReliabilityKey::class)
+        subclass(SnoozeKey::class)
         subclass(TodayKey::class)
         subclass(AgendaKey::class)
         subclass(MattersKey::class)
@@ -18,5 +20,12 @@ val navKeySerializersModule = SerializersModule {
         subclass(CaptureKey::class)
         subclass(SearchKey::class)
         subclass(SettingsKey::class)
+        subclass(TaskEditorKey::class)
+        subclass(TaskDetailKey::class)
+        subclass(AllTasksKey::class)
+        subclass(AppointmentEditorKey::class)
+        subclass(AppointmentDetailKey::class)
+        subclass(MatterEditorKey::class)
+        subclass(MatterDetailKey::class)
     }
 }

@@ -3,4 +3,16 @@
     <string name="today_section_summary">Seu dia, em resumo</string>
     <string name="today_empty_title">Seu dia está livre</string>
     <string name="today_empty_description">Tarefas, compromissos e pendências que precisam de você hoje aparecerão aqui.</string>
+    <string name="today_tasks">Tarefas</string>
+    <string name="today_appointments">Compromissos</string>
+    <plurals name="today_inbox_nudge">
+        <item quantity="one">%1$d item para organizar</item>
+        <item quantity="other">%1$d itens para organizar</item>
+    </plurals>
+    <string name="today_what_to_do">O que fazer hoje</string>
+    <string name="today_all_tasks">Todas as tarefas</string>
+    <string name="today_done">Feitas hoje (%1$d)</string>
+    <string name="today_next_appointment">Próximo compromisso</string>
+    <string name="today_attention">Pendências que merecem atenção</string>
+    <string name="today_task_completed">Tarefa concluída</string>
 </resources>

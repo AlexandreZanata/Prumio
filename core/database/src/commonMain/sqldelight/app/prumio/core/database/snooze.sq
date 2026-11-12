@@ -1,0 +1,9 @@
+CREATE TABLE snooze (key TEXT NOT NULL PRIMARY KEY, until_at INTEGER NOT NULL);
+selectAll:
+SELECT * FROM snooze ORDER BY key;
+put:
+INSERT OR REPLACE INTO snooze(key, until_at) VALUES (?, ?);
+deleteByKey:
+DELETE FROM snooze WHERE key = :key;
+deleteAll:
+DELETE FROM snooze;

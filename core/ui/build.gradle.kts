@@ -4,13 +4,20 @@ plugins {
 
 kotlin {
     sourceSets {
+        getByName("androidHostTest").dependencies {
+            implementation(projects.core.screenshotTesting)
+            implementation(projects.core.testing)
+        }
         commonMain.dependencies {
             api(projects.core.designsystem)
             api(projects.core.model)
             api(libs.androidx.lifecycle.viewmodel)
             implementation(projects.core.common)
+            implementation(projects.core.domain)
+            implementation(libs.kotlinx.datetime)
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
+        androidMain.dependencies { implementation(libs.androidx.activity.compose) }
         commonTest.dependencies {
             implementation(projects.core.testing)
         }

@@ -6,7 +6,7 @@ Gradle (Kotlin DSL) with convention plugins, a version catalog and configuration
 
 | Tool | Version | Where |
 |---|---|---|
-| Gradle | 9.8.2 | `gradle/wrapper/gradle-wrapper.properties` (checksum-verified) |
+| Gradle | 9.9.0 | `gradle/wrapper/gradle-wrapper.properties` (checksum-verified) |
 | JDK | 21 | local / CI `setup-java` |
 | Android Gradle Plugin | 9.5.1 | catalog `agp` |
 | Kotlin | 2.4.21 | catalog `kotlin` |
@@ -30,7 +30,7 @@ build-logic/convention/     convention plugins and module rules
 
 | Plugin id | Applies to | Does |
 |---|---|---|
-| `prumio.kmp.library` | every shared module | KMP + Android KMP library plugin, Android target (namespace from path, SDK levels, host tests), coroutines, test deps, **module rules** |
+| `prumio.kmp.library` | every shared module | KMP + Android KMP library plugin, Android target (namespace from path, SDK levels, host tests), coroutines, test deps, **module rules**, **Kover coverage** |
 | `prumio.kmp.compose` | modules with Compose UI/resources | + Compose Multiplatform, compiler plugin, Android resources, Compose deps, internal `Res` in `<package>.resources` |
 | `prumio.feature` | `:feature:*` | + every allowed core module, lifecycle/navigation3, Koin; `:core:testing` for tests |
 | `prumio.android.application` | `:app:android` | Android app config, Compose, **privacy gate** (`verify<Variant>NoNetworkPermission` in `check`) |
@@ -51,6 +51,7 @@ explanation when it breaks [modules.md](modules.md#dependency-rules).
 | Formatting | `spotlessCheck` (ktlint + Compose rules) | Code is not formatted (`spotlessApply` fixes most) |
 | Unit tests | `check` → `testAndroidHostTest` per module | Any test fails |
 | Architecture | `check` → `:tooling:architecture-tests:test` | Any rule in AGENTS.md is broken |
+| Coverage | `check` → `koverVerify` per module | Line coverage below `CoverageRules.kt` thresholds (domain 90 %, data 80 %) |
 | Migrations | `check` → `verifySqlDelightMigration` | Schema changed without migration/snapshot |
 | Privacy | `check` → `verifyDebugNoNetworkPermission`, `verifyReleaseNoNetworkPermission` | Merged manifest requests `INTERNET` |
 | Android lint | `check` → `lint` (app) | Lint errors |
@@ -64,6 +65,13 @@ explanation when it breaks [modules.md](modules.md#dependency-rules).
 upload test reports on failure and the debug APK as an artifact. Dependabot proposes weekly updates
 for Gradle dependencies and GitHub Actions; toolchain upgrades are done together (AGP + Kotlin +
 Compose) by a plan task, never piecemeal.
+
+### Branch protection
+
+`main` requires a pull request, the status check *Verify (format, tests, architecture, privacy,
+assemble)* passing on a branch up to date with `main`, and resolved conversations. Force pushes and
+deletion are blocked, and the rules apply to administrators too. Changing these settings is an owner
+decision.
 
 ## Performance tips
 

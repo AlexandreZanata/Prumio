@@ -23,6 +23,13 @@ re-litigates it by accident or breaks it unknowingly. Format: [template.md](temp
 | [0016](0016-android-system-backup.md) | Allow Android system backup of the database | Accepted |
 | [0017](0017-ai-first-repository.md) | Repository and documentation designed for AI agents | Accepted |
 | [0018](0018-brand-identity.md) | Sprout logo and Prumio Green as the brand identity | Accepted |
+| [0019](0019-core-ui-uses-domain-types.md) | `:core:ui` may use domain result types (shared error messages) | Accepted |
+| [0020](0020-screenshot-testing.md) | Screenshot tests with Roborazzi and Robolectric in `:core:screenshot-testing` | Accepted |
+
+| [0021](0021-scope-application-chrome-to-shell-viewmodel.md) | Sole ShellViewModel exception for application theme and Inbox badge (owner approved) | Accepted |
+
+| [0022](0022-use-workmanager-and-serialized-reminder-projection.md) | Serialized reminder projection and offline WorkManager safety net | Accepted |
+| [0023](0023-preserve-pre-release-debug-data-when-extending-schema-one.md) | Additive pre-release schema bridge preserves installed debug data | Accepted |
 
 ## When to write an ADR
 

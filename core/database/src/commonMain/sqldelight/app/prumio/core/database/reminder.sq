@@ -1,0 +1,17 @@
+CREATE TABLE reminder (
+ id TEXT NOT NULL PRIMARY KEY,
+ owner_type TEXT NOT NULL CHECK(owner_type IN ('TASK', 'APPOINTMENT')),
+ owner_id TEXT NOT NULL,
+ offset_minutes INTEGER NOT NULL CHECK(offset_minutes >= 0),
+ created_at INTEGER NOT NULL,
+ UNIQUE(owner_type, owner_id, offset_minutes)
+);
+CREATE INDEX reminder_owner ON reminder(owner_type, owner_id);
+selectAll:
+SELECT * FROM reminder ORDER BY owner_type, owner_id, offset_minutes;
+selectForOwner:
+SELECT * FROM reminder WHERE owner_type = :ownerType AND owner_id = :ownerId ORDER BY offset_minutes;
+insert:
+INSERT INTO reminder(id, owner_type, owner_id, offset_minutes, created_at) VALUES (?, ?, ?, ?, ?);
+deleteForOwner:
+DELETE FROM reminder WHERE owner_type = :ownerType AND owner_id = :ownerId;

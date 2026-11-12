@@ -1,0 +1,47 @@
+-- History of a matter (docs/architecture/database-schema.md#version-1-phase-1).
+-- task_id has no foreign key on purpose: history survives the deletion of a task.
+CREATE TABLE matter_entry (
+    id TEXT NOT NULL PRIMARY KEY,
+    matter_id TEXT NOT NULL REFERENCES matter(id) ON DELETE CASCADE,
+    kind TEXT NOT NULL,
+    text TEXT,
+    from_status TEXT,
+    to_status TEXT,
+    task_id TEXT,
+    occurred_on TEXT NOT NULL,
+    search_text TEXT NOT NULL,
+    created_at INTEGER NOT NULL,
+    updated_at INTEGER NOT NULL
+);
+
+CREATE INDEX matter_entry_matter ON matter_entry(matter_id, occurred_on, created_at);
+
+selectByMatter:
+SELECT *
+FROM matter_entry
+WHERE matter_id = :matterId
+ORDER BY occurred_on DESC, created_at DESC, id;
+
+selectById:
+SELECT *
+FROM matter_entry
+WHERE id = :id;
+
+countById:
+SELECT count(*)
+FROM matter_entry
+WHERE id = :id;
+
+insert:
+INSERT INTO matter_entry(id, matter_id, kind, text, from_status, to_status, task_id, occurred_on,
+                         search_text, created_at, updated_at)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+update:
+UPDATE matter_entry
+SET text = :text, occurred_on = :occurredOn, search_text = :searchText, updated_at = :updatedAt
+WHERE id = :id;
+
+deleteById:
+DELETE FROM matter_entry
+WHERE id = :id;

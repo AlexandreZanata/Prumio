@@ -1,6 +1,7 @@
 package app.prumio.core.designsystem.component
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -24,11 +25,16 @@ fun RowScope.PrumioNavigationBarItem(
     selectedIcon: ImageVector,
     label: String,
     modifier: Modifier = Modifier,
+    badgeCount: Int = 0,
 ) {
     NavigationBarItem(
         selected = selected,
         onClick = onClick,
-        icon = { Icon(imageVector = if (selected) selectedIcon else icon, contentDescription = null) },
+        icon = {
+            BadgedBox(badge = { PrumioBadge(count = badgeCount) }) {
+                Icon(imageVector = if (selected) selectedIcon else icon, contentDescription = null)
+            }
+        },
         label = { Text(label) },
         modifier = modifier,
     )

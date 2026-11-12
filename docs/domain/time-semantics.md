@@ -45,7 +45,8 @@ Why zoned for appointments: a call at 15:00 in São Paulo stays at the same inst
 - Floating items keep their wall-clock values; their instants change → reminders are re-planned
   (BR-REM-002 trigger "time or time zone change").
 - Zoned appointments keep their instants; their displayed local time changes.
-- Today recomputes on resume and on date change (BR-TODAY-007).
+- Today and Agenda recompute on resume, midnight, and live Android clock/date/zone broadcasts
+  through the shared `OnTimeChange` adapter (BR-TODAY-007).
 
 ## Storage formats (SQLite)
 

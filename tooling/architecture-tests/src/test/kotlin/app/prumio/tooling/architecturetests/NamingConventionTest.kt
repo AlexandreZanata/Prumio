@@ -34,7 +34,12 @@ class NamingConventionTest {
             .filter { it.name.endsWith("ViewModel") && it.name != "PrumioViewModel" }
             .mapNotNull { viewModel ->
                 when {
-                    !viewModel.path.contains("/feature/") -> "${viewModel.name} must live in a feature module"
+                    !viewModel.path.contains("/feature/") &&
+                        !(
+                            viewModel.name == "ShellViewModel" && viewModel.path.endsWith(
+                                "/app/shell/src/commonMain/kotlin/app/prumio/app/shell/ShellViewModel.kt",
+                            )
+                            ) -> "${viewModel.name} must live in a feature module (shell exception: ADR-0021)"
 
                     viewModel.parents().none { it.name.substringBefore('<') == "PrumioViewModel" } ->
                         "${viewModel.name} must extend PrumioViewModel"

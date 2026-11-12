@@ -44,9 +44,9 @@ Manual / review:
 ## G2 — Design system
 
 Automated:
-- [ ] Screenshot tests for every catalog component (light, dark, 200 % font) recorded and verified in CI.
-- [ ] Contrast test passes for all text/background token pairs.
-- [ ] Catalog test green (every component documented).
+- [x] Screenshot tests for every catalog component (light, dark, 200 % font) recorded and verified in CI.
+- [x] Contrast test passes for all text/background token pairs.
+- [x] Catalog test green (every component documented).
 
 Manual:
 - [ ] Owner reviews the screenshot gallery and approves the visual language.
@@ -54,28 +54,36 @@ Manual:
 ## G3 — Organize (functional v0.1 without reminders)
 
 Automated:
-- [ ] All BR-INBOX/TASK/APPT/MATTER/TODAY/SEARCH rules of phases 1–3 `implemented`.
-- [ ] ViewModel tests for every screen; screenshot tests for every screen state.
-- [ ] No placeholder screen remains in Today, Agenda, Matters, Inbox, Capture, Search.
+- [x] All BR-INBOX/TASK/APPT/MATTER/TODAY/SEARCH rules of phases 1–3 `implemented`.
+- [x] ViewModel tests for every screen; screenshot tests for every screen state.
+- [x] No placeholder screen remains in Today, Agenda, Matters, Inbox, Capture, Search.
 
 Manual ([device QA](qa/device-qa-checklist.md) sections A–F, H, I):
-- [ ] Capture → organize → complete flows work in English and pt-BR.
+- [x] Capture → organize → complete flows work in English and pt-BR.
 - [ ] Owner dogfoods for at least 3 days and logs friction issues; blocking ones fixed.
+
+Local implementation evidence is recorded in [phase-3-organize.md](phase-3-organize.md#gate-record).
+The reminder portion of BR-MATTER-009 is implemented in phase 4; its date/time/history
+logic and Phase 3 UI remain covered. The owner’s dogfooding and final sign-off remain open.
 
 ## G4 — Reminders (release v0.1)
 
 Automated:
-- [ ] Planner and reconciler tests cover every BR-REM rule of phase 4, including DST and time zone travel.
-- [ ] Instrumented alarm tests pass on emulators API 26 and latest.
+- [x] Planner and reconciler tests cover every BR-REM rule of phase 4, including DST and time zone travel.
+- [ ] Instrumented alarm tests pass on physical API 26 and the latest available device (physical-only owner instruction in AGENTS.md).
+- [x] API 26/36 Android host adapter tests; API 36 physical exact/inexact alarm → notification → content intent → Complete tests.
 
 Manual (device QA section G, all items):
 - [ ] Reminders fire on time with exact alarms; are late but delivered without; survive reboot,
       app update, time zone change, Doze; snooze and complete from notification work.
-- [ ] Permission flows (granted, denied, denied twice) behave per BR-REM-014.
+- [x] Permission flows (granted, denied, denied twice) behave per BR-REM-014 (physical API 36; en/pt-BR).
 - [ ] Owner uses v0.1 for 7 days with real reminders; no missed reminder without explanation.
 
 Release:
 - [ ] Version 0.1.0, CHANGELOG, signed APK attached to a GitHub release.
+
+Local phase-4 evidence and remaining release work: [phase-4-reminders.md](phase-4-reminders.md#gate-record).
+The owner requested signing setup and an unsigned artifact while no release key exists.
 
 ## G5 — Automation (release v0.2)
 

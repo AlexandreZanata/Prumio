@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Task editor -->
+    <string name="task_new">New task</string>
+    <string name="task_edit">Edit task</string>
+    <string name="task_title">Title</string>
+    <string name="task_title_placeholder">What needs doing?</string>
+    <string name="task_notes">Notes</string>
+    <string name="task_due_date">Due date</string>
+    <string name="task_due_time">Time</string>
+    <string name="task_matter">Matter</string>
+    <string name="task_no_matter">No matter</string>
+    <string name="task_date_next_week">Next week</string>
+    <string name="task_saved">Task saved</string>
+    <!-- Task detail -->
+    <string name="task_detail">Task</string>
+    <string name="task_complete">Complete</string>
+    <string name="task_reopen">Reopen</string>
+    <string name="task_postpone">Postpone</string>
+    <string name="task_dismiss">Dismiss</string>
+    <string name="task_no_due_date">No due date</string>
+    <string name="task_completed">Task completed</string>
+    <string name="task_dismissed">Task dismissed</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="task_postponed">Postponed to %1$s</string>
+    <string name="task_postpone_tomorrow">Tomorrow</string>
+    <string name="task_postpone_next_week">Next week</string>
+    <string name="task_postpone_pick">Pick a date…</string>
+    <string name="task_status_line">Status: %1$s</string>
+    <!-- All tasks -->
+    <string name="tasks_all">All tasks</string>
+    <string name="tasks_filter_anytime">Anytime</string>
+    <string name="tasks_filter_upcoming">Upcoming</string>
+    <string name="tasks_filter_overdue">Overdue</string>
+    <string name="tasks_filter_completed">Completed</string>
+    <string name="tasks_filter_dismissed">Dismissed</string>
+    <string name="tasks_empty_anytime">No undated tasks</string>
+    <string name="tasks_empty_upcoming">Nothing coming up</string>
+    <string name="tasks_empty_overdue">Nothing overdue. Nice!</string>
+    <string name="tasks_empty_completed">Nothing completed in the last 30 days</string>
+    <string name="tasks_empty_dismissed">No dismissed tasks</string>
+</resources>

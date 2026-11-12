@@ -13,9 +13,11 @@
 
 ## Responsibility
 
-- `theme/`: `PrumioTheme`, `PrumioColors`, `PrumioTextStyle`, `PrumioSpacing` (docs/design-system/tokens.md).
+- `theme/`: `PrumioTheme`, `PrumioColors`, `PrumioTextStyle`, `PrumioSpacing`, `PrumioShape`,
+  `PrumioElevation`, `PrumioMotion` (docs/design-system/tokens.md).
 - `component/`: generic components with no knowledge of tasks, matters or any domain concept.
-- `icon/`: `PrumioIcons`, the single icon registry.
+- `icon/`: `PrumioIcons`, the single icon registry (Material Symbols vectors in
+  `composeResources/drawable/ic_*.xml`, Apache-2.0, see NOTICE).
 - `component/PrumioLogo.kt` + `composeResources/drawable/prumio_mark.xml`: the brand mark
   (generated; rules in [docs/brand/README.md](../../docs/brand/README.md)). Prumio Green `#88C29A`
   is the accent of every token.
@@ -40,4 +42,12 @@ New component → [docs/ai/recipes/add-design-system-component.md](../../docs/ai
 
 ## Tests
 
-Screenshot tests arrive in phase 2 (task P2.01). Until then, check `ComponentCatalogPreview` in the IDE.
+- `./gradlew :core:designsystem:testAndroidHostTest` — `FoundationScreenshotTest` (type, buttons) and
+  `ComponentScreenshotTest` (every component, light/dark/200 % font; baselines in
+  `src/androidHostTest/screenshots/`), `PrumioColorsContrastTest` (WCAG), `PrumioBadgeTest`.
+- Re-record after an intended visual change: add `-PrecordScreenshots`, then review the PNG diff
+  (docs/architecture/testing-strategy.md#screenshot-tests).
+
+Phase 3 extends PrumioText with an AnnotatedString overload, PrumioNavigationBarItem with an
+optional badgeCount and PrumioMessenger with app-scope post. Action messages stay 5 seconds
+(or the longer accessibility timeout); these contracts are in the component catalog.

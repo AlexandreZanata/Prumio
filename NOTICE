@@ -2,3 +2,6 @@ Prumio
 Copyright 2026 The Prumio Authors
 
 This product is licensed under the Apache License, Version 2.0 (see LICENSE).
+
+Icons: Material Symbols by Google, licensed under the Apache License, Version 2.0
+(core/designsystem/src/commonMain/composeResources/drawable/ic_*.xml).

@@ -3,6 +3,7 @@ plugins {
 }
 
 kotlin {
+    android { androidResources { enable = true } }
     sourceSets {
         commonMain.dependencies {
             implementation(projects.core.common)
@@ -14,9 +15,16 @@ kotlin {
         androidMain.dependencies {
             implementation(libs.androidx.core.ktx)
             implementation(libs.koin.android)
+            implementation(libs.androidx.work.runtime)
         }
+        getByName("androidHostTest").dependencies { implementation(libs.robolectric) }
         commonTest.dependencies {
             implementation(projects.core.testing)
         }
     }
+}
+
+// Robolectric API 36 uses the JDK 21 FileDescriptor bridge.
+tasks.withType<Test>().configureEach {
+    jvmArgs("--add-opens=java.base/jdk.internal.access=ALL-UNNAMED")
 }

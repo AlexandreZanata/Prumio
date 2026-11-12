@@ -18,6 +18,7 @@
 | `TodayKey`, `AgendaKey`, `MattersKey`, `InboxKey` | `PrumioNavKeys.kt` | Top-level destinations |
 | `CaptureKey` | `PrumioNavKeys.kt` | Quick capture dialog |
 | `SearchKey`, `SettingsKey` | `PrumioNavKeys.kt` | Full screens |
+| Task, appointment and matter editor/detail keys; `AllTasksKey(filter?)` | `PrumioNavKeys.kt` | Phase 3 screens with primitive id/date/filter arguments |
 | `navKeySerializersModule` | `NavKeySerialization.kt` | Registers every key for back stack persistence |
 | `Navigator` | `Navigator.kt` | `navigate(key)`, `goBack()`; implemented by `:app:shell` |
 
@@ -32,3 +33,7 @@ Planned keys and back stack rules: [docs/architecture/navigation.md](../../docs/
 ## How to extend
 
 New destination → [docs/ai/recipes/add-navigation-key.md](../../docs/ai/recipes/add-navigation-key.md).
+
+## Phase 4 reminders
+
+ReminderReliabilityKey opens Settings reliability; SnoozeKey(alarmKey) is a dialog overlay. Both are serializable and registered. Notification links are resolved by domain and stacked by the shell.

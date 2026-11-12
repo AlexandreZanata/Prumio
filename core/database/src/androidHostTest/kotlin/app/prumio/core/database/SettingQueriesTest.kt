@@ -1,19 +1,17 @@
 package app.prumio.core.database
 
-import app.cash.sqldelight.driver.jdbc.sqlite.JdbcSqliteDriver
+import app.prumio.core.databasetesting.InMemoryDatabase
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class SettingQueriesTest {
-    private val driver = JdbcSqliteDriver(JdbcSqliteDriver.IN_MEMORY).also { PrumioDatabase.Schema.create(it) }
-    private val queries = PrumioDatabase(driver).settingQueries
+    private val db = InMemoryDatabase()
+    private val queries = db.database.settingQueries
 
     @AfterTest
-    fun tearDown() {
-        driver.close()
-    }
+    fun tearDown() = db.close()
 
     @Test
     fun `upsert inserts then replaces a value`() {

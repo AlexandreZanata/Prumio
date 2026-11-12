@@ -8,17 +8,17 @@
 | **Plugin** | `prumio.feature` (wires every allowed dependency) |
 | **Package** | `app.prumio.feature.capture` |
 | **May depend on** | `:core:common`, `:core:designsystem`, `:core:domain`, `:core:model`, `:core:navigation`, `:core:ui` |
-| **Status** | Placeholder dialog. Implemented in task P3.01; share target, widget and voice capture reuse it in phase 6. |
+| **Status** | Implemented in Phase 3. Quick capture with a focused multiline field, Save/IME Done, validation and confirmation. |
 
 ## Contract
 
 | | |
 |---|---|
-| Navigation keys | `CaptureKey` (overlay/dialog) |
+| Navigation keys | CaptureKey |
 | Business rules | BR-INBOX-001, BR-INBOX-002 (docs/domain/business-rules.md) |
 | Screen specification | [docs/product/screens.md](../../docs/product/screens.md#quick-capture) |
 | Plan tasks | P3.01, P6.02–P6.05 (docs/plan/) |
-| Files today | `CaptureRoute.kt`, `CaptureScreen.kt`, `CaptureNavigation.kt`, `CaptureFeatureModule.kt` |
+| Screen files | Each screen uses `XxxContract.kt`, `XxxViewModel.kt`, `XxxRoute.kt`, `XxxScreen.kt`; editor/detail subpackages for multi-screen features |
 
 ## Public API
 
@@ -41,3 +41,10 @@ Only two symbols are public; everything else is `internal` or `private` (archite
 ## Tests
 
 `./gradlew :feature:capture:testAndroidHostTest` — ViewModel tests in `src/commonTest` with fakes from `:core:testing`.
+
+## Phase 3 validation
+
+ViewModel tests cover state, actions, navigation and error effects. Kover enforces ≥ 80 % lines
+for ViewModel classes (including their coroutine/lambda classes). Android host screenshot tests
+use `:core:screenshot-testing` for empty, typical and relevant long/error/status states in light,
+dark and 200 % font. Sheets, dialogs and the keyboard are checked on the physical phone.

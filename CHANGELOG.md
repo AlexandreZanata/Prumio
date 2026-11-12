@@ -12,9 +12,6 @@ versions follow [Semantic Versioning](https://semver.org/).
 - Reminder editing/defaults and summaries; additive pre-release database upgrade preserving debug data.
 - Version 0.1.0 build and local release signing configuration. Unsigned artifact prepared at the owner's
   request; signed publication and G4 dogfooding remain pending.
-
-
-### Added
 - Phase 3 Organize (P3.01–P3.14): capture, Inbox organization, task/appointment/matter screens,
   live Today/Agenda, offline search, theme/language/About, app-wide Inbox badge and Undo;
   English/pt-BR, ViewModel coverage gates and screen screenshot baselines.
@@ -37,6 +34,7 @@ versions follow [Semantic Versioning](https://semver.org/).
 - Coverage gate (P1.01): Kover on every shared module, `:core:domain` ≥ 90 % and `:core:data` ≥ 80 %
   lines enforced in `check`; merged report with `./gradlew koverHtmlReport`.
 - `DomainError.Validation` and `InvalidTransition` require a business rule id (`BR-AREA-NNN`).
+- `main` branch protection: pull requests only, green CI required (documented in AGENTS.md and CONTRIBUTING.md).
 - Brand identity (ADR-0018): vectorized sprout logo (SVG/PNG/Android adaptive icon), `PrumioLogo`,
   Prumio Green `#88C29A` tonal color system with WCAG contrast tests, brand usage guide.
 - Device testing rule: manual checks run on the physical phone over adb.

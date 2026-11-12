@@ -76,7 +76,7 @@ Automated:
 Manual (device QA section G, all items):
 - [ ] Reminders fire on time with exact alarms; are late but delivered without; survive reboot,
       app update, time zone change, Doze; snooze and complete from notification work.
-- [ ] Permission flows (granted, denied, denied twice) behave per BR-REM-014.
+- [x] Permission flows (granted, denied, denied twice) behave per BR-REM-014 (physical API 36; en/pt-BR).
 - [ ] Owner uses v0.1 for 7 days with real reminders; no missed reminder without explanation.
 
 Release:

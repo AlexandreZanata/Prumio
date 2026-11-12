@@ -129,4 +129,4 @@ Schema note: v0.1 is not released yet, so the reminder tables are added to schem
 
 | Date | Result | Notes |
 |---|---|---|
-| 2026-11-12 | Implementation validated; release gate pending | Full verify green: 331 tests, 0 failures. Domain 99.19%, data 96.01%; changed feature ViewModels 94–98%. API 26/36 host adapters and API 36 physical exact/inexact alarm, notification/content intent/Complete. Physical contextual denial flow. Signing setup + unsigned 0.1.0 APK prepared per owner clarification. Remaining device matrix and seven-day owner dogfooding/sign-off remain open. |
+| 2026-11-12 | Implementation validated; release gate pending | Full verify green: 331 tests, 0 failures. Domain 99.19%, data 96.01%; changed feature ViewModels 94–98%. API 26/36 host adapters and API 36 physical exact/inexact alarm, notification/content intent/Complete. Physical contextual permission grant/denial flow in en/pt-BR; localized native notification and Snooze dialog inspected. Signing setup + unsigned 0.1.0 APK prepared per owner clarification. Remaining device matrix and seven-day owner dogfooding/sign-off remain open. |

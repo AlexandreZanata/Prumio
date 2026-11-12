@@ -49,5 +49,6 @@ versions follow [Semantic Versioning](https://semver.org/).
   AI agent manual and recipes, execution plan with validation gates, ADR-0001 … ADR-0017.
 
 ### Changed
+- Gradle Wrapper 9.9.0 from the pending Dependabot PR, validated with the existing toolchain and full quality gate.
 - Cards use `surfaceContainerHigh` and the light status colors are deeper, so status tags inside
   cards keep 4.5:1 contrast (the contrast test now covers tags, cards, errors and snackbars).

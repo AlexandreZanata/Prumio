@@ -6,7 +6,7 @@ Gradle (Kotlin DSL) with convention plugins, a version catalog and configuration
 
 | Tool | Version | Where |
 |---|---|---|
-| Gradle | 9.8.2 | `gradle/wrapper/gradle-wrapper.properties` (checksum-verified) |
+| Gradle | 9.9.0 | `gradle/wrapper/gradle-wrapper.properties` (checksum-verified) |
 | JDK | 21 | local / CI `setup-java` |
 | Android Gradle Plugin | 9.5.1 | catalog `agp` |
 | Kotlin | 2.4.21 | catalog `kotlin` |

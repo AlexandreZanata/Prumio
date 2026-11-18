@@ -37,7 +37,7 @@ androidx-compose-ui-test = "1.12.1"
 junit4 = "4.13.2"
 konsist = "0.18.1"
 robolectric = "4.17"
-roborazzi = "1.78.0"
+roborazzi = "1.79.0"
 turbine = "1.2.1"
 
 # Code quality
